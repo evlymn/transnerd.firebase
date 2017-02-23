@@ -28,7 +28,7 @@
 
     <script src="js/app.js"></script>
     <script>
-        (function () {
+         
             angular.module('transnerd', ['ngRoute', 'firebase', 'summernote']);
             var modulo = angular.module('transnerd');
 
@@ -89,9 +89,9 @@
                 });
             }]);
 
-            modulo.controller('postController', ['$scope', '$rootScope', '$sce', '$firebaseArray',
-                function ($scope, $rootScope, $sce, $firebaseArray) {
-
+            modulo.controller('postController', ['$scope', '$rootScope', '$sce', '$firebaseArray', 'htmlService',
+                function ($scope, $rootScope, $sce, $firebaseArray, htmlService) {
+                    $scope.htmlService = htmlService;
                     var postagensRef = firebase.database().ref();
                     $scope.postagens = [];
 
@@ -149,7 +149,7 @@
                     }
 
                     $scope.updatePostObject = function (item) {
-                         $scope.postForm =true;
+                        $scope.postForm = true;
                         resetPostObject();
                         $scope.post.id = item.$id;
                         console.log($scope.post.id);
@@ -161,7 +161,7 @@
                     }
 
                     function updatePost(post) {
-                         $scope.postForm =null;
+                        $scope.postForm = null;
                         var postUpdate = {};
                         postUpdate['/postagens/' + $scope.post.id] = post;
                         postagensRef.update(postUpdate);
@@ -170,15 +170,13 @@
                     }
 
                     $scope.cancelUpdate = function () {
-                         $scope.postForm =null;
+                        $scope.postForm = null;
                         resetPostObject();
                         toastr["warning"]("Update cancelado");
                         console.log('update cancelado');
                     }
 
-                    $scope.renderHtml = function (htmlCode) {
-                        return $sce.trustAsHtml(htmlCode);
-                    };
+
 
                     $scope.convertToDate = function (stringDate) {
                         var dateOut = new Date(stringDate);
@@ -186,12 +184,14 @@
                         return dateOut;
                     };
                 }]);
-        })();
+
+          
+  
     </script>
 </head>
 
 <body>
-                              
+
 
     <div ng-controller="loginController" class="form-style-8">
         <div class="container">
@@ -218,10 +218,11 @@
                 <div id="photo-header" class="text-center">
                     <!-- PHOTO (AVATAR) -->
                     <div id="photo" class="hand" data-toggle="collapse" data-target="#fotos">
-                        
-                       <img src="https://firebasestorage.googleapis.com/v0/b/transnerd-6f3a9.appspot.com/o/avatar1.jpg?alt=media&token=524cf582-0a74-4c30-8ed6-432811a22c78" /> 
-                   
-                   
+
+                        <img src="https://firebasestorage.googleapis.com/v0/b/transnerd-6f3a9.appspot.com/o/avatar1.jpg?alt=media&token=524cf582-0a74-4c30-8ed6-432811a22c78"
+                        />
+
+
                     </div>
                     <div class="row collapse" id="fotos">
                         <br>
@@ -437,7 +438,7 @@
                             <div ng-show="postForm" id="postForm">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <input type="text"   id="titulo" ng-model="post.titulo" placeholder="Título"></input>
+                                        <input type="text" id="titulo" ng-model="post.titulo" placeholder="Título"></input>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -445,19 +446,19 @@
                                         <input type="text" id="local" ng-model="post.local" placeholder="Local"></input>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date"   id="data" ng-model="post.data" placeholder="Data"></input>
+                                        <input type="date" id="data" ng-model="post.data" placeholder="Data"></input>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12"> 
+                                    <div class="col-sm-12">
                                         <summernote ng-model="post.texto"></summernote>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6" >
+                                    <div class="col-sm-6">
                                         <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn   btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
                                     </div>
-                                    <div class="col-sm-6" >
+                                    <div class="col-sm-6">
                                         <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn  btn-block">Cancelar</button>
                                     </div>
                                 </div>
@@ -475,10 +476,10 @@
                                             <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
                                         </h3>
                                         <br>
-                                        <div ng-show="item.texto" ng-bind-html="renderHtml(item.texto)"></div>
+                                        <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
                                         <div id="postEditDiv" ng-show="logado">
-                                            <span  class="btn btn-sm" ng-click="remove(item)"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                                            <span  ng-class="item.$id==post.id? 'btn btn-sm educationSelectedLi' : 'btn btn-sm'" ng-click="updatePostObject(item)"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                            <span class="btn btn-sm" ng-click="remove(item)"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                            <span ng-class="item.$id==post.id? 'btn btn-sm educationSelectedLi' : 'btn btn-sm'" ng-click="updatePostObject(item)"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
                                         </div>
                                     </div>
                                 </li>
@@ -873,3 +874,4 @@
 
 </html>
 <script src="js/site.js"></script>
+<script src="js/services/htmlservice.js"></script>
