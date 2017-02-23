@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://kamsolutions.pl/projects/resume/ -->
+<html lang="en" ng-app="transnerd">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trans Nerd</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="bower_components/summernote/dist/summernote.min.js"></script>
+    <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="js/firebase.config.js"></script>
+
+    <script src="js/app.js"></script>
+    <script>
+        (function () {
+            angular.module('transnerd', ['ngRoute', 'firebase', 'summernote']);
+            var modulo = angular.module('transnerd');
+
+            modulo.controller('loginController', ['$scope', '$rootScope', '$firebaseArray', function ($scope, $rootScope, $firebaseArray) {
+                $scope.showFormLogin = function () {
+
+                    if ($rootScope.login)
+                        $rootScope.login = null;
+                    else
+                        $rootScope.login = {};
+                }
+
+                function LoggedIn(firebaseUser, showT) {
+                    $scope.user = firebaseUser;
+                    $rootScope.login = null;
+                    $rootScope.logado = true;
+                    $scope.$apply();
+                    if (showT)
+                        toastr["success"]("Você logou");
+                }
+
+                $scope.doLogin = function () {
+                    firebase.auth().signInWithEmailAndPassword($rootScope.login.email, $rootScope.login.senha)
+                        .catch(function (error) {
+                            toastr["danger"]("erro ao logar");
+                            console.log(error)
+                        })
+                        .then(function (firebaseUser) {
+                            LoggedIn(firebaseUser, true);
+                        });
+                }
+
+                function LoggedOut(showT) {
+                    $scope.user = null;
+                    $rootScope.login = null;
+                    $rootScope.logado = false;
+                    $scope.$apply();
+                    if (showT)
+                        toastr["warning"]("Você deslogou")
+                }
+
+                $scope.doLogout = function () {
+                    firebase.auth().signOut()
+                        .then(function () {
+                            LoggedOut(true);
+                        }, function (error) {
+                            toastr["danger"]("erro ao deslogar");
+                            console.log(error);
+                        });
+                }
+
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        LoggedIn(user, false)
+                    } else {
+                        LoggedOut(false)
+                    }
+                });
+            }]);
+
+            modulo.controller('postController', ['$scope', '$rootScope', '$sce', '$firebaseArray',
+                function ($scope, $rootScope, $sce, $firebaseArray) {
+
+                    var postagensRef = firebase.database().ref();
+                    $scope.postagens = [];
+
+                    resetPostObject();
+                    getPostFromDB();
+
+
+                    $scope.showPostForm = function () {
+                        if ($scope.postForm)
+                            $scope.postForm = null;
+                        else
+                            $scope.postForm = true;
+                    };
+
+                    function resetPostObject() {
+                        $scope.post = {
+                            data: new Date(),
+                            datacadastro: new Date().getTime().toString()
+                        };
+
+                        console.log('post object resetado');
+                    }
+
+                    function getPostFromDB() {
+                        $scope.postagens = $firebaseArray(postagensRef.child("postagens"));
+                        console.log('get posts from database');
+                    }
+
+                    $scope.savePost = function () {
+                        var post = {
+                            data: $scope.post.data.toUTCString(),
+                            datacadastro: $scope.post.data.getTime(),
+                            texto: angular.isUndefined($scope.post.texto) ? '' : $scope.post.texto,
+                            titulo: angular.isUndefined($scope.post.titulo) ? '' : $scope.post.titulo,
+                            local: angular.isUndefined($scope.post.local) ? '' : $scope.post.local,
+                        };
+
+                        if ($scope.post.id) {
+                            updatePost(post);
+                        }
+                        else {
+                            pushPost(post);
+                        }
+                        resetPostObject();
+                    }
+
+                    function pushPost(post) {
+                        postagensRef.child("postagens").push(post);
+                        toastr["success"]("Adicionado: " + post.titulo);
+                    }
+                    $scope.remove = function (item) {
+                        postagensRef.child("postagens/" + item.$id).remove();
+                        console.log('item removido');
+                        toastr["warning"]("Removido: " + item.titulo);
+                    }
+
+                    $scope.updatePostObject = function (item) {
+                         $scope.postForm =true;
+                        resetPostObject();
+                        $scope.post.id = item.$id;
+                        console.log($scope.post.id);
+                        $scope.post.data = new Date(item.data);
+                        $scope.post.datacadastro = new Date(item.data).getTime(),
+                            $scope.post.texto = angular.isUndefined(item.texto) ? '' : item.texto;
+                        $scope.post.titulo = angular.isUndefined(item.titulo) ? '' : item.titulo;
+                        $scope.post.local = angular.isUndefined(item.local) ? '' : item.local;
+                    }
+
+                    function updatePost(post) {
+                         $scope.postForm =null;
+                        var postUpdate = {};
+                        postUpdate['/postagens/' + $scope.post.id] = post;
+                        postagensRef.update(postUpdate);
+                        toastr["success"]("Registro atualizado: " + post.titulo);
+                        console.log('atualizado');
+                    }
+
+
+                    $scope.cancelUpdate = function () {
+                         $scope.postForm =null;
+                        resetPostObject();
+                        toastr["warning"]("Update cancelado");
+                        console.log('update cancelado');
+                    }
+
+                    $scope.renderHtml = function (htmlCode) {
+                        return $sce.trustAsHtml(htmlCode);
+                    };
+
+                    $scope.convertToDate = function (stringDate) {
+                        var dateOut = new Date(stringDate);
+                        dateOut.setDate(dateOut.getDate() + 1);
+                        return dateOut;
+                    };
+                }]);
+        })();
+    </script>
+</head>
+
+<body>
+                              
+
+    <div ng-controller="loginController" class="form-style-8">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                    <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()"> <i class="fa fa-sign-in " aria-hidden="true"></i></button>
+                    <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()"> <i class="fa fa-sign-out" aria-hidden="true"></i> </button>
+                </div>
+                <div class="col-sm-3" ng-show="$root.login">
+                    <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
+                </div>
+                <div class="col-sm-3" ng-show="$root.login">
+                    <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
+                </div>
+                <div class="col-sm-1" ng-show="$root.login">
+                    <button ng-click="doLogin()" class="btn"><i class="fa fa-check " aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="photo-header" class="text-center">
+                    <!-- PHOTO (AVATAR) -->
+                    <div id="photo" class="hand" data-toggle="collapse" data-target="#fotos">
+                        
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QDIRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABAAAAYgEbAAUAAAABAAAAagEoAAMAAAABAAIAAAExAAIAAAAPAAAAcgEyAAIAAAAUAAAAgodpAAQAAAABAAAAlgAAAAAAAABIAAAAAQAAAEgAAAABUGl4ZWxtYXRvciAzLjYAADIwMTc6MDI6MDkgMTE6MDI6NDUAAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAWSgAwAEAAAAAQAAAWQAAAAA/+EJkGh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcDpDcmVhdG9yVG9vbD0iUGl4ZWxtYXRvciAzLjYiIHhtcDpNb2RpZnlEYXRlPSIyMDE3LTAyLTA5VDExOjAyOjQ1Ii8+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPD94cGFja2V0IGVuZD0idyI/PgD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAA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" >
+                    </div>
+                    <div class="row collapse" id="fotos">
+                        <br>
+                        <div class="col-sm-3">
+                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                <div style="padding:8px;">
+                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                    </div>
+                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                        <a href="https://www.instagram.com/p/BOCrJCLB0Zk/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                            target="_blank">Launch and Learn</a>
+                                    </p>
+                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T14:51:13+00:00">Dec 15, 2016 at 6:51am PST</time>
+                                    </p>
+                                </div>
+                            </blockquote>
+
+
+                        </div>
+                        <div class="col-sm-3">
+                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                <div style="padding:8px;">
+                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                    </div>
+                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                        <a href="https://www.instagram.com/p/BQSqESMgAns/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                            target="_blank">Apenas mais um dia rsrs</a>
+                                    </p>
+                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2017-02-09T12:52:28+00:00">Feb 9, 2017 at 4:52am PST</time>
+                                    </p>
+
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="col-sm-3">
+                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                <div style="padding:8px;">
+                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                    </div>
+                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                        <a href="https://www.instagram.com/p/BK_VI6yBgjO/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                            target="_blank">Até a cordão do meu crachá é trans!!! 😍😍😍😍😍</a>
+                                    </p>
+                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-09-30T18:07:03+00:00">Sep 30, 2016 at 11:07am PDT</time>
+                                    </p>
+                                </div>
+                            </blockquote>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                <div style="padding:8px;">
+                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                    </div>
+                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                        <a href="https://www.instagram.com/p/BOCVr6jBlgm/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                            target="_blank">Candy e eu tentando tirar uma selfie rsrs 😍😍</a>
+                                    </p>
+                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T11:43:44+00:00">Dec 15, 2016 at 3:43am PST</time>
+                                    </p>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div id="text-header">
+                        <h1>
+                            Olá,<br> eu sou a <span>Jeliel</span><sup id="idadeSup">42</sup> e aqui você conhecerá um pouco
+                            mim <i class="fa fa-smile-o" aria-hidden="true"></i>
+                        </h1>
+                        <br />
+                        <small class="hand" data-toggle="collapse" data-target="#turnupradio">
+<i class="fa fa-heart-o"   aria-hidden="true"></i>
+<b>It</b>  was time that I opened my eyes
+<b>I'm</b>  leaving the past behind
+<b>Nothing's</b>  ever what it seems
+<b>Including</b> this time and this crazy dream
+<i class="fa fa-heart-o"   aria-hidden="true"></i>
+</small>
+                        <div class="collapse" id="turnupradio">
+                            <br>
+                            <p>When the world starts to get you down <br /> And nothing seems to go your way <br /> And the
+                                noise of a maddening crowd
+                                <br /> Makes you feel like you're going to go insane</p>
+                            <p>There's a glow of a distant light<br /> Calling you to come outside<br /> To feel the wind in
+                                your face and your skin
+                                <br /> And it's here I begin my story</p>
+                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
+                                turn up the radio</p>
+                            <p>It was time that I opened my eyes<br /> I'm leaving the past behind<br /> Nothing's ever what
+                                it seems<br /> Including this time and this crazy dream</p>
+                            <p>I'm stuck like a moth to a flame<br /> I'm so tired of playing this game<br /> I don't know how
+                                I got to this stage<br /> Let me out of my cage cause I'm dying
+                            </p>
+                            <p>To turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
+                                turn up the radio</p>
+                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
+                                turn up the radio</p>
+                            <p>I just wanna get in my car<br /> I wanna go fast and I gotta go far<br /> Don't ask me to explain
+                                how I feel<br /> Cause I don't wanna say where I'm going</p>
+                            <p>Turn up the noise and turn up the volume<br /> Don't have a choice<br /> Cause the temperature's
+                                pounding
+                                <br /> If leaving this place is the last thing I do<br /> Then I want to escape<br /> With
+                                a person just like you
+                            </p>
+                            <p>Buzzing around like a moth to a flame<br /> I'm so sick and tired of playing this game<br />                                We gotta have fun if that's all that we do<br /> Gotta shake up the system<br /> And break
+                                all the rules<br /> Gotta turn up the radio<br /> Until the speakers blow!</p>
+                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
+                                turn up the radio</p>
+                            <p>Turn up the radio<br /> Turn up the radio<br /> There's some things you don't need to know<br
+                                /> Just let me turn up the radio</p>
+                            <p>Turn up the radio<br /> Let me turn up the radio<br /> Let me turn up the radio</p>
+                            <br>
+                            <b>Madonna</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-7" id="colunaEsquerda">
+                <!-- ABOUT ME -->
+                <div class="box" id="sobre">
+                    <h2>Sobre mim</h2>
+                    <p>
+                        Mulher transexual <b> <a id="atransicao" href="javascript:void();" data-toggle="collapse" data-target="#transicao"> <i class="fa fa-transgender-alt" aria-hidden="true"></i></b><sup> <b>em transição</b> </sup></a>
+                        , analista e desenvolvedora de sistemas, trabalhando desde 2002 na área, atualmente na ThoughtWorks como consultora de desenvolvimento.
+                        <br /> Faço parte da organização do TransEnem, cursinho que oferece oportunidades de estudos e de
+                        aprendizado para pessoas transgêneros (transexuais, travestis e não-binárias), participo também de
+                        vários projetos sociais como por exemplo, coaching no projeto População T na TI na ThoughtWorks,
+                        que propõe ensinar e desmistificar o desenvolvimento de software para as pessoas trans, instrutora
+                        no Educodar que visa ensinar programação para crianças carentes, além da organização de eventos como
+                        o Rails Girls e o Django Girls em Porto Alegre e BH.
+                        <br />E é claro, muito nerd e geek
+                        <i title="Vida longa e próspera!'" class="fa fa-hand-spock-o" aria-hidden="true"></i>, amo tecnologia,
+                        <br />Sem esquecer que sou mãe e avó de 3 lindos shitzus
+                        <a id="afilhotes" href="javascript:void();" data-toggle="collapse" data-target="#filhotes">
+                            <i class="fa fa-paw" style="color:#F8C879" title="Ichiro meu primeiro filho!" aria-hidden="true"></i>
+                            <i class="fa fa-paw" style="font-size:10px" title="Candy minha filhota amada, mãe dos mais lindos filhotes do mundo!" aria-hidden="true"></i>
+                            <i class="fa fa-paw" title="Luke meu neto lindo!!" aria-hidden="true"></i>
+                        </a> <br />E apesar de tudo isso dizem que sou uma pessoa legal <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    </p>
+                    <div id="transicao" style="font-size:1.3em;padding:10px" class="collapse">
+                        <b><a href="https://pt.wikipedia.org/wiki/Transi%C3%A7%C3%A3o_de_g%C3%AAnero">Transição de gênero</a> </b>é
+                        o período pelo qual uma pessoa passa no momento em que se submete a tratamentos hormonais e cirúrgicos
+                        para paulatinamente transformar suas características primárias e secundárias nas do sexo desejado.<br>Por
+                        exemplo, pode ser o caso de uma <a href="https://pt.wikipedia.org/wiki/Mulher_transexual">mulher transexual</a>(designada
+                        como homem no nascimento e transicionando-se para mulher) (MtF) ou um <a href="https://pt.wikipedia.org/wiki/Transexual_masculino">homem transexual</a>designado
+                        como mulher no nascimento e transicionando-se para homem (FtM). O objetivo da transição de gênero
+                        é adequar o sexo biológico ao mental.
+                    </div>
+                    <div id="filhotes" class="collapse">
+                        <br>
+                        <h5> <b> Meus filhotes lindos!! <i  class="fa fa-heart" aria-hidden="true"></i></b></h5>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/4tqhqQlPxj/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Turminha no frio ❤️</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Uma foto publicada por Evelyn (@jelielmendes) a
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-04T12:02:31+00:00">Jul 4, 2015 às 5:02 PDT</time>
+                                        </p>
+                                    </div>
+                                </blockquote>
+                            </div>
+                            <div class="col-sm-6">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/5AMO-UFPyH/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Passeio de sábado ❤️</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Uma foto publicada por Evelyn (@jelielmendes) a
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-11T16:43:23+00:00">Jul 11, 2015 às 9:43 PDT</time>
+                                        </p>
+                                    </div>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+                    <br>
+                </div>
+                <!-- Cursos -->
+                <div ng-controller="postController">
+
+                    <div class="box" id="cursos" ng-show="postagens">
+                        <h2>Cursos, educação, vida...
+                            <span class="pull-right">
+                            <i id="cursosExpand"  title="Expandir"  class="fa fa-expand" aria-hidden="true"></i>
+                            <i id="cursosCompress" title="Retrair" class="fa fa-compress hidden" aria-hidden="true"></i>
+                        </span>
+                        </h2>
+                        <div class="form-style-8 " ng-show="$root.logado">
+                            <button class="btn btn-sm" ng-click="showPostForm()"><i ng-class="postForm?'fa fa-minus': 'fa fa-plus'"  aria-hidden="true"></i></button>
+
+                            <div ng-show="postForm" id="postForm">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text"   id="titulo" ng-model="post.titulo" placeholder="Título"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" id="local" ng-model="post.local" placeholder="Local"></input>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date"   id="data" ng-model="post.data" placeholder="Data"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12"> 
+                                        <summernote ng-model="post.texto"></summernote>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6" >
+                                        <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn   btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
+                                    </div>
+                                    <div class="col-sm-6" >
+                                        <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn  btn-block">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="collapse " id="education1">
+                            <ul id="education" class="clearfix" data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
+
+
+                                
+                                <li>
+                                    <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
+                                    <div class="description pull-right">
+                                        <h3>{{item.titulo}}</h3>
+
+                                        <h3>
+                                            <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
+                                        </h3>
+                                        <br>
+                                        <div ng-show="item.texto" ng-bind-html="renderHtml(item.texto)"></div>
+                                        <div id="postEditDiv" ng-show="logado">
+                                            <span  class="btn btn-sm" ng-click="remove(item)"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                            <span  ng-class="item.$id==post.id? 'btn btn-sm educationSelectedLi' : 'btn btn-sm'" ng-click="updatePostObject(item)"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- EXPERIENCES -->
+                <div class="box" id="experiencia">
+                    <h2>
+                        Experiência
+                        <span class="pull-right hidden-sm-up">
+                            <i id="experienciaExpand"  title="Expandir"  class="fa fa-expand" aria-hidden="true"></i>
+                            <i id="experienciaCompress"   title="Retrair"  style="display:none" class="fa fa-compress" aria-hidden="true"></i>
+</span>
+                    </h2>
+                    <div class="job clearfix">
+                        <div class="col-xs-3">
+                            <div class="where">ThoughtWorks</div>
+                            <div class="year" title="Setembro 2016">2016</div>
+                        </div>
+                        <div class="col-xs-9">
+                            <div class="profession">Consultant Developer</div>
+                            <small class="pull-right smallExp">Setembro 216 <b>atual</b></small>
+                            <br>
+                            <div class="description">Desenvolvimento web, Java, Javascript, rest, ruby, miçangas, palestras, eventos, justiça social
+                                e muiito mais
+                                <3 </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">DBC Company</div>
+                                <div class="year" title="Maio 2015 -Outubro 2015">2015</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Análise e desenvolvimento</div>
+                                <small class="pull-right smallExp">maio   – outubro de 2015 - <b>6 meses</b></small>
+                                <br>
+                                <div class="description">Desenvolvimento web, desktop, Asp.Net, C#, MVC, AngularJS, VB6.</div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">TriMobi</div>
+                                <div class="year">2012 - 2015</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Coordenação, análise e desenvolvimento</div>
+                                <small class="pull-right smallExp">janeiro de 2013 – maio de 2015 - <b>2 anos 5 meses</b></small>
+                                <br />
+                                <div class="description">Coordenação de equipe, desenvolvimento web, desktop e mobile(iOS, Android, .Net)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Deep Red</div>
+                                <div class="year">2011 - 2012</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Análise e desenvolvimento</div>
+                                <small class="pull-right smallExp"> setembro de 2011 – janeiro de 2013 - <b>1 ano 5 meses</b></small>
+                                <br />
+                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine
+                                    entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">PmWeb</div>
+                                <div class="year">2011</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Análise e desenvolvimento</div>
+                                <small class="pull-right smallExp"> setembro de 2011 -<b>1 mês*</b></small>
+                                <br />
+                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Deep Red</div>
+                                <div class="year">2011</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Análise e desenvolvimento</div>
+                                <small class="pull-right smallExp"> junho   – setembro de 2011 - <b>4 meses</b></small>
+                                <br />
+                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine
+                                    entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Tedesco Tecnologia</div>
+                                <div class="year">2006 - 2011</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Programador Sênior / Líder técnico</div>
+                                <small class="pull-right smallExp">  novembro de 2006 – junho de 2011 - <b>4 anos 8 meses</b></small>
+                                <br />
+                                <div class="description"><b>Atividades:</b>
+                                    <br/>
+                                    <div>Manutenção e customização do produto WebFull (produto principal da empresa),Programação
+                                        ASP, ASP.Net-C#,VB.Net, VB Script, Java Script, Ajax, JQuery, Windows Service, Web
+                                        Services, Windows Forms.
+                                        <br /> Banco de dados SQL Server 2000, 2005,2008,Oracle, Access.
+                                        <br/> Por último, responsável pelo setor de P&D, a cargo de desenvolver um novo produto
+                                        em C#, POO, além de fazer analise e desenvolvimento de customizações mais complexas.
+                                        <br/>
+                                        <i>Nesse período também realizei entrevistas para contratação de novos profissionais, para a matriz em SP e para a filial de Porto Alegre.<br />
+</i>
+                                    </div>
+                                    <br>
+                                    <b>Algumas tarefas realizadas:</b>
+                                    <br />
+                                    <ul>
+                                        <li>Desenvolvimento de componente e webservice para melhorar performance da aplicação
+                                            em cerca de 90%
+                                        </li>
+                                        <li>Novos projetos independentes, horas vagas, que ajudaram a melhorar o gerenciamento
+                                            de horas e projetos para os desenvolvedores e gerentes.
+                                        </li>
+                                        <li>Aplicação para extração de relatório alcançando uma melhora de performance e interação
+                                            com o usuário (esse projeto ganhou o prêmio de inovação da empresa no final de
+                                            2008)
+                                        </li>
+                                        <li>Cubo OLAP usando o componente Dundas.</li>
+                                        <li>Analise e desenvolvimento de métodos, componentes e estrutura para o atual sistema
+                                            funcionar em n linguagens, respeitando questões de informação de cultura e caracteres
+                                            especiais, como os do leste asiático. Hoje o sistema funciona em 32 países e
+                                            em 17 idiomas.</li>
+                                        <li>Wizard, pré-visualização e edição de documentos Word na web.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Travel Explorer</div>
+                                <div class="year">2004 - 2006</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Desenvolvimento web</div>
+                                <small class="pull-right smallExp">   2004 – novembro 2006 - <b>2 anos</b></small>
+                                <br />
+                                <div class="description">Programação ASP 3,ASP.Net-C#, VB Script, Java Script. Banco de dados SQL Server 2000, 2005,
+                                    Access, MySQL e PostGreSQL
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Conectt</div>
+                                <div class="year">2004</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Desenvolvimento web</div>
+                                <small class="pull-right smallExp"> 2004 - <b>menos de 1 ano</b></small>
+                                <br />
+                                <div class="description">PDesenvolvimento de Sistemas Programação ASP, VB Script, Java Script. Banco de dados SQL
+                                    2000 e Access.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Teledata Brasil</div>
+                                <div class="year">2004</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Desenvolvimento de Sistemas</div>
+                                <small class="pull-right smallExp">   junho de 2002 – 2004 - <b>2 anos</b></small>
+                                <br />
+                                <div class="description"><i>[Terceirizada na Polícia Federal do Rio Grande do Sul SRRS/DPF]</i>
+                                    <br> Programação ASP, VB Script, Java Script. Banco de dados SQL e Access. Atualização
+                                    da página de Intranet da Polícia Federal do Rio Grande do Sul SRRS/DPF, web designer.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Puras do Brasil</div>
+                                <div class="year">2002 - 2004</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Desenvolvimento de Sistemas</div>
+                                <small class="pull-right smallExp">   dezembro de 2002 – 2004 - <b>2 anos</b></small>
+                                <br />
+                                <div class="description"> Desenvolvimento de Sistemas Programação Visual Basic ASP, VB Script, Java Script. Banco de
+                                    dados SQL e Access. Trabalhos em VB com assistência do Visual Source Safe Atualização
+                                    da página institucional www.puras.com.br, web designer. Testes com VB e ASP.NET.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">Rádio gaúcha</div>
+                                <div class="year">1995 - 2002</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Operadora de aúdio</div>
+                                <small class="pull-right smallExp"> abril de 1996 – maio de 2002 - <b>6 anos 2 meses</b></small>
+                                <br />
+                                <div class="description">Responsável pela operação da mesa de áudio durante gravações e transmissões ao vivo respondendo
+                                    por sua qualidade
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-5" id="colunaDireita">
+                    <div class="box ">
+                        <h2 title="Curiosx? Então clique!" data-toggle="collapse" class="whyJelielH2" data-target="#whyjeliel">Why Jeliel? <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
+                        </h2>
+                        <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
+                            <small class="pull-right smallExp">4 junho 2015 - <b>Porto Alegre</b></small>
+                            <br /> Well, <b>Jeliel</b> is my guardian angel, and because angels doesn't have a gender, and
+                            for now is how I'm feeling myself, without a gender or a name. Sometimes just a thing.
+                            <br /> Since I started the transition, I'm trying to get better, evolve, my look and my mind...
+                            day by day, step by step, feeling by feeling, sorrow by sorrow, loss by loss and joy by joy <i
+                                class="fa fa-smile-o" aria-hidden="true"></i> ...I know, is tough, but isn't impossible.
+                            <br /> Despite the issues, I hope to reach my dreams.
+                            <br /> Some people... well, some close people call me <b>Evelyn</b>, due the first three letters
+                            of my old name, but I don't know if they are being sarcastic <i class="fa fa-meh-o" aria-hidden="true"></i>                            hahahaha
+                            <br /> Thanks to all who support me, I love you <i class="fa fa-heart" aria-hidden="true"></i>
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            <br /> And for those who don't like, kisses on the shoulder!!! rsrs
+                            <br />
+                        </div>
+                    </div>
+                    <!-- CONTACT -->
+                    <div class="box clearfix">
+                        <h2>Contatos e afins.
+                        </h2>
+                        <div id="contatosDiv" class="collapse">
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-home fa-fw"></span></div>
+                                <div class="title only pull-right">Porto Alegre - RS/Brasil </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-envelope fa-fw"></span></div>
+                                <div class="title only pull-right">jeliel@transnerd.com.br</div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-medium fa-fw"></span></div>
+                                <div class="title pull-right">Medium</div>
+                                <div class="description pull-right"><a href="https://medium.com/transnerd">medium.com/transnerd</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-linkedin fa-fw"></span></div>
+                                <div class="title pull-right">Linkedin</div>
+                                <div class="description pull-right"><a href="https://www.linkedin.com/in/jelielmendes">in/jelielmendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-twitter fa-fw"></span></div>
+                                <div class="title pull-right">Twitter</div>
+                                <div class="description pull-right"><a href="https://twitter.com/jelielmendes">twitter.com/jelielmendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-facebook fa-fw"></span></div>
+                                <div class="title pull-right">Facebook</div>
+                                <div class="description pull-right"><a href="https://www.facebook.com/jelielmendes">facebook.com/jelielmendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-instagram fa-fw"></span></div>
+                                <div class="title pull-right">Instagram</div>
+                                <div class="description pull-right"><a href="https://www.instagram.com/jelielmendes/">instagram.com/jelielmendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-youtube fa-fw"></span></div>
+                                <div class="title pull-right">Youtube</div>
+                                <div class="description pull-right"><a href="https://www.youtube.com/channel/UCBSEHB7hg-T8CRRpxJgNDDw">Canal</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-github fa-fw"></span></div>
+                                <div class="title pull-right">GitHub</div>
+                                <div class="description pull-right"><a href="https://github.com/jelielmendes">github.com/jelielmendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-bitbucket fa-fw"></span></div>
+                                <div class="title pull-right">Bitbucket</div>
+                                <div class="description pull-right"><a href="https://bitbucket.org/jeliel/">bitbucket.org/jeliel/</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-google-plus fa-fw"></span></div>
+                                <div class="title pull-right">Google+</div>
+                                <div class="description pull-right"><a href="https://plus.google.com/+JelielMendes/">+JelielMendes</a></div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="icon pull-left text-center"><span class="fa fa-skype fa-fw"></span></div>
+                                <div class="title pull-right">Skype</div>
+                                <div class="description pull-right"><a href="skype:jelielmendes?dropdown">jelielmendes</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SKILLS -->
+                    <div class="box ">
+                        <h2>Habilidades
+                        </h2>
+                        <div class="skills collapse" id="skillsDiv">
+                            <div class="item-skills" data-percent="0.98" style="overflow: hidden; width: 238.231px;">C#</div>
+                            <div class="item-skills" data-percent="0.90" style="overflow: hidden; width: 238.231px;">MVC</div>
+                            <div class="item-skills" data-percent="1.00" style="overflow: hidden; width: 263.716px;">HTML</div>
+                            <div class="item-skills" data-percent="0.98" style="overflow: hidden; width: 238.231px;">CSS</div>
+                            <div class="item-skills" data-percent="0.99" style="overflow: hidden; width: 212.747px;">jQuery</div>
+                            <div class="item-skills" data-percent="0.2" style="overflow: hidden; width: 212.747px;">PHP</div>
+                            <div class="item-skills" data-percent="0.7" style="overflow: hidden; width: 212.747px;">BI</div>
+                            <div class="item-skills" data-percent="0.9" style="overflow: hidden; width: 212.747px;">Mobile</div>
+                            <div class="item-skills" data-percent="0.6" style="overflow: hidden; width: 212.747px;">Xamarin</div>
+                            <div class="item-skills" data-percent="0.94" style="overflow: hidden; width: 212.747px;">Boostrap</div>
+                            <div class="item-skills" data-percent="0.23" style="overflow: hidden; width: 212.747px;">AngularJS</div>
+                            <div class="item-skills" data-percent="0.14" style="overflow: hidden; width: 212.747px;">TDD</div>
+                            <div class="item-skills" data-percent="0.2" style="overflow: hidden; width: 212.747px;">Ruby</div>
+                            <div class="item-skills" data-percent="0.15" style="overflow: hidden; width: 212.747px;">Sinatra (Ruby)</div>
+                            <div class="skills-legend clearfix">
+                                <div class="legend-left legend">Iniciante</div>
+                                <div class="legend-left legend"><span>Proficiente</span></div>
+                                <div class="legend-right legend"><span>Pleno</span></div>
+                                <div class="legend-right legend">Sênior</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- qualidades -->
+                    <div class="box">
+                        <h2>Qualidades
+                        </h2>
+                        <ul style="font-size:1.3em;" class="collapse" id="qualidadesUl">
+                            <li>Trabalho em equipe</li>
+                            <li>Foco em soluções</li>
+                            <li>Pró-atividade (prevendo problemas e achando soluções para eles antes que aconteçam, além de melhorias
+                                para o sistema, entre outras.).
+                            </li>
+                            <li>Bom conhecimento técnico</li>
+                            <li>Fácil aprendizado</li>
+                            <li>Autodidata em termos de tecnologia</li>
+                            <li>Boa redação, primando pela escrita correta</li>
+                        </ul>
+                    </div>
+                    <!-- LANGUAGES -->
+                    <div class="box">
+                        <h2>Idiomas
+                        </h2>
+                        <div id="idiomasDiv" class="collapse">
+                            <div id="language-skills">
+                                <div class="skill">Português
+                                    <div class="icons pull-right">
+                                        <div style="width: 100%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                    </div>
+                                </div>
+                                <div class="skill">Inglês
+                                    <div class="icons pull-right">
+                                        <div style="width: 60%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                    </div>
+                                </div>
+                                <div class="skill">Espanhol
+                                    <div class="icons pull-right">
+                                        <div style="width: 60%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- HOBBIES -->
+                    <div class="box">
+                        <h2>Interesses
+                        </h2>
+                        <div class="collapse" id="interessesDiv">
+                            <div class="hobby">Leitura</div>
+                            <div class="hobby">Novas tecnologias</div>
+                            <div class="hobby">Desenvolvimento</div>
+                            <div class="hobby">Documentários</div>
+                            <div class="hobby">Ficção científica</div>
+                            <div class="hobby">Moda</div>
+                            <div class="hobby">Botas</div>
+                            <div class="hobby">Saltos</div>
+                            <div class="hobby">Beleza</div>
+                            <div class="hobby">Transexualidade</div>
+                        </div>
+                    </div>
+                    <!-- Fotos -->
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
+<script src="js/site.js"></script>

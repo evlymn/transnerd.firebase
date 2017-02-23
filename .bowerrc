@@ -1,0 +1,10 @@
+{
+  "directory": "public/bower_components/",
+  "timeout": 120000,
+   "save": true,
+  "registry": {
+    "search": [
+      "https://bower.herokuapp.com"
+    ]
+  }
+}

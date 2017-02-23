@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="transnerd">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
+
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css">
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.js"></script>
+    <script src="bower_components/summernote/dist/summernote.min.js"></script>
+    <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="js/firebase.config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/firebase.authentication.js"></script>
+
+    <script>
+        //var authModulo = angular.module('authModulo');
+        (function () {
+
+            angular.module('transnerd', ['ngRoute', 'firebase', 'summernote']);
+            var modulo = angular.module('transnerd');
+
+            modulo.controller('loginController', ['$scope', '$firebaseArray', function ($scope, $firebaseArray) {
+
+                function logou(firebaseUser, showT) {
+                    $scope.user = firebaseUser;
+                    $scope.oAuth = null;
+                    $scope.logado = true;
+                    $scope.$apply();
+                    if (showT)
+                        toastr["success"]("Você logou");
+                }
+
+                $scope.login = function () {
+                    firebase.auth().signInWithEmailAndPassword($scope.oAuth.email, $scope.oAuth.senha)
+                        .then(function (firebaseUser) {
+                            logou(firebaseUser, true);
+                        })
+                        .catch(function (error) {
+                            toastr["danger"]("erro ao logar");
+                            console.log(error)
+                        });
+                }
+
+                function deslogou(showT) {
+                    $scope.user = null;
+                    $scope.oAuth = null;
+                    $scope.logado = false;
+                    $scope.$apply();
+                    if (showT)
+                        toastr["warning"]("Você deslogou")
+                }
+
+                $scope.logout = function () {
+                    firebase.auth().signOut()
+                        .then(function () {
+                            deslogou(true);
+                        }, function (error) {
+                            toastr["danger"]("erro ao deslogar");
+                            console.log(error);
+                        });
+                }
+
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        logou(user, false)
+                    } else {
+                        deslogou(false)
+                    }
+                });
+            }]);
+
+            modulo.controller('postCtrl', ['$scope', '$sce', '$firebaseArray',
+
+                function ($scope, $sce, $firebaseArray) {
+
+                    var postagensRef = firebase.database().ref();
+                    $scope.posts = [];
+                    $scope.logado = false;
+                    $scope.oAuth = null;
+                    resetPostObject();
+                    getPostFromDB();
+
+                    function resetPostObject() {
+                        $scope.post = {
+                            data: new Date(),
+                            datacadastro: new Date().getTime().toString()
+                        };
+
+                        console.log('post object resetado');
+                    }
+
+                    function getPostFromDB() {
+                        $scope.posts = $firebaseArray(postagensRef.child("postagens"));//orderByChild("datacadastro").limitToFirst(10)
+                        console.log('get posts from database');
+                    }
+
+                    $scope.savePost = function () {
+                        var post = {
+                            data: $scope.post.data.toUTCString(),
+                            datacadastro: $scope.post.data.getTime(),
+                            texto: angular.isUndefined($scope.post.texto) ? '' : $scope.post.texto,
+                            titulo: angular.isUndefined($scope.post.titulo) ? '' : $scope.post.titulo,
+                            local: angular.isUndefined($scope.post.local) ? '' : $scope.post.local,
+                        };
+
+                        if ($scope.post.id) {
+                            updatePost(post);
+                        }
+                        else {
+                            pushPost(post);
+                        }
+                        resetPostObject();
+                    }
+
+                    function pushPost(post) {
+                        postagensRef.child("postagens").push(post);
+                        toastr["success"]("Adicionado: " + post.titulo);
+                    }
+                    $scope.remove = function (item) {
+                        postagensRef.child("postagens/" + item.$id).remove();
+                        console.log('item removido');
+                        toastr["warning"]("Removido: " + item.titulo);
+                    }
+
+                    $scope.updatePostObject = function (item) {
+                        resetPostObject();
+                        $scope.post.id = item.$id;
+                        console.log($scope.post.id);
+                        $scope.post.data = new Date(item.data);
+                        $scope.post.datacadastro = new Date(item.data).getTime(),
+                            $scope.post.texto = angular.isUndefined(item.texto) ? '' : item.texto;
+                        $scope.post.titulo = angular.isUndefined(item.titulo) ? '' : item.titulo;
+                        $scope.post.local = angular.isUndefined(item.local) ? '' : item.local;
+                    }
+
+                    function updatePost(post) {
+                        var postUpdate = {};
+                        postUpdate['/postagens/' + $scope.post.id] = post;
+                        postagensRef.update(postUpdate);
+                        toastr["success"]("Registro atualizado: " + post.titulo);
+                        console.log('atualizado');
+                    }
+
+                    $scope.cancelUpdate = function () {
+                        resetPostObject();
+                        toastr["warning"]("Update cancelado");
+                        console.log('update cancelado');
+                    }
+
+                    $scope.showFormLogin = function () {
+                        resetPostObject();
+                        if ($scope.oAuth)
+                            $scope.oAuth = null;
+                        else
+                            $scope.oAuth = {};
+                    }
+
+                    // function logou(firebaseUser, showT) {
+                    //     $scope.user = firebaseUser;
+                    //     $scope.oAuth = null;
+                    //     $scope.logado = true;
+                    //     $scope.$apply();
+                    //     if (showT)
+                    //         toastr["success"]("Você logou");
+                    // }
+
+                    // $scope.login = function () {
+                    //     firebase.auth().signInWithEmailAndPassword($scope.oAuth.email, $scope.oAuth.senha)
+                    //         .then(function (firebaseUser) {
+                    //             logou(firebaseUser, true);
+                    //         })
+                    //         .catch(function (error) {
+                    //             toastr["danger"]("erro ao logar");
+                    //             console.log(error)
+                    //         });
+                    // }
+
+                    // function deslogou(showT) {
+                    //     $scope.user = null;
+                    //     $scope.oAuth = null;
+                    //     $scope.logado = false;
+                    //     $scope.$apply();
+                    //     if (showT)
+                    //         toastr["warning"]("Você deslogou")
+                    // }
+
+                    // $scope.logout = function () {
+                    //     firebase.auth().signOut()
+                    //         .then(function () {
+                    //             deslogou(true);
+                    //         }, function (error) {
+                    //             toastr["danger"]("erro ao deslogar");
+                    //             console.log(error);
+                    //         });
+                    // }
+
+                    // firebase.auth().onAuthStateChanged(function (user) {
+                    //     if (user) {
+                    //         logou(user, false)
+                    //     } else {
+                    //         deslogou(false)
+                    //     }
+                    // });
+
+                    $scope.renderHtml = function (htmlCode) {
+                        return $sce.trustAsHtml(htmlCode);
+                    };
+
+                    $scope.convertToDate = function (stringDate) {
+                        var dateOut = new Date(stringDate);
+                        dateOut.setDate(dateOut.getDate() + 1);
+                        return dateOut;
+                    };
+                }]);
+        })();
+    </script>
+</head>
+
+<body ng-controller="postCtrl">
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div lass="col-sm-4">
+                <span title="Login" ng-hide="logado" class=" btn btn-success btn-sm " ng-click="showFormLogin()"> <i class="fa fa-sign-in" aria-hidden="true"></i> <b>Login</b></span>
+                <span title="logout" ng-show="logado" class=" btn btn-warning btn-sm" ng-click="logout()"> <i class="fa fa-sign-out" aria-hidden="true"></i> <b>Logout</b></span>
+            </div>
+        </div>
+        <div class="well" ng-show="oAuth">
+            <div class="row">
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="text" class="form-control" id="email" ng-model="oAuth.email" placeholder="email"></input>
+                </div>
+                <div class="col-sm-6">
+                    <input autocomplete="off" type="password" class="form-control" id="senha" ng-model="oAuth.senha" placeholder="senha"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button ng-click="login()" class="btn btn-block btn-primary">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container" id="postDiv">
+
+            <div ng-show="logado">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" ng-required="true" class="form-control" id="titulo" ng-model="post.titulo" placeholder="Título"></input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="local" ng-model="post.local" placeholder="Local"></input>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="date" required class="form-control" id="data" ng-model="post.data" placeholder="Data"></input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <summernote ng-model="post.texto"></summernote>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-class="post.id ? 'col-sm-6' : 'col-sm-12'">
+                        <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" type="button" class="btn btn-success btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
+                    </div>
+                    <div class="col-sm-6" ng-show="post.id">
+                        <button id="postButton" ng-click="cancelUpdate(item)" type="button" class="btn btn-warning btn-block">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul data-ng-repeat="item in posts | orderBy:'datacadastro':true " class="list-group">
+                        <li ng-class="item.$id==post.id? 'list-group-item list-group-item-success' : 'list-group-item'">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <span ng-show="logado" class="well-sm btn" ng-click="remove(item)"> <i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                                    <span ng-show="logado" class="well-sm btn" ng-click="updatePostObject(item)"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                                    <b>{{item.titulo}}</b> - {{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}}
+                                    - {{item.local}}
+                                    <div ng-show="item.texto" class="well" ng-bind-html="renderHtml(item.texto)"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+</body>
+
+</html>
