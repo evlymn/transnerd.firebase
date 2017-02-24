@@ -8,11 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trans Nerd</title>
 
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
 
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="bower_components/toastr/toastr.css">
+    <link rel="stylesheet" href="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css">
     <link href="css/style.css" rel="stylesheet">
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -24,175 +28,15 @@
     <script src="bower_components/summernote/dist/summernote.min.js"></script>
     <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
     <script src="bower_components/toastr/toastr.js"></script>
+
+    <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
+
     <script src="js/firebase.config.js"></script>
 
     <script src="js/app.js"></script>
-    <script>
-         
-            angular.module('transnerd', ['ngRoute', 'firebase', 'summernote']);
-            var modulo = angular.module('transnerd');
-
-            modulo.controller('loginController', ['$scope', '$rootScope', '$firebaseArray', function ($scope, $rootScope, $firebaseArray) {
-                $scope.showFormLogin = function () {
-
-                    if ($rootScope.login)
-                        $rootScope.login = null;
-                    else
-                        $rootScope.login = {};
-                }
-
-                function LoggedIn(firebaseUser, showT) {
-                    $scope.user = firebaseUser;
-                    $rootScope.login = null;
-                    $rootScope.logado = true;
-                    $scope.$apply();
-                    if (showT)
-                        toastr["success"]("Você logou");
-                }
-
-                $scope.doLogin = function () {
-                    firebase.auth().signInWithEmailAndPassword($rootScope.login.email, $rootScope.login.senha)
-                        .catch(function (error) {
-                            toastr["danger"]("erro ao logar");
-                            console.log(error)
-                        })
-                        .then(function (firebaseUser) {
-                            LoggedIn(firebaseUser, true);
-                        });
-                }
-
-                function LoggedOut(showT) {
-                    $scope.user = null;
-                    $rootScope.login = null;
-                    $rootScope.logado = false;
-                    $scope.$apply();
-                    if (showT)
-                        toastr["warning"]("Você deslogou")
-                }
-
-                $scope.doLogout = function () {
-                    firebase.auth().signOut()
-                        .then(function () {
-                            LoggedOut(true);
-                        }, function (error) {
-                            toastr["danger"]("erro ao deslogar");
-                            console.log(error);
-                        });
-                }
-
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        LoggedIn(user, false)
-                    } else {
-                        LoggedOut(false)
-                    }
-                });
-            }]);
-
-            modulo.controller('postController', ['$scope', '$rootScope', '$sce', '$firebaseArray', 'htmlService',
-                function ($scope, $rootScope, $sce, $firebaseArray, htmlService) {
-                    $scope.htmlService = htmlService;
-                    var postagensRef = firebase.database().ref();
-                    $scope.postagens = [];
-
-                    resetPostObject();
-                    getPostFromDB();
-
-
-                    $scope.showPostForm = function () {
-                        if ($scope.postForm)
-                            $scope.postForm = null;
-                        else
-                            $scope.postForm = true;
-                    };
-
-                    function resetPostObject() {
-                        $scope.post = {
-                            data: new Date(),
-                            datacadastro: new Date().getTime().toString()
-                        };
-
-                        console.log('post object resetado');
-                    }
-
-                    function getPostFromDB() {
-                        $scope.postagens = $firebaseArray(postagensRef.child("postagens"));
-                        console.log('get posts from database');
-                    }
-
-                    $scope.savePost = function () {
-                        var post = {
-                            data: $scope.post.data.toUTCString(),
-                            datacadastro: $scope.post.data.getTime(),
-                            texto: angular.isUndefined($scope.post.texto) ? '' : $scope.post.texto,
-                            titulo: angular.isUndefined($scope.post.titulo) ? '' : $scope.post.titulo,
-                            local: angular.isUndefined($scope.post.local) ? '' : $scope.post.local,
-                        };
-
-                        if ($scope.post.id) {
-                            updatePost(post);
-                        }
-                        else {
-                            pushPost(post);
-                        }
-                        resetPostObject();
-                    }
-
-                    function pushPost(post) {
-                        postagensRef.child("postagens").push(post);
-                        toastr["success"]("Adicionado: " + post.titulo);
-                    }
-                    $scope.remove = function (item) {
-                        postagensRef.child("postagens/" + item.$id).remove();
-                        console.log('item removido');
-                        toastr["warning"]("Removido: " + item.titulo);
-                    }
-
-                    $scope.updatePostObject = function (item) {
-                        $scope.postForm = true;
-                        resetPostObject();
-                        $scope.post.id = item.$id;
-                        console.log($scope.post.id);
-                        $scope.post.data = new Date(item.data);
-                        $scope.post.datacadastro = new Date(item.data).getTime(),
-                            $scope.post.texto = angular.isUndefined(item.texto) ? '' : item.texto;
-                        $scope.post.titulo = angular.isUndefined(item.titulo) ? '' : item.titulo;
-                        $scope.post.local = angular.isUndefined(item.local) ? '' : item.local;
-                    }
-
-                    function updatePost(post) {
-                        $scope.postForm = null;
-                        var postUpdate = {};
-                        postUpdate['/postagens/' + $scope.post.id] = post;
-                        postagensRef.update(postUpdate);
-                        toastr["success"]("Registro atualizado: " + post.titulo);
-                        console.log('atualizado');
-                    }
-
-                    $scope.cancelUpdate = function () {
-                        $scope.postForm = null;
-                        resetPostObject();
-                        toastr["warning"]("Update cancelado");
-                        console.log('update cancelado');
-                    }
-
-
-
-                    $scope.convertToDate = function (stringDate) {
-                        var dateOut = new Date(stringDate);
-                        dateOut.setDate(dateOut.getDate() + 1);
-                        return dateOut;
-                    };
-                }]);
-
-          
-  
-    </script>
 </head>
 
 <body>
-
-
     <div ng-controller="loginController" class="form-style-8">
         <div class="container">
             <div class="row">
@@ -217,13 +61,56 @@
             <div class="col-xs-12">
                 <div id="photo-header" class="text-center">
                     <!-- PHOTO (AVATAR) -->
-                    <div id="photo" class="hand" data-toggle="collapse" data-target="#fotos">
+                    <div class="form-style-8" ng-controller="avatarController">
+ 
+                    <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
 
-                        <img src="https://firebasestorage.googleapis.com/v0/b/transnerd-6f3a9.appspot.com/o/avatar1.jpg?alt=media&token=524cf582-0a74-4c30-8ed6-432811a22c78"
-                        />
+                        <img src="{{item.avatarUrl}}" />
+                    </div>
 
+                    
+
+                        <div class="text-center">
+                            <button class="btn btn-link" ng-click="openAvatarEdit()"> <i class="fa fa-camera" aria-hidden="true"></i>
+</button>
+                        </div>
+                        <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class="col-xs-8">
+                                        <div>
+                                            <label id="selecioneAvatarLabel" class="btn  btn-file">
+                                Clique aqui para selecione um avatar  <input type="file" id="fileInput" />
+                                    </label>
+                                        </div>
+                                        <div class="cropArea">
+                                            <img-crop image="newImage" result-image="croppedAvatar"></img-crop>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 center-block">
+                                        <div class="row">
+                                            <div class="col-xs-12" id="imageCroppedCol">
+                                                <label>Imagem cortada</label> <br><br>
+                                                <div><img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block"
+                                                        ng-src="{{croppedAvatar}}" /></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-block  btn-link btn-sm" ng-show="croppedAvatar" ng-click="putImage()"> Enviar imagem </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
+
                     <div class="row collapse" id="fotos">
                         <br>
                         <div class="col-sm-3">
@@ -875,3 +762,6 @@
 </html>
 <script src="js/site.js"></script>
 <script src="js/services/htmlservice.js"></script>
+<script src="js/controllers/postController.js"></script>
+<script src="js/controllers/loginController.js"></script>
+<script src="js/controllers/avatarController.js"></script>

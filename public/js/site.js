@@ -197,9 +197,8 @@ $('#education1').collapse('show')
 //$('blockquote').attr('style','');
 $('blockquote').css('box-shadow', '');
 // box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)
- //$('#idadeSup').val(calculateAge(8,14,1974))
+//$('#idadeSup').val(calculateAge(8,14,1974))
 
 //alert($('#idadeSup').val());
-$(".summernote").summernote("backColor", "red"); 
+$(".summernote").summernote("backColor", "red");
 
- 

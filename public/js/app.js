@@ -1,3 +1,8 @@
+ 
+ 
+  angular.module('transnerd', ['ngRoute', 'firebase', 'summernote', 'ngImgCrop']);
+        var modulo = angular.module('transnerd');
+ 
  toastr.options = {
                 "closeButton": false,
                 "debug": false,
