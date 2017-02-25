@@ -566,7 +566,7 @@ background-color: transparent
 /*.form-style-8 div{ padding: 1px;}*/
 .form-style-8 .container{ background-color: transparent;      margin: 0px}
 
-#postForm{  padding: 10px;}
+ 
 
   
 
@@ -612,3 +612,7 @@ background-color: transparent
  }
 
  .btn-link{ color: #EC7263;}
+
+ #postFormDiv .row{
+     margin-bottom: 5px;
+ }

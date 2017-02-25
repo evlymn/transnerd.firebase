@@ -255,7 +255,7 @@
                 <!-- ABOUT ME -->
 
                 <div ng-controller="sobreController">
-                     <button ng-show="$root.logado" ng-click="showHideSobreForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sobre mim':'Editar sobre mim' }}</button>
+                    <button ng-show="$root.logado" ng-click="showHideSobreForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sobre mim':'Editar sobre mim' }}</button>
                     <div class="container-fluid" ng-show="isOpenSobreForm && $root.logado">
                         <br />
                         <div class="row">
@@ -275,10 +275,10 @@
                         <br />
                     </div>
                     <div class="box" id="sobre" ng-show="sobres" ng-repeat="item in sobres | limitTo:1">
-                        
-                         
-                         <h2>Sobre mim</h2>
-                        <div  ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+
+
+                        <h2>Sobre mim</h2>
+                        <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
 
 
                     </div>
@@ -289,7 +289,40 @@
 
                 <!-- Cursos -->
                 <div ng-controller="postController">
+                    <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i></button>
+                    <br /> <br />
+                    <div ng-show="$root.logado">
 
+                        <div ng-show="postForm" id="postFormDiv">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" id="titulo" class="form-control input-sm" ng-model="post.titulo" placeholder="Título"></input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="text" id="local" class="form-control input-sm" ng-model="post.local" placeholder="Local"></input>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="date" id="data" class="form-control input-sm" ng-model="post.data" placeholder="Data"></input>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <summernote ng-model="post.texto"></summernote>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn  btn-default  btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn   btn-default btn-block">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="box" id="cursos" ng-show="postagens">
                         <h2>Cursos, educação, vida...
                             <span class="pull-right">
@@ -297,39 +330,7 @@
                             <i id="cursosCompress" title="Retrair" class="fa fa-compress hidden" aria-hidden="true"></i>
                         </span>
                         </h2>
-                        <div class="form-style-8 " ng-show="$root.logado">
-                            <button class="btn btn-sm" ng-click="showPostForm()"><i ng-class="postForm?'fa fa-minus': 'fa fa-plus'"  aria-hidden="true"></i></button>
 
-                            <div ng-show="postForm" id="postForm">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <input type="text" id="titulo" ng-model="post.titulo" placeholder="Título"></input>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <input type="text" id="local" ng-model="post.local" placeholder="Local"></input>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="date" id="data" ng-model="post.data" placeholder="Data"></input>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <summernote ng-model="post.texto"></summernote>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn   btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn  btn-block">Cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                         <div class="collapse " id="education1">
                             <ul id="education" class="clearfix" data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
                                 <li>

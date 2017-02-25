@@ -37,8 +37,8 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
         else {
             $scope.isOpenSobreForm = true;
             angular.forEach($scope.sobres, function (value, key) {
-               $scope.sobreTextoEdit = value.texto;
-               return;
+                $scope.sobreTextoEdit = value.texto;
+                return;
             });
         }
     };
