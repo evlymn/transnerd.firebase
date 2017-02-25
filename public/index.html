@@ -77,14 +77,14 @@
                     <!-- PHOTO (AVATAR) -->
                     <div class="form-style-8" ng-controller="avatarController">
 
-                        <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
+                        <div id="photo"  ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
 
                             <img ng-src="{{item.avatarUrl}}" />
                         </div>
 
 
 
-                        <div class="text-center">
+                        <div class="text-center" ng-show="$root.logado">
                             <button class="btn btn-link" ng-click="openAvatarEdit()"> <i class="fa fa-camera" aria-hidden="true"></i>
 </button>
                         </div>
