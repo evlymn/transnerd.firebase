@@ -708,28 +708,46 @@
                         </ul>
                     </div>
                     <!-- LANGUAGES -->
+
+                    <div ng-controller="idiomasController" id="idiomasControllerDiv">
+                        <div ng-show="$root.logado">
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{addButtonLabel()}}</i></button>
+                            <br /> <br />
+                        </div>
+                        <div ng-show="$root.logado && formIsOpen" id="idiomasFormDiv">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <input type="text" id="Idioma" class="form-control input-sm" ng-model="item.texto" placeholder="Idioma"></input>
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="number" class="form-control input-sm"  title="Fluência (0 a 100)"  min="0" max="100" value="10" ng-model="item.valor" placeholder="Conhecimento"></input>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button> </div>
+                            </div>
+                        </div>
                     <div class="box">
                         <h2>Idiomas
                         </h2>
                         <div id="idiomasDiv" class="collapse">
-                            <div id="language-skills">
-                                <div class="skill">Português
+                            <div id="language-skills" ng-repeat="item in items">
+                                <div class="skill"> <span ng-show="$root.logado">
+                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
+                                 </span>
+                                    {{item.texto}}
+                                   
                                     <div class="icons pull-right">
-                                        <div style="width: 90%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                        <div   style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
                                     </div>
                                 </div>
-                                <div class="skill">Inglês
-                                    <div class="icons pull-right">
-                                        <div style="width: 60%; overflow: hidden; height: 14px;" class="icons-red"></div>
-                                    </div>
-                                </div>
-                                <div class="skill">Espanhol
-                                    <div class="icons pull-right">
-                                        <div style="width: 60%; overflow: hidden; height: 14px;" class="icons-red"></div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
+                    </div>
                     </div>
                     <!-- HOBBIES -->
                     <div class="box">
@@ -762,3 +780,4 @@
 <script src="js/controllers/avatarController.js"></script>
 <script src="js/controllers/sobreController.js"></script>
 <script src="js/controllers/habilidadesController.js"></script>
+<script src="js/controllers/idiomasController.js"></script>

@@ -1,7 +1,7 @@
 
 modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseArray) {
     var childRef = "idiomas";
-    var addButtonLabel = "Adicionar novo idioma";
+   var msgaddButtonLabel = "Adicionar novo idioma";
     var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
@@ -12,7 +12,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
     function resetFormObject() {
         $scope.item = {
             texto: '',
-            valor: 0.5
+            valor: 10
         }
     }
 
@@ -66,8 +66,8 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
         $scope.formIsOpen = true;
     };
 
-    $scope.labelAddButton = function () {
-        return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgLabelAddButton;
+    $scope.addButtonLabel = function () {
+        return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgaddButtonLabel;
     }
 
     $scope.update = function () {

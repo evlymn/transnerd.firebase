@@ -99,4 +99,4 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
             $scope.formIsOpen = true;
         }
     };
-});
+ });
