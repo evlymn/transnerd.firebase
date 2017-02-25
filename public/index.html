@@ -94,7 +94,7 @@
 
                                     <div class="col-xs-8">
                                         <div>
-                                            <label id="selecioneAvatarLabel" class="btn  btn-file">
+                                            <label id="selecioneAvatarLabel" class="btn btn-link  btn-file">
                                 Clique aqui para selecione um avatar  <input type="file" id="fileInput" />
                                     </label>
                                         </div>
@@ -105,7 +105,7 @@
                                     <div class="col-xs-4 center-block">
                                         <div class="row">
                                             <div class="col-xs-12" id="imageCroppedCol">
-                                                <label>Imagem cortada</label> <br><br>
+                                                <span>Imagem cortada</span> <br><br>
                                                 <div><img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block"
                                                         ng-src="{{croppedAvatar}}" /></div>
                                             </div>
@@ -275,12 +275,8 @@
                         <br />
                     </div>
                     <div class="box" id="sobre" ng-show="sobres" ng-repeat="item in sobres | limitTo:1">
-
-
                         <h2>Sobre mim</h2>
                         <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
-
-
                     </div>
                 </div>
 
