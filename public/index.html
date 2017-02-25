@@ -74,7 +74,7 @@
                     <!-- PHOTO (AVATAR) -->
                     <div class="form-style-8" ng-controller="avatarController">
 
-                        <div id="photo"  ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
+                        <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
 
                             <img ng-src="{{item.avatarUrl}}" />
                         </div>
@@ -254,9 +254,9 @@
                         <br />
                         <div class="row">
                             <div class="col-xs-12">
- <div class="summernoteDefault">
-                                <summernote  id="sobreSummernote" ng-model="sobreTextoEdit" ></summernote>
- </div>
+                                <div class="summernoteDefault">
+                                    <summernote id="sobreSummernote" ng-model="sobreTextoEdit"></summernote>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -648,8 +648,8 @@
                     <!-- SKILLS -->
                     <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{addButtonLabel()}}</i></button>
-                            <br /> <br />
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                            <br /> 
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
@@ -657,30 +657,29 @@
                                     <input type="text" id="Habilidade" class="form-control input-sm" ng-model="item.texto" placeholder="Habilidade"></input>
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm"   min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
+                                    <input type="number" class="form-control input-sm" min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
                                 </div>
                                 <div class="col-xs-1">
                                     <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button> </div>
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
                             </div>
                         </div>
                         <div class="box">
                             <h2>Habilidades
                             </h2>
                             <div class="skills collapse" id="skillsDiv">
-                                <div  ng-repeat="item in items">
-                                <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
-                                 <span ng-show="$root.logado">
+                                <div ng-repeat="item in items">
+                                    <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
+                                        <span ng-show="$root.logado">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                     <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
-                                 </span>
-                                    {{item.texto}}
+                                 </span> {{item.texto}}
 
+                                    </div>
                                 </div>
-                                </div>
-                                 
+
                                 <div class="skills-legend clearfix">
                                     <div class="legend-left legend">Iniciante</div>
                                     <div class="legend-left legend"><span>Proficiente</span></div>
@@ -691,28 +690,44 @@
                         </div>
 
                     </div>
-                    <!-- qualidades -->
-                    <div class="box">
-                        <h2>Qualidades
-                        </h2>
-                        <ul style="font-size:1.3em;" class="collapse" id="qualidadesUl">
-                            <li>Trabalho em equipe</li>
-                            <li>Foco em soluções</li>
-                            <li>Pró-atividade (prevendo problemas e achando soluções para eles antes que aconteçam, além de melhorias
-                                para o sistema, entre outras.).
-                            </li>
-                            <li>Bom conhecimento técnico</li>
-                            <li>Fácil aprendizado</li>
-                            <li>Autodidata em termos de tecnologia</li>
-                            <li>Boa redação, primando pela escrita correta</li>
-                        </ul>
+                    <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
+  <div ng-show="$root.logado">
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                            <br />  
+                        </div>
+                        <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <input type="text" id="Qualidades" class="form-control input-sm" ng-model="item.texto" placeholder="Qualidades"></input>
+                                </div>
+                                
+                                <div class="col-xs-1">
+                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
+                            </div>
+                        </div>
+                        <!-- qualidades -->
+                        <div class="box">
+                            <h2>Qualidades
+                            </h2>
+                            <ul style="font-size:1.3em;" class="collapse"  ng-repeat="item in items" id="qualidadesUl">
+                                <li>  <span ng-show="$root.logado" style="color:gray">
+                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
+                                 </span>{{item.texto}}</li>
+                                 
+                            </ul>
+                        </div>
+
                     </div>
                     <!-- LANGUAGES -->
 
                     <div ng-controller="idiomasController" id="idiomasControllerDiv">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{addButtonLabel()}}</i></button>
-                            <br /> <br />
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                            <br /> 
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="idiomasFormDiv">
                             <div class="row">
@@ -720,34 +735,35 @@
                                     <input type="text" id="Idioma" class="form-control input-sm" ng-model="item.texto" placeholder="Idioma"></input>
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm"  title="Fluência (0 a 100)"  min="0" max="100" value="10" ng-model="item.valor" placeholder="Conhecimento"></input>
+                                    <input type="number" class="form-control input-sm" title="Fluência (0 a 100)" min="0" max="100" value="10" ng-model="item.valor"
+                                        placeholder="Conhecimento"></input>
                                 </div>
                                 <div class="col-xs-1">
                                     <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button> </div>
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
                             </div>
                         </div>
-                    <div class="box">
-                        <h2>Idiomas
-                        </h2>
-                        <div id="idiomasDiv" class="collapse">
-                            <div id="language-skills" ng-repeat="item in items">
-                                <div class="skill"> <span ng-show="$root.logado">
+                        <div class="box">
+                            <h2>Idiomas
+                            </h2>
+                            <div id="idiomasDiv" class="collapse">
+                                <div id="language-skills" ng-repeat="item in items">
+                                    <div class="skill">
+                                        <span ng-show="$root.logado" style="color:gray">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                     <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
-                                 </span>
-                                    {{item.texto}}
-                                   
-                                    <div class="icons pull-right">
-                                        <div   style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                 </span> {{item.texto}}
+
+                                        <div class="icons pull-right">
+                                            <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                
                             </div>
                         </div>
-                    </div>
                     </div>
                     <!-- HOBBIES -->
                     <div class="box">
@@ -781,3 +797,4 @@
 <script src="js/controllers/sobreController.js"></script>
 <script src="js/controllers/habilidadesController.js"></script>
 <script src="js/controllers/idiomasController.js"></script>
+<script src="js/controllers/qualidadesController.js"></script>

@@ -1,7 +1,7 @@
 
 modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseArray) {
     var childRef = "idiomas";
-   var msgaddButtonLabel = "Adicionar novo idioma";
+    var msgaddButtonLabel = "Adicionar novo idioma";
     var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
@@ -42,6 +42,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
         updateNode = {};
         updateNode['/' + childRef + '/' + newKey] = newItem;
         databaseRef.update(updateNode);
+        toastr["success"]("Adicionado: " + $scope.item.texto);
         $scope.showHideForm();
     }
 

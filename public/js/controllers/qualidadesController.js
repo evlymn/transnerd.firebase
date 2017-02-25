@@ -1,7 +1,7 @@
 
-modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray) {
-    var childRef = "habilidades";
-    var msgaddButtonLabel = "Adicionar nova habilidade";
+modulo.controller('qualidadesController', function ($scope, $rootScope, $firebaseArray) {
+    var childRef = "qualidades";
+    var msgaddButtonLabel = "Adicionar nova qualidade";
     var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
@@ -11,8 +11,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
 
     function resetFormObject() {
         $scope.item = {
-            texto: '',
-            valor: 0.5
+            texto: ''
         }
     }
 
@@ -20,12 +19,8 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
 
     function getItemsFromDb() {
         $scope.items = $firebaseArray(databaseRef.child(childRef));
-        console.log('get data');
+        console.log('get data ' + childRef);
     }
-
-    $scope.items.$loaded().then(function () {
-        showHabilidade(null);
-    });
 
     $scope.setSaveMethod = function () {
         if ($scope.item.id) {
@@ -38,16 +33,14 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
     $scope.add = function () {
         var newItem = {
             timeid: new Date().getTime(),
-            texto: $scope.item.texto,
-            valor: $scope.item.valor
+            texto: $scope.item.texto
         }
         var newKey = firebase.database().ref().child(childRef).push().key;
         updateNode = {};
         updateNode['/' + childRef + '/' + newKey] = newItem;
         databaseRef.update(updateNode);
-        $scope.showHideForm();
         toastr["success"]("Adicionado: " + $scope.item.texto);
-        showHabilidade(newKey);
+        $scope.showHideForm();
     }
 
     $scope.remove = function (item) {
@@ -65,8 +58,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
         $scope.item = {
             id: item.$id,
             timeid: item.timeid,
-            texto: item.texto,
-            valor: item.valor
+            texto: item.texto
         }
         $scope.formIsOpen = true;
     };
@@ -78,8 +70,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
     $scope.update = function () {
         var updateItem = {
             timeid: $scope.item.timeid,
-            texto: $scope.item.texto,
-            valor: $scope.item.valor
+            texto: $scope.item.texto
         };
 
         updateNode = {};
