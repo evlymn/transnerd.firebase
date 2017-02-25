@@ -606,7 +606,9 @@ background-color: transparent
 }
 
  
- 
+  
  #imageCroppedCol{
       min-height: 250px;
  }
+
+ .btn-link{ color: #EC7263;}

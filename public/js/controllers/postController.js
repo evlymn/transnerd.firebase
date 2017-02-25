@@ -54,6 +54,7 @@
                     databaseRef.child("postagens").push(post);
                     toastr["success"]("Adicionado: " + post.titulo);
                 }
+                
                 $scope.remove = function (item) {
                     databaseRef.child("postagens/" + item.$id).remove();
                     console.log('item removido');

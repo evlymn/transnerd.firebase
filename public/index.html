@@ -79,7 +79,7 @@
 
                         <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
 
-                            <img src="{{item.avatarUrl}}" />
+                            <img ng-src="{{item.avatarUrl}}" />
                         </div>
 
 
@@ -253,76 +253,39 @@
         <div class="row">
             <div class="col-xs-12 col-sm-7" id="colunaEsquerda">
                 <!-- ABOUT ME -->
-                <div class="box" id="sobre">
-                    <h2>Sobre mim</h2>
-                    <p>
-                        Mulher transexual <b> <a id="atransicao" href="javascript:void();" data-toggle="collapse" data-target="#transicao"> <i class="fa fa-transgender-alt" aria-hidden="true"></i></b><sup> <b>em transição</b> </sup></a>
-                        , analista e desenvolvedora de sistemas, trabalhando desde 2002 na área, atualmente na ThoughtWorks como consultora de desenvolvimento.
-                        <br /> Faço parte da organização do TransEnem, cursinho que oferece oportunidades de estudos e de
-                        aprendizado para pessoas transgêneros (transexuais, travestis e não-binárias), participo também de
-                        vários projetos sociais como por exemplo, coaching no projeto População T na TI na ThoughtWorks,
-                        que propõe ensinar e desmistificar o desenvolvimento de software para as pessoas trans, instrutora
-                        no Educodar que visa ensinar programação para crianças carentes, além da organização de eventos como
-                        o Rails Girls e o Django Girls em Porto Alegre e BH.
-                        <br />E é claro, muito nerd e geek
-                        <i title="Vida longa e próspera!'" class="fa fa-hand-spock-o" aria-hidden="true"></i>, amo tecnologia,
-                        <br />Sem esquecer que sou mãe e avó de 3 lindos shitzus
-                        <a id="afilhotes" href="javascript:void();" data-toggle="collapse" data-target="#filhotes">
-                            <i class="fa fa-paw" style="color:#F8C879" title="Ichiro meu primeiro filho!" aria-hidden="true"></i>
-                            <i class="fa fa-paw" style="font-size:10px" title="Candy minha filhota amada, mãe dos mais lindos filhotes do mundo!" aria-hidden="true"></i>
-                            <i class="fa fa-paw" title="Luke meu neto lindo!!" aria-hidden="true"></i>
-                        </a> <br />E apesar de tudo isso dizem que sou uma pessoa legal <i class="fa fa-heart-o" aria-hidden="true"></i>
-                    </p>
-                    <div id="transicao" style="font-size:1.3em;padding:10px" class="collapse">
-                        <b><a href="https://pt.wikipedia.org/wiki/Transi%C3%A7%C3%A3o_de_g%C3%AAnero">Transição de gênero</a> </b>é
-                        o período pelo qual uma pessoa passa no momento em que se submete a tratamentos hormonais e cirúrgicos
-                        para paulatinamente transformar suas características primárias e secundárias nas do sexo desejado.<br>Por
-                        exemplo, pode ser o caso de uma <a href="https://pt.wikipedia.org/wiki/Mulher_transexual">mulher transexual</a>(designada
-                        como homem no nascimento e transicionando-se para mulher) (MtF) ou um <a href="https://pt.wikipedia.org/wiki/Transexual_masculino">homem transexual</a>designado
-                        como mulher no nascimento e transicionando-se para homem (FtM). O objetivo da transição de gênero
-                        é adequar o sexo biológico ao mental.
-                    </div>
-                    <div id="filhotes" class="collapse">
-                        <br>
-                        <h5> <b> Meus filhotes lindos!! <i  class="fa fa-heart" aria-hidden="true"></i></b></h5>
+
+                <div ng-controller="sobreController">
+                     <button ng-show="$root.logado" ng-click="showHideSobreForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sobre mim':'Editar sobre mim' }}</button>
+                    <div class="container-fluid" ng-show="isOpenSobreForm && $root.logado">
+                        <br />
                         <div class="row">
-                            <div class="col-sm-6">
-                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                    <div style="padding:8px;">
-                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                        </div>
-                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                            <a href="https://www.instagram.com/p/4tqhqQlPxj/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                                target="_blank">Turminha no frio ❤️</a>
-                                        </p>
-                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Uma foto publicada por Evelyn (@jelielmendes) a
-                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-04T12:02:31+00:00">Jul 4, 2015 às 5:02 PDT</time>
-                                        </p>
-                                    </div>
-                                </blockquote>
-                            </div>
-                            <div class="col-sm-6">
-                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                    <div style="padding:8px;">
-                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                        </div>
-                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                            <a href="https://www.instagram.com/p/5AMO-UFPyH/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                                target="_blank">Passeio de sábado ❤️</a>
-                                        </p>
-                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">Uma foto publicada por Evelyn (@jelielmendes) a
-                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2015-07-11T16:43:23+00:00">Jul 11, 2015 às 9:43 PDT</time>
-                                        </p>
-                                    </div>
-                                </blockquote>
+                            <div class="col-xs-12">
+
+                                <summernote id="sobreSummernote" ng-model="sobreTextoEdit"></summernote>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button ng-click="saveSobre()" class="btn btn-block btn-default btn-sm"> Salvar</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button ng-click="showHideSobreForm()" class="btn btn-block btn-default btn-sm"> Cancelar</button>
+                            </div>
+                        </div>
+                        <br />
                     </div>
-                    <script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
-                    <br>
+                    <div class="box" id="sobre" ng-show="sobreTexto" ng-repeat="item in sobres">
+
+                        <h2>Sobre mim</h2>
+                        <div  ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+
+
+                    </div>
                 </div>
+
+
+
+
                 <!-- Cursos -->
                 <div ng-controller="postController">
 
@@ -779,3 +742,4 @@
 <script src="js/controllers/postController.js"></script>
 <script src="js/controllers/loginController.js"></script>
 <script src="js/controllers/avatarController.js"></script>
+<script src="js/controllers/sobreController.js"></script>

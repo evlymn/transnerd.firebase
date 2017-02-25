@@ -1,4 +1,5 @@
-modulo.controller('avatarController', ['$scope', '$rootScope', '$firebaseArray', function ($scope, $rootScope, $firebaseArray) {
+
+modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArray) {
     $scope.newImage = '';
     $scope.croppedAvatar = '';
     $scope.filename = '';
@@ -8,12 +9,13 @@ modulo.controller('avatarController', ['$scope', '$rootScope', '$firebaseArray',
 
 
 
-    getPostFromDB();
-    function getPostFromDB() {
+    getFromDB();
+    function getFromDB() {
         $scope.avatares = $firebaseArray(databaseRef.child("avatares").orderByKey().limitToLast(1));
+     }
 
-    }
 
+    
     var handleFileSelect = function (evt) {
         var file = evt.currentTarget.files[0];
         console.log(file.type);
@@ -59,14 +61,14 @@ modulo.controller('avatarController', ['$scope', '$rootScope', '$firebaseArray',
                 var downloadURL = uploadTask.snapshot.downloadURL;
                 console.log(downloadURL);
 
-                pushPost(downloadURL)
+                pushAvatar(downloadURL)
                 $scope.$apply();
             });
     }
 
 
 
-    function pushPost(url) {
+    function pushAvatar(url) {
         var avatar = {
 
             datacadastro: new Date().getTime(),
@@ -75,7 +77,7 @@ modulo.controller('avatarController', ['$scope', '$rootScope', '$firebaseArray',
         };
         databaseRef.child("avatares").push(avatar);
         toastr["success"]("Avatar adicionado");
-         $scope.openAvatarEdit();
+        $scope.openAvatarEdit();
     }
 
 
@@ -93,4 +95,4 @@ modulo.controller('avatarController', ['$scope', '$rootScope', '$firebaseArray',
         else
             $scope.editAvatar = true;
     }
-}]);
+});

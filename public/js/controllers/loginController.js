@@ -1,3 +1,4 @@
+
 modulo.controller('loginController', ['$scope', '$rootScope', '$firebaseArray', function ($scope, $rootScope, $firebaseArray) {
             $scope.showFormLogin = function () {
                 if ($rootScope.login)
