@@ -274,7 +274,9 @@
                         </div>
                         <br />
                     </div>
-                    <div class="box" id="sobre" ng-show="sobreTexto" ng-repeat="item in sobres">
+                    <div class="box" id="sobre" ng-show="sobres" ng-repeat="item in sobres | limitTo:1">
+                        
+                         
                          <h2>Sobre mim</h2>
                         <div  ng-bind-html="htmlService.renderHtml(item.texto)"></div>
 

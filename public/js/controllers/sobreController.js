@@ -12,11 +12,12 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
         $scope.sobres = $firebaseArray(databaseRef.child("sobres").orderByKey().limitToLast(1));
     }
 
-    
+
+
     $scope.saveSobre = function () {
         pushToDb();
     };
-    
+
     function pushToDb() {
         var sobre = {
             datacadastro: new Date().getTime(),
@@ -25,6 +26,7 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
 
         databaseRef.child("sobres").push(sobre);
         toastr["success"]("Sobre editado");
+        $scope.showHideSobreForm();
     }
 
     $scope.showHideSobreForm = function () {
@@ -34,7 +36,10 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
         }
         else {
             $scope.isOpenSobreForm = true;
-            $scope.sobreTextoEdit = $scope.sobreTexto;
+            angular.forEach($scope.sobres, function (value, key) {
+               $scope.sobreTextoEdit = value.texto;
+               return;
+            });
         }
     };
 });
