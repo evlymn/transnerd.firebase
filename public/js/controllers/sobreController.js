@@ -12,26 +12,11 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
         $scope.sobres = $firebaseArray(databaseRef.child("sobres").orderByKey().limitToLast(1));
     }
 
-    $scope.$watch('sobres', function () {
-        console.log('$scope.sobreTexto');
-        $scope.sobres.$loaded().then(function (data) {
-            angular.forEach(data, function (value, key) {
-                $scope.sobreTexto = value.texto;
-                 
-                // console.log( $scope.sobreTexto);
-            });
-        });
-    });
-    // $scope.sobres.$loaded().then(function (data) {
-    //     angular.forEach(data, function (value, key) {
-    //         $scope.sobreTexto = value.texto;
-    //         Console.log( $scope.sobreTexto);
-    //     });
-    // });
-
+    
     $scope.saveSobre = function () {
         pushToDb();
     };
+    
     function pushToDb() {
         var sobre = {
             datacadastro: new Date().getTime(),
