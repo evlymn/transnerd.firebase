@@ -289,8 +289,10 @@
 
                 <!-- Cursos -->
                 <div ng-controller="postController">
-                    <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i></button>
+                    <div  ng-show="$root.logado">
+                    <button  class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i></button>
                     <br /> <br />
+                    </div>
                     <div ng-show="$root.logado">
 
                         <div ng-show="postForm" id="postFormDiv">
