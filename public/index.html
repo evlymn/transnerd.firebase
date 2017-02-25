@@ -333,7 +333,7 @@
                             <ul id="education" class="clearfix" data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
                                 <li>
                                     <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
-                                   
+
                                     <div class="description pull-right">
                                         <h3>{{item.titulo}}</h3>
 
@@ -342,12 +342,13 @@
                                         </h3>
                                         <br>
                                         <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
-                                       <div id="postEditDiv" ng-show="logado">
+                                        <div id="postEditDiv" ng-show="logado">
                                             <i ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
-                                        <i ng-class="item.$id==post.id? 'fa fa-pencil-square  fa-lg cursorHand educationSelectedLi' : 'fa fa-pencil-square  fa-lg cursorHand'" ng-click="updatePostObject(item)"   aria-hidden="true"></i>
+                                            <i ng-class="item.$id==post.id? 'fa fa-pencil-square  fa-lg cursorHand educationSelectedLi' : 'fa fa-pencil-square  fa-lg cursorHand'"
+                                                ng-click="updatePostObject(item)" aria-hidden="true"></i>
                                         </div>
                                     </div>
-                                      
+
                                 </li>
 
                             </ul>
@@ -650,50 +651,41 @@
                         </div>
                     </div>
                     <!-- SKILLS -->
-                    <div ng-controller="habilidadesController" id="habilidadesControllerDiv" >
+                    <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar': 'Adicionar nova habilidade'}}</i></button>
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{labelAddHabilidadeButton()}}</i></button>
                             <br /> <br />
                         </div>
-                        <div ng-show="$root.logado">
+                        <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input type="text" id="Habilidade" class="form-control input-sm" ng-model="habilidade" placeholder="Habilidade"></input>
+                                    <input type="text" id="Habilidade" class="form-control input-sm" ng-model="item.texto" placeholder="Habilidade"></input>
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm" value="0.1" ng-model="total" placeholder="Percentual"></input>
+                                    <input type="number" class="form-control input-sm"   min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i>
-</button>
+                                    <button ng-click="save()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm"><i class="fa fa-ban" aria-hidden="true"></i>
-</button> </div>
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button> </div>
                             </div>
                         </div>
                         <div class="box">
                             <h2>Habilidades
                             </h2>
                             <div class="skills collapse" id="skillsDiv">
-                                <div class="item-skills" data-percent="0.98" style="overflow: hidden; width: 238.231px;">
-                                    <i class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                    <i class="fa fa-pencil-square cursorHand" aria-hidden="true"></i> C#
+                                <div  ng-repeat="item in habilidades">
+                                <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
+                                 <span ng-show="$root.logado">
+                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                    <i ng-click="fillEditForm(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
+                                 </span>
+                                    {{item.texto}}
 
                                 </div>
-                                <div class="item-skills" data-percent="0.90" style="overflow: hidden; width: 238.231px;">MVC</div>
-                                <div class="item-skills" data-percent="1.00" style="overflow: hidden; width: 263.716px;">HTML</div>
-                                <div class="item-skills" data-percent="0.98" style="overflow: hidden; width: 238.231px;">CSS</div>
-                                <div class="item-skills" data-percent="0.99" style="overflow: hidden; width: 212.747px;">jQuery</div>
-                                <div class="item-skills" data-percent="0.2" style="overflow: hidden; width: 212.747px;">PHP</div>
-                                <div class="item-skills" data-percent="0.7" style="overflow: hidden; width: 212.747px;">BI</div>
-                                <div class="item-skills" data-percent="0.9" style="overflow: hidden; width: 212.747px;">Mobile</div>
-                                <div class="item-skills" data-percent="0.6" style="overflow: hidden; width: 212.747px;">Xamarin</div>
-                                <div class="item-skills" data-percent="0.94" style="overflow: hidden; width: 212.747px;">Boostrap</div>
-                                <div class="item-skills" data-percent="0.23" style="overflow: hidden; width: 212.747px;">AngularJS</div>
-                                <div class="item-skills" data-percent="0.14" style="overflow: hidden; width: 212.747px;">TDD</div>
-                                <div class="item-skills" data-percent="0.2" style="overflow: hidden; width: 212.747px;">Ruby</div>
-                                <div class="item-skills" data-percent="0.15" style="overflow: hidden; width: 212.747px;">Sinatra (Ruby)</div>
+                                </div>
+                                 
                                 <div class="skills-legend clearfix">
                                     <div class="legend-left legend">Iniciante</div>
                                     <div class="legend-left legend"><span>Proficiente</span></div>

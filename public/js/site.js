@@ -1,11 +1,14 @@
 
 
 
-var callback = function () {
+var callback = function (id) {
 
+  console.log('showHabilidade');
+  var seletor = '.item-skills';
+  if (id)
+    seletor = '#' +id;
 
-
-  $('.item-skills').each(function () {
+  $(seletor).each(function () {
     newWidth = $(this).parent().width() * $(this).data('percent');
     $(this).width(0);
     $(this).animate({
@@ -21,6 +24,16 @@ var callback = function () {
     }, 2000);
   });
 };
+
+
+function showHabilidade(id) {
+  clearTimeout(resize);
+  resize = setTimeout(function () {
+    callback(id);
+  }, 100);
+
+};
+
 $(document).ready(callback);
 
 var resize;
