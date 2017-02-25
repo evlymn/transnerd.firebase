@@ -23,7 +23,6 @@ var callback = function (id) {
 
 
 function showHabilidade(id) {
-  console.log(id)
   clearTimeout(resize);
   resize = setTimeout(function () {
     callback(id);

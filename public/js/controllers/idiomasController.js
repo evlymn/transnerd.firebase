@@ -1,7 +1,7 @@
 
-modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray) {
-    var childRef = "habilidades";
-    var msgaddButtonLabel = "Adicionar nova habilidade";
+modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseArray) {
+    var childRef = "idiomas";
+    var addButtonLabel = "Adicionar novo idioma";
     var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
@@ -20,12 +20,9 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
 
     function getItemsFromDb() {
         $scope.items = $firebaseArray(databaseRef.child(childRef));
-        console.log('get data');
+        console.log('get data ' + childRef);
     }
 
-    $scope.items.$loaded().then(function () {
-        showHabilidade(null);
-    });
 
     $scope.setSaveMethod = function () {
         if ($scope.item.id) {
@@ -46,7 +43,6 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
         updateNode['/' + childRef + '/' + newKey] = newItem;
         databaseRef.update(updateNode);
         $scope.showHideForm();
-        showHabilidade(newKey);
     }
 
     $scope.remove = function (item) {
@@ -70,8 +66,8 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
         $scope.formIsOpen = true;
     };
 
-    $scope.addButtonLabel = function () {
-        return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgaddButtonLabel;
+    $scope.labelAddButton = function () {
+        return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgLabelAddButton;
     }
 
     $scope.update = function () {

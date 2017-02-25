@@ -78,9 +78,6 @@
 
                             <img ng-src="{{item.avatarUrl}}" />
                         </div>
-
-
-
                         <div class="text-center" ng-show="$root.logado">
                             <button class="btn btn-link" ng-click="openAvatarEdit()"> <i class="fa fa-camera" aria-hidden="true"></i>
 </button>
@@ -651,7 +648,7 @@
                     <!-- SKILLS -->
                     <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{labelAddHabilidadeButton()}}</i></button>
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()" >{{addButtonLabel()}}</i></button>
                             <br /> <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
@@ -673,7 +670,7 @@
                             <h2>Habilidades
                             </h2>
                             <div class="skills collapse" id="skillsDiv">
-                                <div  ng-repeat="item in habilidades">
+                                <div  ng-repeat="item in items">
                                 <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
                                  <span ng-show="$root.logado">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
