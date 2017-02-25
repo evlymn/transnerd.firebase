@@ -42,11 +42,8 @@
     <script src="bower_components/summernote/dist/summernote.min.js"></script>
     <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
     <script src="bower_components/toastr/toastr.js"></script>
-
     <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
-
     <script src="js/firebase.config.js"></script>
-
     <script src="js/app.js"></script>
 </head>
 
@@ -260,8 +257,9 @@
                         <br />
                         <div class="row">
                             <div class="col-xs-12">
-
-                                <summernote id="sobreSummernote" ng-model="sobreTextoEdit"></summernote>
+ <div class="summernoteDefault">
+                                <summernote  id="sobreSummernote" ng-model="sobreTextoEdit" ></summernote>
+ </div>
                             </div>
                         </div>
                         <div class="row">
@@ -665,7 +663,7 @@
                                     <input type="number" class="form-control input-sm"   min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button ng-click="save()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
                                 </div>
                                 <div class="col-xs-1">
                                     <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button> </div>
@@ -679,7 +677,7 @@
                                 <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
                                  <span ng-show="$root.logado">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                    <i ng-click="fillEditForm(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
+                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
                                  </span>
                                     {{item.texto}}
 
@@ -720,7 +718,7 @@
                             <div id="language-skills">
                                 <div class="skill">Português
                                     <div class="icons pull-right">
-                                        <div style="width: 100%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                        <div style="width: 90%; overflow: hidden; height: 14px;" class="icons-red"></div>
                                     </div>
                                 </div>
                                 <div class="skill">Inglês

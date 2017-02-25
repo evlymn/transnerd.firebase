@@ -2,31 +2,28 @@
 
 
 var callback = function (id) {
+  var selector = '.item-skills';
+  if (id && !(typeof id === "function"))
+    selector = '#' + id;
 
-  console.log('showHabilidade');
-  var seletor = '.item-skills';
-  if (id)
-    seletor = '#' +id;
-
-  $(seletor).each(function () {
+  $(selector).each(function () {
     newWidth = $(this).parent().width() * $(this).data('percent');
     $(this).width(0);
     $(this).animate({
-      width: newWidth
-      ,
+      width: newWidth,
     }, 1000);
   });
   $('.icons-red').each(function () {
     height = $(this).height();
     $(this).animate({
-      height: 14
-      ,
+      height: 14,
     }, 2000);
   });
 };
 
 
 function showHabilidade(id) {
+  console.log(id)
   clearTimeout(resize);
   resize = setTimeout(function () {
     callback(id);
@@ -40,7 +37,7 @@ var resize;
 window.onresize = function () {
   clearTimeout(resize);
   resize = setTimeout(function () {
-    callback();
+    callback(null);
   }, 100);
 };
 

@@ -1,29 +1,31 @@
 
 modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray) {
+    var childRef = "habilidades";
     $scope.formIsOpen = false;
     $scope.habilidades = [];
     var databaseRef = firebase.database().ref();
-    resetForm();
 
-    function resetForm() {
+    resetFormObject();
+
+    function resetFormObject() {
         $scope.item = {
             texto: '',
             valor: 0.5
         }
     }
-    
-    getData();
 
-    function getData() {
-        $scope.habilidades = $firebaseArray(databaseRef.child("habilidades"));
+    getItemsFromDb();
+
+    function getItemsFromDb() {
+        $scope.habilidades = $firebaseArray(databaseRef.child(childRef));
         console.log('get data');
     }
 
     $scope.habilidades.$loaded().then(function () {
-        showHabilidade();
+        showHabilidade(null);
     });
 
-    $scope.save = function () {
+    $scope.setSaveMethod = function () {
         if ($scope.item.id) {
             $scope.update();
         } else {
@@ -32,24 +34,21 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
     }
 
     $scope.add = function () {
-
         var newItem = {
             timeid: new Date().getTime(),
             texto: $scope.item.texto,
             valor: $scope.item.valor
         }
-        var newKey = firebase.database().ref().child('habilidades').push().key;
+        var newKey = firebase.database().ref().child(childRef).push().key;
         updateNode = {};
-        updateNode['/habilidades/' + newKey] = newItem;
+        updateNode['/' + childRef + '/' + newKey] = newItem;
         databaseRef.update(updateNode);
-        console.log(newKey);
         $scope.showHideForm();
-
         showHabilidade(newKey);
     }
 
     $scope.remove = function (item) {
-        databaseRef.child("habilidades/" + item.$id).remove();
+        databaseRef.child(childRef + "/" + item.$id).remove();
         console.log('item removido');
         toastr["warning"]("Removido: " + item.texto);
     }
@@ -59,8 +58,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
         toastr["warning"]("Cancelado");
     }
 
-
-    $scope.fillEditForm = function (item) {
+    $scope.fillFormObject = function (item) {
         $scope.item = {
             id: item.$id,
             timeid: item.timeid,
@@ -71,7 +69,6 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
     };
 
     $scope.labelAddHabilidadeButton = function () {
-
         return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : 'Adicionar nova habilidade';
     }
 
@@ -83,18 +80,18 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
         };
 
         updateNode = {};
-        updateNode['/habilidades/' + $scope.item.id] = updateItem;
+        updateNode['/' + childRef + '/' + $scope.item.id] = updateItem;
         databaseRef.update(updateNode);
         toastr["success"]("Atualizado: " + $scope.item.texto);
         console.log('atualizado');
         $scope.showHideForm();
-        showHabilidade();
+        showHabilidade(null);
     }
 
     $scope.showHideForm = function () {
         if ($scope.formIsOpen) {
             $scope.formIsOpen = false;
-            resetForm();
+            resetFormObject();
         }
         else {
             $scope.formIsOpen = true;
