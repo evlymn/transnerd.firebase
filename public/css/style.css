@@ -616,3 +616,20 @@ background-color: transparent
  #postFormDiv .row{
      margin-bottom: 5px;
  }
+
+ .cursorHand{
+     cursor: pointer; cursor: hand;
+ }
+  .cursorHand:hover{
+     cursor: pointer; cursor: hand;
+     color: darkgrey;
+ }
+
+ #habilidadesControllerDiv .fa{
+     margin-right: 3px;
+ }
+
+ #postEditDiv .fa{
+     padding: 5px;
+     
+ }
