@@ -692,8 +692,9 @@
 
                     </div>
                     <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
-                        <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                        <div ng-show="$root.logado"  >
+                            <button class="btn btn-sm btn-link text-left" style=" max-width: 90% ;
+        overflow: hidden; text-overflow: ellipsis;" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
                             <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
@@ -789,11 +790,11 @@
                             <h2>Interesses
                             </h2>
                             <span style="float: left" class="collapse" id="interessesDiv" ng-repeat="item in items">
+                                 
+                                     
                                 <span class="hobby">
-                                       <span ng-show="$root.logado"  >
-                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                     &nbsp;&nbsp;
-                                 </span>
+                                     <i  ng-show="$root.logado"  ng-click="remove(item)" title="Remover" 
+                                        class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                             <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
                             </span>
 
