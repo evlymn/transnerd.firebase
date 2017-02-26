@@ -73,50 +73,50 @@
                 <div id="photo-header" class="text-center">
                     <!-- PHOTO (AVATAR) -->
                     <div class="form-style-8" ng-controller="avatarController">
-
                         <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
-
                             <img ng-src="{{item.avatarUrl}}" />
                         </div>
                         <div class="text-center" ng-show="$root.logado">
-                            <button class="btn btn-link" ng-click="openAvatarEdit()"> <i class="fa fa-camera" aria-hidden="true"></i>
-</button>
+                            <button class="btn btn-link" ng-click="openAvatarEdit()"> 
+                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                </button>
                         </div>
                         <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
                             <div class="container-fluid">
                                 <div class="row">
-
-                                    <div class="col-xs-8">
-                                        <div>
-                                            <label id="selecioneAvatarLabel" class="btn btn-link  btn-file">
-                                Clique aqui para selecione um avatar  <input type="file" id="fileInput" />
-                                    </label>
-                                        </div>
-                                        <div class="cropArea">
-                                            <img-crop image="newImage" result-image="croppedAvatar"></img-crop>
+                                    <div class="col-sm-8">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <label id="selecioneAvatarLabel" class="btn btn-link btn-sm btn-file">
+                                                    Clique aqui para selecione um avatar  
+                                                    <input type="file" id="fileInput" />
+                                                 </label>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="cropArea">
+                                                    <img-crop image="newImage" result-image="croppedAvatar"></img-crop>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer" ng-show="croppedAvatar">Reposicione e ajuste a imagem</div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-4 center-block">
-                                        <div class="row">
-                                            <div class="col-xs-12" id="imageCroppedCol">
-                                                <span>Imagem cortada</span> <br><br>
-                                                <div><img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block"
-                                                        ng-src="{{croppedAvatar}}" /></div>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <button class="btn btn-block  btn-link btn-sm" ng-disabled="!croppedAvatar" ng-click="putImage()"> Enviar imagem </button>
                                             </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <button class="btn btn-block  btn-link btn-sm" ng-show="croppedAvatar" ng-click="putImage()"> Enviar imagem </button>
+                                            <div class="panel-body" style="min-height: 250px">
+                                                <div class="cropArea">
+                                                    <br />
+                                                    <img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block" ng-src="{{croppedAvatar}}" />
+                                                </div>
                                             </div>
+                                            <div class="panel-footer" ng-show="croppedAvatar">Preview</div>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row collapse" id="fotos">
@@ -675,8 +675,7 @@
                                         <span ng-show="$root.logado">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                   </span>
-                                        <span ng-click="fillFormObject(item)" title="Editar"
-                                            class="cursorHand">{{item.texto}} </span>
+                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
 
                                     </div>
                                 </div>
@@ -692,10 +691,11 @@
 
                     </div>
                     <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
-                        <div ng-show="$root.logado"  >
+                        <div ng-show="$root.logado">
                             <button class="btn btn-sm btn-link text-left" style=" max-width: 90% ;
-        overflow: hidden; text-overflow: ellipsis;" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br />
+        overflow: hidden; text-overflow: ellipsis;" ng-click="showHideForm()">{{addButtonLabel()}}</i>
+                                </button>
+                                <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
@@ -755,12 +755,11 @@
                                         <span ng-show="$root.logado" style="color:gray">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                   </span>
-                                        <span ng-click="fillFormObject(item)" title="Editar"
-                                            class="cursorHand">{{item.texto}} </span>
+                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
 
-                                            <div class="icons pull-right">
-                                                <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
-                                            </div>
+                                        <div class="icons pull-right">
+                                            <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                        </div>
                                     </div>
 
                                 </div>
