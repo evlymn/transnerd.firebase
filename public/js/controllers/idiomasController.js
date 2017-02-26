@@ -50,7 +50,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             toastr["success"]("Adicionado: " + newItem.texto);
         }, function (error) {
             console.error(childRef + error);
-            toastr["success"]("Erro ao tentar adicionar: " + newItem.texto);
+            toastr["danger"]("Erro ao tentar adicionar: " + newItem.texto);
         })
 
         $scope.showHideForm();
@@ -62,7 +62,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             toastr["warning"]("Removido");
         }, function (error) {
             console.error(error);
-            toastr["warning"]('Erro ao tentar remover');
+            toastr["danger"]('Erro ao tentar remover');
         });
     }
 
@@ -79,7 +79,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             showHabilidade(null);
         }, function (error) {
             console.error(error);
-            toastr["warning"]('Erro ao tentar editar');
+            toastr["danger"]('Erro ao tentar editar');
         })
     }
 
