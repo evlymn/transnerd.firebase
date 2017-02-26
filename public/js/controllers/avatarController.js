@@ -1,13 +1,12 @@
 
-modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArray) {
+modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArray,databaseService) {
     $scope.newImage = '';
     $scope.croppedAvatar = '';
     $scope.filename = '';
     $scope.totalUp = 0;
     $scope.avatares = [];
     var databaseRef = firebase.database().ref();
-
-
+ 
 
     getFromDB();
     function getFromDB() {
@@ -66,8 +65,6 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
                 $scope.$apply();
             });
     }
-
-
 
     function pushAvatar(url) {
         var avatar = {

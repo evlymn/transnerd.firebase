@@ -1,9 +1,9 @@
 
-modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseArray) {
+modulo.controller('idiomasController', function ($scope, $rootScope, databaseService) {
     var childRef = "idiomas";
     var msgaddButtonLabel = "Adicionar novo idioma";
     var databaseRef = firebase.database().ref();
-
+    databaseService.setChildRef(childRef);
     $scope.formIsOpen = false;
     $scope.items = [];
 
@@ -16,14 +16,6 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
         }
     }
 
-    getItemsFromDb();
-
-    function getItemsFromDb() {
-        $scope.items = $firebaseArray(databaseRef.child(childRef));
-        console.log('get data ' + childRef);
-    }
-
-
     $scope.setSaveMethod = function () {
         if ($scope.item.id) {
             $scope.update();
@@ -32,24 +24,63 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
         }
     }
 
+    getItemsFromDb();
+
+    function getItemsFromDb() {
+        databaseService.retrievelAllAsync().then(function (data) {
+            $scope.items = data;
+            $scope.$apply();
+            console.log('get data ' + childRef);
+        }, function (error) {
+            console.log(error);
+            console.log('erro ' + childRef);
+        });
+    }
+
     $scope.add = function () {
         var newItem = {
             timeid: new Date().getTime(),
             texto: $scope.item.texto,
             valor: $scope.item.valor
         }
-        var newKey = firebase.database().ref().child(childRef).push().key;
-        updateNode = {};
-        updateNode['/' + childRef + '/' + newKey] = newItem;
-        databaseRef.update(updateNode);
-        toastr["success"]("Adicionado: " + $scope.item.texto);
+
+        databaseService.createAsync(newItem).then(function (newKey) {
+            console.info(childRef + ' item adicionado');
+            console
+            toastr["success"]("Adicionado: " + newItem.texto);
+        }, function (error) {
+            console.error(childRef + error);
+            toastr["success"]("Erro ao tentar adicionar: " + newItem.texto);
+        })
+
         $scope.showHideForm();
     }
 
-    $scope.remove = function (item) {
-        databaseRef.child(childRef + "/" + item.$id).remove();
-        console.log('item removido');
-        toastr["warning"]("Removido: " + item.texto);
+    $scope.remove = function (id) {
+        databaseService.deleteByIdAsync(id).then(function () {
+            console.info('item removido');
+            toastr["warning"]("Removido");
+        }, function (error) {
+            console.error(error);
+            toastr["warning"]('Erro ao tentar remover');
+        });
+    }
+
+    $scope.update = function () {
+        var updateItem = {
+            timeid: $scope.item.timeid,
+            texto: $scope.item.texto,
+            valor: $scope.item.valor
+        };
+        databaseService.updateByIdAsync($scope.item.id, updateItem).then(function () {
+            toastr["success"]("Editado");
+            console.log('Editado');
+            $scope.showHideForm();
+            showHabilidade(null);
+        }, function (error) {
+            console.error(error);
+            toastr["warning"]('Erro ao tentar editar');
+        })
     }
 
     $scope.cancel = function () {
@@ -71,21 +102,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, $firebaseAr
         return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgaddButtonLabel;
     }
 
-    $scope.update = function () {
-        var updateItem = {
-            timeid: $scope.item.timeid,
-            texto: $scope.item.texto,
-            valor: $scope.item.valor
-        };
-
-        updateNode = {};
-        updateNode['/' + childRef + '/' + $scope.item.id] = updateItem;
-        databaseRef.update(updateNode);
-        toastr["success"]("Atualizado: " + $scope.item.texto);
-        console.log('atualizado');
-        $scope.showHideForm();
-        showHabilidade(null);
-    }
+    
 
     $scope.showHideForm = function () {
         if ($scope.formIsOpen) {

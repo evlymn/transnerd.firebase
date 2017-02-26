@@ -23,7 +23,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <!--<meta name="theme-color" content="#ffffff">-->
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
@@ -757,7 +757,7 @@
                                 <div id="language-skills" ng-repeat="item in items">
                                     <div class="skill">
                                         <span ng-show="$root.logado" style="color:gray">
-                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                        <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                   </span>
                                         <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
 
@@ -813,6 +813,7 @@
 </html>
 <script src="js/site.js"></script>
 <script src="js/services/htmlservice.js"></script>
+<script src="js/services/databaseService.js"></script>
 <script src="js/controllers/postController.js"></script>
 <script src="js/controllers/loginController.js"></script>
 <script src="js/controllers/avatarController.js"></script>
