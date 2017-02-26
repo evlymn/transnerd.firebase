@@ -330,18 +330,18 @@
                                     <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
 
                                     <div class="description pull-right">
-                                        <h3>{{item.titulo}}</h3>
-
+                                        <h3 ng-class="item.$id==post.id? '' : ''">
+                                            <span id="postEditDiv" ng-show="logado">
+                                            <i title="Remover" ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
+                                        </span>
+                                            <span title="Editar: {{item.titulo}}" ng-click="updatePostObject(item)" class="cursorHand"> {{item.titulo}}</span>
+                                        </h3>
                                         <h3>
                                             <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
                                         </h3>
                                         <br>
                                         <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
-                                        <div id="postEditDiv" ng-show="logado">
-                                            <i ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
-                                            <i ng-class="item.$id==post.id? 'fa fa-pencil-square  fa-lg cursorHand educationSelectedLi' : 'fa fa-pencil-square  fa-lg cursorHand'"
-                                                ng-click="updatePostObject(item)" aria-hidden="true"></i>
-                                        </div>
+
                                     </div>
 
                                 </li>
@@ -649,7 +649,7 @@
                     <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
                         <div ng-show="$root.logado">
                             <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br /> 
+                            <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
@@ -674,8 +674,9 @@
                                     <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
                                         <span ng-show="$root.logado">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
-                                 </span> {{item.texto}}
+                                  </span>
+                                        <span ng-click="fillFormObject(item)" title="Editar"
+                                            class="cursorHand">{{item.texto}} </span>
 
                                     </div>
                                 </div>
@@ -691,16 +692,16 @@
 
                     </div>
                     <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
-  <div ng-show="$root.logado">
+                        <div ng-show="$root.logado">
                             <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br />  
+                            <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
                                 <div class="col-xs-9">
-                                    <input type="text" id="Qualidades" class="form-control input-sm" ng-model="item.texto" placeholder="Qualidades"></input>
+                                    <input type="text" id="Qualidades" class="form-control input-sm" ng-model="item.texto" placeholder="Qualidade"></input>
                                 </div>
-                                
+
                                 <div class="col-xs-1">
                                     <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
                                 </div>
@@ -712,12 +713,11 @@
                         <div class="box">
                             <h2>Qualidades
                             </h2>
-                            <ul style="font-size:1.3em;" class="collapse"  ng-repeat="item in items" id="qualidadesUl">
-                                <li>  <span ng-show="$root.logado" style="color:gray">
+                            <ul style="font-size:1.3em;" class="collapse" ng-repeat="item in items" id="qualidadesUl">
+                                <li> <span ng-show="$root.logado" style="color:gray">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
-                                 </span>{{item.texto}}</li>
-                                 
+                                  </span><span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span></li>
+
                             </ul>
                         </div>
 
@@ -727,7 +727,7 @@
                     <div ng-controller="idiomasController" id="idiomasControllerDiv">
                         <div ng-show="$root.logado">
                             <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br /> 
+                            <br />
                         </div>
                         <div ng-show="$root.logado && formIsOpen" id="idiomasFormDiv">
                             <div class="row">
@@ -753,33 +753,51 @@
                                     <div class="skill">
                                         <span ng-show="$root.logado" style="color:gray">
                                         <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                    <i ng-click="fillFormObject(item)"  title="Editar"  class="fa fa-pencil-square cursorHand" aria-hidden="true"></i>
-                                 </span> {{item.texto}}
+                                  </span>
+                                        <span ng-click="fillFormObject(item)" title="Editar"
+                                            class="cursorHand">{{item.texto}} </span>
 
-                                        <div class="icons pull-right">
-                                            <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
-                                        </div>
+                                            <div class="icons pull-right">
+                                                <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                            </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- HOBBIES -->
-                    <div class="box">
-                        <h2>Interesses
-                        </h2>
-                        <div class="collapse" id="interessesDiv">
-                            <div class="hobby">Leitura</div>
-                            <div class="hobby">Novas tecnologias</div>
-                            <div class="hobby">Desenvolvimento</div>
-                            <div class="hobby">Documentários</div>
-                            <div class="hobby">Ficção científica</div>
-                            <div class="hobby">Moda</div>
-                            <div class="hobby">Botas</div>
-                            <div class="hobby">Saltos</div>
-                            <div class="hobby">Beleza</div>
-                            <div class="hobby">Transexualidade</div>
+
+                    <div ng-controller="interessesController" id="interessesControllerDiv">
+                        <div ng-show="$root.logado">
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                            <br />
+                        </div>
+                        <div ng-show="$root.logado && formIsOpen">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control input-sm" ng-model="item.texto" placeholder="Interesse"></input>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
+                            </div>
+                        </div>
+                        <!-- HOBBIES -->
+                        <div class="box">
+                            <h2>Interesses
+                            </h2>
+                            <span style="float: left" class="collapse" id="interessesDiv" ng-repeat="item in items">
+                                <span class="hobby">
+                                       <span ng-show="$root.logado"  >
+                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                     &nbsp;&nbsp;
+                                 </span>
+                            <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+                            </span>
+
+                            </span>
                         </div>
                     </div>
                     <!-- Fotos -->
@@ -798,3 +816,4 @@
 <script src="js/controllers/habilidadesController.js"></script>
 <script src="js/controllers/idiomasController.js"></script>
 <script src="js/controllers/qualidadesController.js"></script>
+<script src="js/controllers/interessesController.js"></script>
