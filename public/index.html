@@ -111,7 +111,11 @@
                                                     <img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block" ng-src="{{croppedAvatar}}" />
                                                 </div>
                                             </div>
-                                            <div class="panel-footer" ng-show="croppedAvatar">Preview</div>
+                                            <div class="panel-footer" ng-show="croppedAvatar">
+                                                <span ng-hide="enviando"> Preview</span>
+                                                <span ng-show="enviando"><b>Enviando  <i class="fa fa-spinner fa-pulse  fa-fw"></i></b>
+                                              </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

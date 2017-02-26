@@ -37,6 +37,7 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
     angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 
     $scope.putImage = function () {
+        $scope.enviando = true;
         var storageRef = firebase.storage().ref();
         console.log($scope.filename);
         var imageRef = storageRef.child('avatar/' + $scope.filename);
@@ -60,8 +61,8 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
             }, function () {
                 var downloadURL = uploadTask.snapshot.downloadURL;
                 console.log(downloadURL);
-
                 pushAvatar(downloadURL)
+                $scope.enviando=false;
                 $scope.$apply();
             });
     }
@@ -70,10 +71,8 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
 
     function pushAvatar(url) {
         var avatar = {
-
             datacadastro: new Date().getTime(),
             avatarUrl: url
-
         };
         databaseRef.child("avatares").push(avatar);
         toastr["success"]("Avatar adicionado");
