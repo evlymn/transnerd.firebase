@@ -2,813 +2,911 @@
 <!-- saved from url=(0039)http://kamsolutions.pl/projects/resume/ -->
 <html lang="en" ng-app="transnerd">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trans Nerd</title>
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Trans Nerd</title>
+        <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/images/favicons/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/images/favicons/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/images/favicons/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/summernote/dist/summernote.css">
 
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="bower_components/toastr/toastr.css">
-    <link rel="stylesheet" href="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css">
-    <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" href="bower_components/toastr/toastr.css">
+        <link rel="stylesheet" href="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css">
+        <link href="css/style.css" rel="stylesheet">
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
-    <script src="bower_components/firebase/firebase.js"></script>
-    <script src="bower_components/angularfire/dist/angularfire.js"></script>
-    <script src="bower_components/summernote/dist/summernote.min.js"></script>
-    <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
-    <script src="bower_components/toastr/toastr.js"></script>
-    <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
-    <script src="js/firebase.config.js"></script>
-    <script src="js/app.js"></script>
-</head>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/firebase/firebase.js"></script>
+        <script src="bower_components/angularfire/dist/angularfire.js"></script>
+        <script src="bower_components/summernote/dist/summernote.min.js"></script>
+        <script src="bower_components/angular-summernote/dist/angular-summernote.min.js"></script>
+        <script src="bower_components/toastr/toastr.js"></script>
+        <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
+        <script src="js/firebase.config.js"></script>
+        <script src="js/app.js"></script>
+    </head>
 
-<body>
-    <div ng-controller="loginController" class="form-style-8">
+    <body>
+        <div ng-controller="loginController" class="form-style-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
+                            <i class="fa fa-sign-in " aria-hidden="true"></i>
+                        </button>
+                        <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col-sm-3" ng-show="$root.login">
+                        <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
+                    </div>
+                    <div class="col-sm-3" ng-show="$root.login">
+                        <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
+                    </div>
+                    <div class="col-sm-1" ng-show="$root.login">
+                        <button ng-click="doLogin()" class="btn">
+                            <i class="fa fa-check " aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-1">
-                    <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()"> <i class="fa fa-sign-in " aria-hidden="true"></i></button>
-                    <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()"> <i class="fa fa-sign-out" aria-hidden="true"></i> </button>
-                </div>
-                <div class="col-sm-3" ng-show="$root.login">
-                    <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
-                </div>
-                <div class="col-sm-3" ng-show="$root.login">
-                    <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
-                </div>
-                <div class="col-sm-1" ng-show="$root.login">
-                    <button ng-click="doLogin()" class="btn"><i class="fa fa-check " aria-hidden="true"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="photo-header" class="text-center">
-                    <!-- PHOTO (AVATAR) -->
-                    <div class="form-style-8" ng-controller="avatarController">
-                        <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
-                            <img ng-src="{{item.avatarUrl}}" />
-                        </div>
-                        <div class="text-center" ng-show="$root.logado">
-                            <button class="btn btn-link" ng-click="openAvatarEdit()"> 
-                                <i class="fa fa-camera" aria-hidden="true"></i>
+                <div class="col-xs-12">
+                    <div id="photo-header" class="text-center">
+                        <!-- PHOTO (AVATAR) -->
+                        <div class="form-style-8" ng-controller="avatarController">
+                            <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
+                                <img ng-src="{{item.avatarUrl}}" />
+                            </div>
+                            <div class="text-center" ng-show="$root.logado">
+                                <button class="btn btn-link" ng-click="openAvatarEdit()">
+                                    <i class="fa fa-camera" aria-hidden="true"></i>
                                 </button>
-                        </div>
-                        <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <label id="selecioneAvatarLabel" class="btn btn-link btn-sm btn-file">
-                                                    Clique aqui para selecione um avatar  
-                                                    <input type="file" id="fileInput" />
-                                                 </label>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="cropArea">
-                                                    <img-crop image="newImage" result-image="croppedAvatar"></img-crop>
+                            </div>
+                            <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <label id="selecioneAvatarLabel" class="btn btn-link btn-sm btn-file">
+                                                        Clique aqui para selecione um avatar
+                                                        <input type="file" id="fileInput" />
+                                                    </label>
                                                 </div>
-                                            </div>
-                                            <div class="panel-footer" ng-show="croppedAvatar">Reposicione e ajuste a imagem</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <button class="btn btn-block  btn-link btn-sm" ng-disabled="!croppedAvatar" ng-click="putImage()"> Enviar imagem </button>
-                                            </div>
-                                            <div class="panel-body" style="min-height: 250px">
-                                                <div class="cropArea">
-                                                    <br />
-                                                    <img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block" ng-src="{{croppedAvatar}}" />
+                                                <div class="panel-body">
+                                                    <div class="cropArea">
+                                                        <img-crop image="newImage" result-image="croppedAvatar"></img-crop>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="panel-footer" ng-show="croppedAvatar">
-                                                <span ng-hide="enviando"> Preview</span>
-                                                <span ng-show="enviando"><b>Enviando  <i class="fa fa-spinner fa-pulse  fa-fw"></i></b>
-                                              </span>
+                                                <div class="panel-footer" ng-show="croppedAvatar">Reposicione e ajuste a imagem</div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <button class="btn btn-block  btn-link btn-sm" ng-disabled="!croppedAvatar" ng-click="putImage()"> Enviar imagem </button>
+                                                </div>
+                                                <div class="panel-body" style="min-height: 250px">
+                                                    <div class="cropArea">
+                                                        <br />
+                                                        <img id="croppedImage" ng-show="croppedAvatar" class="img-responsive center-block" ng-src="{{croppedAvatar}}" />
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer" ng-show="croppedAvatar">
+                                                    <span ng-hide="enviando"> Preview</span>
+                                                    <span ng-show="enviando"><b>Enviando  <i class="fa fa-spinner fa-pulse  fa-fw"></i></b>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row collapse" id="fotos">
-                        <br>
-                        <div class="col-sm-3">
-                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                <div style="padding:8px;">
-                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                    </div>
-                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                        <a href="https://www.instagram.com/p/BOCrJCLB0Zk/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                            target="_blank">Launch and Learn</a>
-                                    </p>
-                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
-                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T14:51:13+00:00">Dec 15, 2016 at 6:51am PST</time>
-                                    </p>
-                                </div>
-                            </blockquote>
-
-
-                        </div>
-                        <div class="col-sm-3">
-                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                <div style="padding:8px;">
-                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                    </div>
-                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                        <a href="https://www.instagram.com/p/BQSqESMgAns/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                            target="_blank">Apenas mais um dia rsrs</a>
-                                    </p>
-                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
-                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2017-02-09T12:52:28+00:00">Feb 9, 2017 at 4:52am PST</time>
-                                    </p>
-
-                                </div>
-                            </blockquote>
-                        </div>
-                        <div class="col-sm-3">
-                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                <div style="padding:8px;">
-                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                    </div>
-                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                        <a href="https://www.instagram.com/p/BK_VI6yBgjO/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                            target="_blank">Até a cordão do meu crachá é trans!!! 😍😍😍😍😍</a>
-                                    </p>
-                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
-                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-09-30T18:07:03+00:00">Sep 30, 2016 at 11:07am PDT</time>
-                                    </p>
-                                </div>
-                            </blockquote>
-
-                        </div>
-                        <div class="col-sm-3">
-                            <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-                                <div style="padding:8px;">
-                                    <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
-                                        <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
-                                    </div>
-                                    <p style=" margin:8px 0 0 0; padding:0 4px;">
-                                        <a href="https://www.instagram.com/p/BOCVr6jBlgm/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
-                                            target="_blank">Candy e eu tentando tirar uma selfie rsrs 😍😍</a>
-                                    </p>
-                                    <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
-                                        <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T11:43:44+00:00">Dec 15, 2016 at 3:43am PST</time>
-                                    </p>
-                                </div>
-                            </blockquote>
-                        </div>
-                    </div>
-                    <div id="text-header">
-                        <h1>
-                            Olá,<br> eu sou a <span>Jeliel</span><sup id="idadeSup">42</sup> e aqui você conhecerá um pouco
-                            mim <i class="fa fa-smile-o" aria-hidden="true"></i>
-                        </h1>
-                        <br />
-                        <small class="hand" data-toggle="collapse" data-target="#turnupradio">
-<i class="fa fa-heart-o"   aria-hidden="true"></i>
-<b>It</b>  was time that I opened my eyes
-<b>I'm</b>  leaving the past behind
-<b>Nothing's</b>  ever what it seems
-<b>Including</b> this time and this crazy dream
-<i class="fa fa-heart-o"   aria-hidden="true"></i>
-</small>
-                        <div class="collapse" id="turnupradio">
+                        <div class="row collapse" id="fotos">
                             <br>
-                            <p>When the world starts to get you down <br /> And nothing seems to go your way <br /> And the
-                                noise of a maddening crowd
-                                <br /> Makes you feel like you're going to go insane</p>
-                            <p>There's a glow of a distant light<br /> Calling you to come outside<br /> To feel the wind in
-                                your face and your skin
-                                <br /> And it's here I begin my story</p>
-                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
-                                turn up the radio</p>
-                            <p>It was time that I opened my eyes<br /> I'm leaving the past behind<br /> Nothing's ever what
-                                it seems<br /> Including this time and this crazy dream</p>
-                            <p>I'm stuck like a moth to a flame<br /> I'm so tired of playing this game<br /> I don't know how
-                                I got to this stage<br /> Let me out of my cage cause I'm dying
-                            </p>
-                            <p>To turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
-                                turn up the radio</p>
-                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
-                                turn up the radio</p>
-                            <p>I just wanna get in my car<br /> I wanna go fast and I gotta go far<br /> Don't ask me to explain
-                                how I feel<br /> Cause I don't wanna say where I'm going</p>
-                            <p>Turn up the noise and turn up the volume<br /> Don't have a choice<br /> Cause the temperature's
-                                pounding
-                                <br /> If leaving this place is the last thing I do<br /> Then I want to escape<br /> With
-                                a person just like you
-                            </p>
-                            <p>Buzzing around like a moth to a flame<br /> I'm so sick and tired of playing this game<br />                                We gotta have fun if that's all that we do<br /> Gotta shake up the system<br /> And break
-                                all the rules<br /> Gotta turn up the radio<br /> Until the speakers blow!</p>
-                            <p>Turn up the radio<br /> Turn up the radio<br /> Don't ask me where I wanna go<br /> We gotta
-                                turn up the radio</p>
-                            <p>Turn up the radio<br /> Turn up the radio<br /> There's some things you don't need to know<br
-                                /> Just let me turn up the radio</p>
-                            <p>Turn up the radio<br /> Let me turn up the radio<br /> Let me turn up the radio</p>
-                            <br>
-                            <b>Madonna</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-7" id="colunaEsquerda">
-                <!-- ABOUT ME -->
+                            <div class="col-sm-3">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/BOCrJCLB0Zk/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Launch and Learn</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T14:51:13+00:00">Dec 15, 2016 at 6:51am PST</time>
+                                        </p>
+                                    </div>
+                                </blockquote>
 
-                <div ng-controller="sobreController">
-                    <button ng-show="$root.logado" ng-click="showHideSobreForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sobre mim':'Editar sobre mim' }}</button>
-                    <div class="container-fluid" ng-show="isOpenSobreForm && $root.logado">
-                        <br />
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="summernoteDefault">
-                                    <summernote id="sobreSummernote" ng-model="sobreTextoEdit"></summernote>
-                                </div>
+
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <button ng-click="saveSobre()" class="btn btn-block btn-default btn-sm"> Salvar</button>
-                            </div>
-                            <div class="col-xs-6">
-                                <button ng-click="showHideSobreForm()" class="btn btn-block btn-default btn-sm"> Cancelar</button>
-                            </div>
-                        </div>
-                        <br />
-                    </div>
-                    <div class="box" id="sobre" ng-show="sobres" ng-repeat="item in sobres | limitTo:1">
-                        <h2>Sobre mim</h2>
-                        <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
-                    </div>
-                </div>
-
-
-
-
-                <!-- Cursos -->
-                <div ng-controller="postController">
-                    <div ng-show="$root.logado">
-                        <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i></button>
-                        <br /> <br />
-                    </div>
-                    <div ng-show="$root.logado">
-
-                        <div ng-show="postForm" id="postFormDiv">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <input type="text" id="titulo" class="form-control input-sm" ng-model="post.titulo" placeholder="Título"></input>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <input type="text" id="local" class="form-control input-sm" ng-model="post.local" placeholder="Local"></input>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="date" id="data" class="form-control input-sm" ng-model="post.data" placeholder="Data"></input>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <summernote ng-model="post.texto"></summernote>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn  btn-default  btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn   btn-default btn-block">Cancelar</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="box" id="cursos" ng-show="postagens">
-                        <h2>Cursos, educação, vida...
-                            <span class="pull-right">
-                            <i id="cursosExpand"  title="Expandir"  class="fa fa-expand" aria-hidden="true"></i>
-                            <i id="cursosCompress" title="Retrair" class="fa fa-compress hidden" aria-hidden="true"></i>
-                        </span>
-                        </h2>
-
-                        <div class="collapse " id="education1">
-                            <ul id="education" class="clearfix" data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
-                                <li>
-                                    <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
-
-                                    <div class="description pull-right">
-                                        <h3 ng-class="item.$id==post.id? '' : ''">
-                                            <span id="postEditDiv" ng-show="logado">
-                                            <i title="Remover" ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
-                                        </span>
-                                            <span title="Editar: {{item.titulo}}" ng-click="updatePostObject(item)" class="cursorHand"> {{item.titulo}}</span>
-                                        </h3>
-                                        <h3>
-                                            <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
-                                        </h3>
-                                        <br>
-                                        <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                            <div class="col-sm-3">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/BQSqESMgAns/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Apenas mais um dia rsrs</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2017-02-09T12:52:28+00:00">Feb 9, 2017 at 4:52am PST</time>
+                                        </p>
 
                                     </div>
+                                </blockquote>
+                            </div>
+                            <div class="col-sm-3">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/BK_VI6yBgjO/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Até a cordão do meu crachá é trans!!! 😍😍😍😍😍</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-09-30T18:07:03+00:00">Sep 30, 2016 at 11:07am PDT</time>
+                                        </p>
+                                    </div>
+                                </blockquote>
 
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- EXPERIENCES -->
-                <div class="box" id="experiencia">
-                    <h2>
-                        Experiência
-                        <span class="pull-right hidden-sm-up">
-                            <i id="experienciaExpand"  title="Expandir"  class="fa fa-expand" aria-hidden="true"></i>
-                            <i id="experienciaCompress"   title="Retrair"  style="display:none" class="fa fa-compress" aria-hidden="true"></i>
-</span>
-                    </h2>
-                    <div class="job clearfix">
-                        <div class="col-xs-3">
-                            <div class="where">ThoughtWorks</div>
-                            <div class="year" title="Setembro 2016">2016</div>
-                        </div>
-                        <div class="col-xs-9">
-                            <div class="profession">Consultant Developer</div>
-                            <small class="pull-right smallExp">Setembro 216 <b>atual</b></small>
-                            <br>
-                            <div class="description">Desenvolvimento web, Java, Javascript, rest, ruby, miçangas, palestras, eventos, justiça social
-                                e muiito mais
-                                <3 </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+                                    <div style="padding:8px;">
+                                        <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;">
+                                            <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div>
+                                        </div>
+                                        <p style=" margin:8px 0 0 0; padding:0 4px;">
+                                            <a href="https://www.instagram.com/p/BOCVr6jBlgm/" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;"
+                                                target="_blank">Candy e eu tentando tirar uma selfie rsrs 😍😍</a>
+                                        </p>
+                                        <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A photo posted by Evelyn (@jelielmendes) on
+                                            <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-12-15T11:43:44+00:00">Dec 15, 2016 at 3:43am PST</time>
+                                        </p>
+                                    </div>
+                                </blockquote>
                             </div>
                         </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">DBC Company</div>
-                                <div class="year" title="Maio 2015 -Outubro 2015">2015</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Análise e desenvolvimento</div>
-                                <small class="pull-right smallExp">maio   – outubro de 2015 - <b>6 meses</b></small>
+                        <div id="text-header">
+                            <h1>
+                                Olá,
+                                <br> eu sou a
+                                <span>Jeliel</span><sup id="idadeSup">42</sup> e aqui você conhecerá um pouco mim
+                                <i class="fa fa-smile-o" aria-hidden="true"></i>
+                            </h1>
+                            <br />
+                            <small class="hand" data-toggle="collapse" data-target="#turnupradio">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                <b>It</b> was time that I opened my eyes
+                                <b>I'm</b> leaving the past behind
+                                <b>Nothing's</b> ever what it seems
+                                <b>Including</b> this time and this crazy dream
+                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                            </small>
+                            <div class="collapse" id="turnupradio">
                                 <br>
-                                <div class="description">Desenvolvimento web, desktop, Asp.Net, C#, MVC, AngularJS, VB6.</div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">TriMobi</div>
-                                <div class="year">2012 - 2015</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Coordenação, análise e desenvolvimento</div>
-                                <small class="pull-right smallExp">janeiro de 2013 – maio de 2015 - <b>2 anos 5 meses</b></small>
-                                <br />
-                                <div class="description">Coordenação de equipe, desenvolvimento web, desktop e mobile(iOS, Android, .Net)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Deep Red</div>
-                                <div class="year">2011 - 2012</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Análise e desenvolvimento</div>
-                                <small class="pull-right smallExp"> setembro de 2011 – janeiro de 2013 - <b>1 ano 5 meses</b></small>
-                                <br />
-                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine
-                                    entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">PmWeb</div>
-                                <div class="year">2011</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Análise e desenvolvimento</div>
-                                <small class="pull-right smallExp"> setembro de 2011 -<b>1 mês*</b></small>
-                                <br />
-                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Deep Red</div>
-                                <div class="year">2011</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Análise e desenvolvimento</div>
-                                <small class="pull-right smallExp"> junho   – setembro de 2011 - <b>4 meses</b></small>
-                                <br />
-                                <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine
-                                    entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Tedesco Tecnologia</div>
-                                <div class="year">2006 - 2011</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Programador Sênior / Líder técnico</div>
-                                <small class="pull-right smallExp">  novembro de 2006 – junho de 2011 - <b>4 anos 8 meses</b></small>
-                                <br />
-                                <div class="description"><b>Atividades:</b>
-                                    <br/>
-                                    <div>Manutenção e customização do produto WebFull (produto principal da empresa),Programação
-                                        ASP, ASP.Net-C#,VB.Net, VB Script, Java Script, Ajax, JQuery, Windows Service, Web
-                                        Services, Windows Forms.
-                                        <br /> Banco de dados SQL Server 2000, 2005,2008,Oracle, Access.
-                                        <br/> Por último, responsável pelo setor de P&D, a cargo de desenvolver um novo produto
-                                        em C#, POO, além de fazer analise e desenvolvimento de customizações mais complexas.
-                                        <br/>
-                                        <i>Nesse período também realizei entrevistas para contratação de novos profissionais, para a matriz em SP e para a filial de Porto Alegre.<br />
-</i>
-                                    </div>
-                                    <br>
-                                    <b>Algumas tarefas realizadas:</b>
-                                    <br />
-                                    <ul>
-                                        <li>Desenvolvimento de componente e webservice para melhorar performance da aplicação
-                                            em cerca de 90%
-                                        </li>
-                                        <li>Novos projetos independentes, horas vagas, que ajudaram a melhorar o gerenciamento
-                                            de horas e projetos para os desenvolvedores e gerentes.
-                                        </li>
-                                        <li>Aplicação para extração de relatório alcançando uma melhora de performance e interação
-                                            com o usuário (esse projeto ganhou o prêmio de inovação da empresa no final de
-                                            2008)
-                                        </li>
-                                        <li>Cubo OLAP usando o componente Dundas.</li>
-                                        <li>Analise e desenvolvimento de métodos, componentes e estrutura para o atual sistema
-                                            funcionar em n linguagens, respeitando questões de informação de cultura e caracteres
-                                            especiais, como os do leste asiático. Hoje o sistema funciona em 32 países e
-                                            em 17 idiomas.</li>
-                                        <li>Wizard, pré-visualização e edição de documentos Word na web.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Travel Explorer</div>
-                                <div class="year">2004 - 2006</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Desenvolvimento web</div>
-                                <small class="pull-right smallExp">   2004 – novembro 2006 - <b>2 anos</b></small>
-                                <br />
-                                <div class="description">Programação ASP 3,ASP.Net-C#, VB Script, Java Script. Banco de dados SQL Server 2000, 2005,
-                                    Access, MySQL e PostGreSQL
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Conectt</div>
-                                <div class="year">2004</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Desenvolvimento web</div>
-                                <small class="pull-right smallExp"> 2004 - <b>menos de 1 ano</b></small>
-                                <br />
-                                <div class="description">PDesenvolvimento de Sistemas Programação ASP, VB Script, Java Script. Banco de dados SQL
-                                    2000 e Access.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Teledata Brasil</div>
-                                <div class="year">2004</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Desenvolvimento de Sistemas</div>
-                                <small class="pull-right smallExp">   junho de 2002 – 2004 - <b>2 anos</b></small>
-                                <br />
-                                <div class="description"><i>[Terceirizada na Polícia Federal do Rio Grande do Sul SRRS/DPF]</i>
-                                    <br> Programação ASP, VB Script, Java Script. Banco de dados SQL e Access. Atualização
-                                    da página de Intranet da Polícia Federal do Rio Grande do Sul SRRS/DPF, web designer.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Puras do Brasil</div>
-                                <div class="year">2002 - 2004</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Desenvolvimento de Sistemas</div>
-                                <small class="pull-right smallExp">   dezembro de 2002 – 2004 - <b>2 anos</b></small>
-                                <br />
-                                <div class="description"> Desenvolvimento de Sistemas Programação Visual Basic ASP, VB Script, Java Script. Banco de
-                                    dados SQL e Access. Trabalhos em VB com assistência do Visual Source Safe Atualização
-                                    da página institucional www.puras.com.br, web designer. Testes com VB e ASP.NET.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="job clearfix">
-                            <div class="col-xs-3">
-                                <div class="where">Rádio gaúcha</div>
-                                <div class="year">1995 - 2002</div>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="profession">Operadora de aúdio</div>
-                                <small class="pull-right smallExp"> abril de 1996 – maio de 2002 - <b>6 anos 2 meses</b></small>
-                                <br />
-                                <div class="description">Responsável pela operação da mesa de áudio durante gravações e transmissões ao vivo respondendo
-                                    por sua qualidade
-                                </div>
+                                <p>When the world starts to get you down
+                                    <br /> And nothing seems to go your way
+                                    <br /> And the noise of a maddening crowd
+                                    <br /> Makes you feel like you're going to go insane</p>
+                                <p>There's a glow of a distant light
+                                    <br /> Calling you to come outside
+                                    <br /> To feel the wind in your face and your skin
+                                    <br /> And it's here I begin my story</p>
+                                <p>Turn up the radio
+                                    <br /> Turn up the radio
+                                    <br /> Don't ask me where I wanna go
+                                    <br /> We gotta turn up the radio</p>
+                                <p>It was time that I opened my eyes
+                                    <br /> I'm leaving the past behind
+                                    <br /> Nothing's ever what it seems
+                                    <br /> Including this time and this crazy dream</p>
+                                <p>I'm stuck like a moth to a flame
+                                    <br /> I'm so tired of playing this game
+                                    <br /> I don't know how I got to this stage
+                                    <br /> Let me out of my cage cause I'm dying
+                                </p>
+                                <p>To turn up the radio
+                                    <br /> Turn up the radio
+                                    <br /> Don't ask me where I wanna go
+                                    <br /> We gotta turn up the radio</p>
+                                <p>Turn up the radio
+                                    <br /> Turn up the radio
+                                    <br /> Don't ask me where I wanna go
+                                    <br /> We gotta turn up the radio</p>
+                                <p>I just wanna get in my car
+                                    <br /> I wanna go fast and I gotta go far
+                                    <br /> Don't ask me to explain how I feel
+                                    <br /> Cause I don't wanna say where I'm going</p>
+                                <p>Turn up the noise and turn up the volume
+                                    <br /> Don't have a choice
+                                    <br /> Cause the temperature's pounding
+                                    <br /> If leaving this place is the last thing I do
+                                    <br /> Then I want to escape
+                                    <br /> With a person just like you
+                                </p>
+                                <p>Buzzing around like a moth to a flame
+                                    <br /> I'm so sick and tired of playing this game
+                                    <br /> We gotta have fun if that's all that we do
+                                    <br /> Gotta shake up the system
+                                    <br /> And break all the rules
+                                    <br /> Gotta turn up the radio
+                                    <br /> Until the speakers blow!</p>
+                                <p>Turn up the radio
+                                    <br /> Turn up the radio
+                                    <br /> Don't ask me where I wanna go
+                                    <br /> We gotta turn up the radio</p>
+                                <p>Turn up the radio
+                                    <br /> Turn up the radio
+                                    <br /> There's some things you don't need to know
+                                    <br /> Just let me turn up the radio</p>
+                                <p>Turn up the radio
+                                    <br /> Let me turn up the radio
+                                    <br /> Let me turn up the radio</p>
+                                <br>
+                                <b>Madonna</b>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-5" id="colunaDireita">
-                    <div class="box ">
-                        <h2 title="Curiosx? Então clique!" data-toggle="collapse" class="whyJelielH2" data-target="#whyjeliel">Why Jeliel? <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
-                        </h2>
-                        <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
-                            <small class="pull-right smallExp">4 junho 2015 - <b>Porto Alegre</b></small>
-                            <br /> Well, <b>Jeliel</b> is my guardian angel, and because angels doesn't have a gender, and
-                            for now is how I'm feeling myself, without a gender or a name. Sometimes just a thing.
-                            <br /> Since I started the transition, I'm trying to get better, evolve, my look and my mind...
-                            day by day, step by step, feeling by feeling, sorrow by sorrow, loss by loss and joy by joy <i
-                                class="fa fa-smile-o" aria-hidden="true"></i> ...I know, is tough, but isn't impossible.
-                            <br /> Despite the issues, I hope to reach my dreams.
-                            <br /> Some people... well, some close people call me <b>Evelyn</b>, due the first three letters
-                            of my old name, but I don't know if they are being sarcastic <i class="fa fa-meh-o" aria-hidden="true"></i>                            hahahaha
-                            <br /> Thanks to all who support me, I love you <i class="fa fa-heart" aria-hidden="true"></i>
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            <br /> And for those who don't like, kisses on the shoulder!!! rsrs
-                            <br />
-                        </div>
-                    </div>
-                    <!-- CONTACT -->
-                    <div class="box clearfix">
-                        <h2>Contatos e afins.
-                        </h2>
-                        <div id="contatosDiv" class="collapse">
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-home fa-fw"></span></div>
-                                <div class="title only pull-right">Porto Alegre - RS/Brasil </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-envelope fa-fw"></span></div>
-                                <div class="title only pull-right">jeliel@transnerd.com.br</div>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-7" id="colunaEsquerda">
+                    <!-- ABOUT ME -->
 
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-medium fa-fw"></span></div>
-                                <div class="title pull-right">Medium</div>
-                                <div class="description pull-right"><a href="https://medium.com/transnerd">medium.com/transnerd</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-linkedin fa-fw"></span></div>
-                                <div class="title pull-right">Linkedin</div>
-                                <div class="description pull-right"><a href="https://www.linkedin.com/in/jelielmendes">in/jelielmendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-twitter fa-fw"></span></div>
-                                <div class="title pull-right">Twitter</div>
-                                <div class="description pull-right"><a href="https://twitter.com/jelielmendes">twitter.com/jelielmendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-facebook fa-fw"></span></div>
-                                <div class="title pull-right">Facebook</div>
-                                <div class="description pull-right"><a href="https://www.facebook.com/jelielmendes">facebook.com/jelielmendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-instagram fa-fw"></span></div>
-                                <div class="title pull-right">Instagram</div>
-                                <div class="description pull-right"><a href="https://www.instagram.com/jelielmendes/">instagram.com/jelielmendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-youtube fa-fw"></span></div>
-                                <div class="title pull-right">Youtube</div>
-                                <div class="description pull-right"><a href="https://www.youtube.com/channel/UCBSEHB7hg-T8CRRpxJgNDDw">Canal</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-github fa-fw"></span></div>
-                                <div class="title pull-right">GitHub</div>
-                                <div class="description pull-right"><a href="https://github.com/jelielmendes">github.com/jelielmendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-bitbucket fa-fw"></span></div>
-                                <div class="title pull-right">Bitbucket</div>
-                                <div class="description pull-right"><a href="https://bitbucket.org/jeliel/">bitbucket.org/jeliel/</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-google-plus fa-fw"></span></div>
-                                <div class="title pull-right">Google+</div>
-                                <div class="description pull-right"><a href="https://plus.google.com/+JelielMendes/">+JelielMendes</a></div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center"><span class="fa fa-skype fa-fw"></span></div>
-                                <div class="title pull-right">Skype</div>
-                                <div class="description pull-right"><a href="skype:jelielmendes?dropdown">jelielmendes</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- SKILLS -->
-                    <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
-                        <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
+                    <div ng-controller="sobreController">
+                        <button ng-show="$root.logado" ng-click="showHideSobreForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sobre mim':'Editar sobre mim' }}</button>
+                        <div class="container-fluid" ng-show="isOpenSobreForm && $root.logado">
                             <br />
-                        </div>
-                        <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
                             <div class="row">
-                                <div class="col-xs-6">
-                                    <input type="text" id="Habilidade" class="form-control input-sm" ng-model="item.texto" placeholder="Habilidade"></input>
-                                </div>
-                                <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm" min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
-                                </div>
-                                <div class="col-xs-1">
-                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
-                            </div>
-                        </div>
-                        <div class="box">
-                            <h2>Habilidades
-                            </h2>
-                            <div class="skills collapse" id="skillsDiv">
-                                <div ng-repeat="item in items">
-                                    <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
-                                        <span ng-show="$root.logado">
-                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                  </span>
-                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
-
+                                <div class="col-xs-12">
+                                    <div class="summernoteDefault">
+                                        <summernote id="sobreSummernote" ng-model="sobreTextoEdit"></summernote>
                                     </div>
                                 </div>
-
-                                <div class="skills-legend clearfix">
-                                    <div class="legend-left legend">Iniciante</div>
-                                    <div class="legend-left legend"><span>Proficiente</span></div>
-                                    <div class="legend-right legend"><span>Pleno</span></div>
-                                    <div class="legend-right legend">Sênior</div>
-                                </div>
                             </div>
-                        </div>
-
-                    </div>
-                    <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
-                        <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link text-left" style=" max-width: 90% ;
-        overflow: hidden; text-overflow: ellipsis;" ng-click="showHideForm()">{{addButtonLabel()}}</i>
-                                </button>
-                                <br />
-                        </div>
-                        <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
-                            <div class="row">
-                                <div class="col-xs-9">
-                                    <input type="text" id="Qualidades" class="form-control input-sm" ng-model="item.texto" placeholder="Qualidade"></input>
-                                </div>
-
-                                <div class="col-xs-1">
-                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
-                            </div>
-                        </div>
-                        <!-- qualidades -->
-                        <div class="box">
-                            <h2>Qualidades
-                            </h2>
-                            <ul style="font-size:1.3em;" class="collapse" ng-repeat="item in items" id="qualidadesUl">
-                                <li> <span ng-show="$root.logado" style="color:gray">
-                                        <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                  </span><span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span></li>
-
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- LANGUAGES -->
-
-                    <div ng-controller="idiomasController" id="idiomasControllerDiv">
-                        <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br />
-                        </div>
-                        <div ng-show="$root.logado && formIsOpen" id="idiomasFormDiv">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input type="text" id="Idioma" class="form-control input-sm" ng-model="item.texto" placeholder="Idioma"></input>
+                                    <button ng-click="saveSobre()" class="btn btn-block btn-default btn-sm"> Salvar</button>
                                 </div>
-                                <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm" title="Fluência (0 a 100)" min="0" max="100" value="10" ng-model="item.valor"
-                                        placeholder="Conhecimento"></input>
+                                <div class="col-xs-6">
+                                    <button ng-click="showHideSobreForm()" class="btn btn-block btn-default btn-sm"> Cancelar</button>
                                 </div>
-                                <div class="col-xs-1">
-                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="box" id="sobre" ng-show="sobres" ng-repeat="item in sobres | limitTo:1">
+                            <h2>Sobre mim</h2>
+                            <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Cursos -->
+                    <div ng-controller="postController">
+                        <div ng-show="$root.logado">
+                            <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i>
+                            </button>
+                            <br />
+                            <br />
+                        </div>
+                        <div ng-show="$root.logado">
+
+                            <div ng-show="postForm" id="postFormDiv">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <input type="text" id="titulo" class="form-control input-sm" ng-model="post.titulo" placeholder="Título"></input>
+                                    </div>
                                 </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" id="local" class="form-control input-sm" ng-model="post.local" placeholder="Local"></input>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" id="data" class="form-control input-sm" ng-model="post.data" placeholder="Data"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <summernote ng-model="post.texto"></summernote>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn  btn-default  btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn   btn-default btn-block">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="box" id="cursos" ng-show="postagens">
+                            <h2>Cursos, educação, vida...
+                                <span class="pull-right">
+                                    <i id="cursosExpand" title="Expandir" class="fa fa-expand" aria-hidden="true"></i>
+                                    <i id="cursosCompress" title="Retrair" class="fa fa-compress hidden" aria-hidden="true"></i>
+                                </span>
+                            </h2>
+
+                            <div class="collapse " id="education1">
+                                <ul id="education" class="clearfix" >
+                                    <li data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
+                                        <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
+
+                                        <div class="description pull-right">
+                                            <h3 ng-class="item.$id==post.id? '' : ''">
+                                                <span id="postEditDiv" ng-show="logado">
+                                                    <i title="Remover" ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
+                                                </span>
+                                                <span title="Editar: {{item.titulo}}" ng-click="updatePostObject(item)" class="cursorHand"> {{item.titulo}}</span>
+                                            </h3>
+                                            <h3>
+                                                <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
+                                            </h3>
+                                            <br>
+                                            <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+
+                                        </div>
+
+                                    </li>
+
+                                </ul>
                             </div>
                         </div>
-                        <div class="box">
-                            <h2>Idiomas
+                    </div>
+                    <!-- EXPERIENCES -->
+                    <div class="box" id="experiencia">
+                        <h2>
+                            Experiência
+                            <span class="pull-right hidden-sm-up">
+                                <i id="experienciaExpand" title="Expandir" class="fa fa-expand" aria-hidden="true"></i>
+                                <i id="experienciaCompress" title="Retrair" style="display:none" class="fa fa-compress" aria-hidden="true"></i>
+                            </span>
+                        </h2>
+                        <div class="job clearfix">
+                            <div class="col-xs-3">
+                                <div class="where">ThoughtWorks</div>
+                                <div class="year" title="Setembro 2016">2016</div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="profession">Consultant Developer</div>
+                                <small class="pull-right smallExp">Setembro 216 <b>atual</b></small>
+                                <br>
+                                <div class="description">Desenvolvimento web, Java, Javascript, rest, ruby, miçangas, palestras, eventos, justiça social e muiito mais
+                                    <3 </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">DBC Company</div>
+                                    <div class="year" title="Maio 2015 -Outubro 2015">2015</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Análise e desenvolvimento</div>
+                                    <small class="pull-right smallExp">maio – outubro de 2015 - <b>6 meses</b></small>
+                                    <br>
+                                    <div class="description">Desenvolvimento web, desktop, Asp.Net, C#, MVC, AngularJS, VB6.</div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">TriMobi</div>
+                                    <div class="year">2012 - 2015</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Coordenação, análise e desenvolvimento</div>
+                                    <small class="pull-right smallExp">janeiro de 2013 – maio de 2015 - <b>2 anos 5 meses</b></small>
+                                    <br />
+                                    <div class="description">Coordenação de equipe, desenvolvimento web, desktop e mobile(iOS, Android, .Net)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Deep Red</div>
+                                    <div class="year">2011 - 2012</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Análise e desenvolvimento</div>
+                                    <small class="pull-right smallExp"> setembro de 2011 – janeiro de 2013 - <b>1 ano 5 meses</b></small>
+                                    <br />
+                                    <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">PmWeb</div>
+                                    <div class="year">2011</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Análise e desenvolvimento</div>
+                                    <small class="pull-right smallExp"> setembro de 2011 -<b>1 mês*</b></small>
+                                    <br />
+                                    <div class="description">Programação .Net, Manutenção, melhorias e novas customizações.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Deep Red</div>
+                                    <div class="year">2011</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Análise e desenvolvimento</div>
+                                    <small class="pull-right smallExp"> junho – setembro de 2011 - <b>4 meses</b></small>
+                                    <br />
+                                    <div class="description">Programação .Net, Manutenção, melhorias e novas customizações no sistema Representante OnLine entre outros produtos, usando Webservices, WCF, WPF, Asp.Net, C#.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Tedesco Tecnologia</div>
+                                    <div class="year">2006 - 2011</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Programador Sênior / Líder técnico</div>
+                                    <small class="pull-right smallExp"> novembro de 2006 – junho de 2011 - <b>4 anos 8 meses</b></small>
+                                    <br />
+                                    <div class="description"><b>Atividades:</b>
+                                        <br/>
+                                        <div>Manutenção e customização do produto WebFull (produto principal da empresa),Programação ASP, ASP.Net-C#,VB.Net, VB Script, Java Script, Ajax, JQuery, Windows Service,
+                                            Web Services, Windows Forms.
+                                            <br /> Banco de dados SQL Server 2000, 2005,2008,Oracle, Access.
+                                            <br/> Por último, responsável pelo setor de P&D, a cargo de desenvolver um novo produto em C#, POO, além de fazer analise e desenvolvimento de customizações mais
+                                            complexas.
+                                            <br/>
+                                            <i>Nesse período também realizei entrevistas para contratação de novos profissionais, para a matriz em SP e para a filial de Porto Alegre.
+                                                <br />
+                                            </i>
+                                        </div>
+                                        <br>
+                                        <b>Algumas tarefas realizadas:</b>
+                                        <br />
+                                        <ul>
+                                            <li>Desenvolvimento de componente e webservice para melhorar performance da aplicação em cerca de 90%
+                                            </li>
+                                            <li>Novos projetos independentes, horas vagas, que ajudaram a melhorar o gerenciamento de horas e projetos para os desenvolvedores e gerentes.
+                                            </li>
+                                            <li>Aplicação para extração de relatório alcançando uma melhora de performance e interação com o usuário (esse projeto ganhou o prêmio de inovação da empresa no
+                                                final de 2008)
+                                            </li>
+                                            <li>Cubo OLAP usando o componente Dundas.</li>
+                                            <li>Analise e desenvolvimento de métodos, componentes e estrutura para o atual sistema funcionar em n linguagens, respeitando questões de informação de cultura e
+                                                caracteres especiais, como os do leste asiático. Hoje o sistema funciona em 32 países e em 17 idiomas.</li>
+                                            <li>Wizard, pré-visualização e edição de documentos Word na web.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Travel Explorer</div>
+                                    <div class="year">2004 - 2006</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Desenvolvimento web</div>
+                                    <small class="pull-right smallExp"> 2004 – novembro 2006 - <b>2 anos</b></small>
+                                    <br />
+                                    <div class="description">Programação ASP 3,ASP.Net-C#, VB Script, Java Script. Banco de dados SQL Server 2000, 2005, Access, MySQL e PostGreSQL
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Conectt</div>
+                                    <div class="year">2004</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Desenvolvimento web</div>
+                                    <small class="pull-right smallExp"> 2004 - <b>menos de 1 ano</b></small>
+                                    <br />
+                                    <div class="description">PDesenvolvimento de Sistemas Programação ASP, VB Script, Java Script. Banco de dados SQL 2000 e Access.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Teledata Brasil</div>
+                                    <div class="year">2004</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Desenvolvimento de Sistemas</div>
+                                    <small class="pull-right smallExp"> junho de 2002 – 2004 - <b>2 anos</b></small>
+                                    <br />
+                                    <div class="description">
+                                        <i>[Terceirizada na Polícia Federal do Rio Grande do Sul SRRS/DPF]</i>
+                                        <br> Programação ASP, VB Script, Java Script. Banco de dados SQL e Access. Atualização da página de Intranet da Polícia Federal do Rio Grande do Sul SRRS/DPF, web designer.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Puras do Brasil</div>
+                                    <div class="year">2002 - 2004</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Desenvolvimento de Sistemas</div>
+                                    <small class="pull-right smallExp"> dezembro de 2002 – 2004 - <b>2 anos</b></small>
+                                    <br />
+                                    <div class="description"> Desenvolvimento de Sistemas Programação Visual Basic ASP, VB Script, Java Script. Banco de dados SQL e Access. Trabalhos em VB com assistência do Visual Source Safe
+                                        Atualização da página institucional www.puras.com.br, web designer. Testes com VB e ASP.NET.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="job clearfix">
+                                <div class="col-xs-3">
+                                    <div class="where">Rádio gaúcha</div>
+                                    <div class="year">1995 - 2002</div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="profession">Operadora de aúdio</div>
+                                    <small class="pull-right smallExp"> abril de 1996 – maio de 2002 - <b>6 anos 2 meses</b></small>
+                                    <br />
+                                    <div class="description">Responsável pela operação da mesa de áudio durante gravações e transmissões ao vivo respondendo por sua qualidade
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5" id="colunaDireita">
+                        <div class="box ">
+                            <h2 title="Curiosx? Então clique!" data-toggle="collapse" class="whyJelielH2" data-target="#whyjeliel">Why Jeliel?
+                                <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
                             </h2>
-                            <div id="idiomasDiv" class="collapse">
-                                <div id="language-skills" ng-repeat="item in items">
-                                    <div class="skill">
-                                        <span ng-show="$root.logado" style="color:gray">
-                                        <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                                  </span>
-                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+                            <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
+                                <small class="pull-right smallExp">4 junho 2015 - <b>Porto Alegre</b></small>
+                                <br /> Well, <b>Jeliel</b> is my guardian angel, and because angels doesn't have a gender, and for now is how I'm feeling myself, without a gender or a name. Sometimes just a
+                                thing.
+                                <br /> Since I started the transition, I'm trying to get better, evolve, my look and my mind... day by day, step by step, feeling by feeling, sorrow by sorrow, loss by loss and
+                                joy by joy
+                                <i class="fa fa-smile-o" aria-hidden="true"></i> ...I know, is tough, but isn't impossible.
+                                <br /> Despite the issues, I hope to reach my dreams.
+                                <br /> Some people... well, some close people call me <b>Evelyn</b>, due the first three letters of my old name, but I don't know if they are being sarcastic
+                                <i class="fa fa-meh-o" aria-hidden="true"></i> hahahaha
+                                <br /> Thanks to all who support me, I love you
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                <br /> And for those who don't like, kisses on the shoulder!!! rsrs
+                                <br />
+                            </div>
+                        </div>
+                        <!-- CONTACT -->
+                        <div class="box clearfix">
+                            <h2>Contatos e afins.
+                            </h2>
+                            <div id="contatosDiv" class="collapse">
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-home fa-fw"></span>
+                                    </div>
+                                    <div class="title only pull-right">Porto Alegre - RS/Brasil </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-envelope fa-fw"></span>
+                                    </div>
+                                    <div class="title only pull-right">jeliel@transnerd.com.br</div>
+                                </div>
 
-                                        <div class="icons pull-right">
-                                            <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-medium fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Medium</div>
+                                    <div class="description pull-right">
+                                        <a href="https://medium.com/transnerd">medium.com/transnerd</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-linkedin fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Linkedin</div>
+                                    <div class="description pull-right">
+                                        <a href="https://www.linkedin.com/in/jelielmendes">in/jelielmendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-twitter fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Twitter</div>
+                                    <div class="description pull-right">
+                                        <a href="https://twitter.com/jelielmendes">twitter.com/jelielmendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-facebook fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Facebook</div>
+                                    <div class="description pull-right">
+                                        <a href="https://www.facebook.com/jelielmendes">facebook.com/jelielmendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-instagram fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Instagram</div>
+                                    <div class="description pull-right">
+                                        <a href="https://www.instagram.com/jelielmendes/">instagram.com/jelielmendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-youtube fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Youtube</div>
+                                    <div class="description pull-right">
+                                        <a href="https://www.youtube.com/channel/UCBSEHB7hg-T8CRRpxJgNDDw">Canal</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-github fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">GitHub</div>
+                                    <div class="description pull-right">
+                                        <a href="https://github.com/jelielmendes">github.com/jelielmendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-bitbucket fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Bitbucket</div>
+                                    <div class="description pull-right">
+                                        <a href="https://bitbucket.org/jeliel/">bitbucket.org/jeliel/</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-google-plus fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Google+</div>
+                                    <div class="description pull-right">
+                                        <a href="https://plus.google.com/+JelielMendes/">+JelielMendes</a>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="icon pull-left text-center">
+                                        <span class="fa fa-skype fa-fw"></span>
+                                    </div>
+                                    <div class="title pull-right">Skype</div>
+                                    <div class="description pull-right">
+                                        <a href="skype:jelielmendes?dropdown">jelielmendes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- SKILLS -->
+                        <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
+                            <div ng-show="$root.logado">
+                                <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i>
+                                </button>
+                                <br />
+                            </div>
+                            <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="text" id="Habilidade" class="form-control input-sm" ng-model="item.texto" placeholder="Habilidade"></input>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <input type="number" class="form-control input-sm" min="0" max="1" value="0.1" ng-model="item.valor" placeholder="Valor"></input>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button ng-click="setSaveMethod()" class="btn btn-link btn-sm">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-link btn-sm" ng-click="cancel()">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <h2>Habilidades
+                                </h2>
+                                <div class="skills collapse" id="skillsDiv">
+                                    <div ng-repeat="item in items">
+                                        <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
+                                            <span ng-show="$root.logado">
+                                                <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                            </span>
+                                            <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+
                                         </div>
                                     </div>
 
+                                    <div class="skills-legend clearfix">
+                                        <div class="legend-left legend">Iniciante</div>
+                                        <div class="legend-left legend">
+                                            <span>Proficiente</span>
+                                        </div>
+                                        <div class="legend-right legend">
+                                            <span>Pleno</span>
+                                        </div>
+                                        <div class="legend-right legend">Sênior</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div ng-controller="qualidadesController" id="qualidadesControllerDiv">
+                            <div ng-show="$root.logado">
+                                <button class="btn btn-sm btn-link text-left" style="max-width: 90% ;overflow: hidden; text-overflow: ellipsis;" ng-click="showHideForm()">{{addButtonLabel()}}</i>
+                                </button>
+                                <br />
+                            </div>
+                            <div ng-show="$root.logado && formIsOpen" id="habilidadesFormDiv">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <input type="text" id="Qualidades" class="form-control input-sm" ng-model="item.texto" placeholder="Qualidade"></input>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                        <button ng-click="setSaveMethod()" class="btn btn-link btn-sm">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-link btn-sm" ng-click="cancel()">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- qualidades -->
+                            <div class="box">
+                                <h2>Qualidades
+                                </h2>
+                                <ul style="font-size:1.3em;" class="collapse"  id="qualidadesUl">
+                                    <li ng-repeat="item in items">
+                                        <span ng-show="$root.logado" style="color:gray">
+                                            <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                        </span>
+                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- LANGUAGES -->
+
+                        <div ng-controller="idiomasController" id="idiomasControllerDiv">
+                            <div ng-show="$root.logado">
+                                <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}
+                                </button>
+                                <br />
+                            </div>
+                            <div ng-show="$root.logado && formIsOpen" id="idiomasFormDiv">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="text" id="Idioma" class="form-control input-sm" ng-model="item.texto" placeholder="Idioma"></input>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <input type="number" class="form-control input-sm" title="Fluência (0 a 100)" min="0" max="100" value="10" ng-model="item.valor" placeholder="Conhecimento"></input>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button ng-click="setSaveMethod()" class="btn btn-link btn-sm">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-link btn-sm" ng-click="cancel()">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <h2>Idiomas
+                                </h2>
+                                <div id="idiomasDiv" class="collapse">
+                                    <div id="language-skills">
+                                        <div class="skill"  ng-repeat="item in items" >
+                                            <span ng-show="$root.logado" style="color:gray">
+                                                <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                            </span>
+                                            <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+
+                                            <div class="icons pull-right">
+                                                <div style="width: {{item.valor}}%; overflow: hidden; height: 14px;" class="icons-red"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div ng-controller="interessesController" id="interessesControllerDiv">
-                        <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i></button>
-                            <br />
-                        </div>
-                        <div ng-show="$root.logado && formIsOpen">
-                            <div class="row">
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control input-sm" ng-model="item.texto" placeholder="Interesse"></input>
+                        <div ng-controller="interessesController" id="interessesControllerDiv">
+                            <div ng-show="$root.logado">
+                                <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i>
+                                </button>
+                                <br />
+                            </div>
+                            <div ng-show="$root.logado && formIsOpen">
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <input type="text" class="form-control input-sm" ng-model="item.texto" placeholder="Interesse"></input>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button ng-click="setSaveMethod()" class="btn btn-link btn-sm">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-link btn-sm" ng-click="cancel()">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-xs-1">
-                                    <button ng-click="setSaveMethod()" class="btn btn-link btn-sm"><i class="fa fa-check" aria-hidden="true"></i></button>
-                                </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-link btn-sm" ng-click="cancel()"><i class="fa fa-ban" aria-hidden="true"></i></button>                                    </div>
+                            </div>
+                            <!-- HOBBIES -->
+                            <div class="box">
+                                <h2>Interesses
+                                </h2>
+                                <div   class="collapse" id="interessesDiv">
+
+
+                                    <span class="hobby"  ng-repeat="item in items">
+                                        <i ng-show="$root.logado" ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                        <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
+                                    </div>
+
+                                </span>
                             </div>
                         </div>
-                        <!-- HOBBIES -->
-                        <div class="box">
-                            <h2>Interesses
-                            </h2>
-                            <span style="float: left" class="collapse" id="interessesDiv" ng-repeat="item in items">
-                                 
-                                     
-                                <span class="hobby">
-                                     <i  ng-show="$root.logado"  ng-click="remove(item)" title="Remover" 
-                                        class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
-                            <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
-                            </span>
-
-                            </span>
-                        </div>
+                        <!-- Fotos -->
                     </div>
-                    <!-- Fotos -->
                 </div>
             </div>
-        </div>
-</body>
+    </body>
 
 </html>
 <script src="js/site.js"></script>
