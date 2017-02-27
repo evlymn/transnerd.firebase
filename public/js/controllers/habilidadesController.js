@@ -99,6 +99,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
             toastr["success"]("Editado");
             console.log('Editado');
             $scope.showHideForm();
+            $scope.$apply();
         }, function (error) {
             console.error(error);
             toastr["danger"]('Erro ao tentar editar');
