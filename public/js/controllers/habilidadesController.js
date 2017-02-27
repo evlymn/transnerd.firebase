@@ -1,5 +1,5 @@
 
-modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray) {
+modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray, databaseService) {
     var childRef = "habilidades";
     var msgaddButtonLabel = "Adicionar nova habilidade";
     var databaseRef = firebase.database().ref();
@@ -19,13 +19,20 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
     getItemsFromDb();
 
     function getItemsFromDb() {
-        $scope.items = $firebaseArray(databaseRef.child(childRef));
-        console.log('get data');
+        databaseService.retrievelAllAsync(childRef).then(function (data) {
+            $scope.items = data;
+            $scope.$apply();
+            $scope.items.$loaded().then(function () {
+                showHabilidade(null);
+            });
+            console.log('get data ' + childRef);
+        }, function (error) {
+            console.log(error);
+            console.log('erro ' + childRef);
+        });
     }
 
-    $scope.items.$loaded().then(function () {
-        showHabilidade(null);
-    });
+
 
     $scope.setSaveMethod = function () {
         if ($scope.item.id) {
@@ -41,19 +48,25 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
             texto: $scope.item.texto,
             valor: $scope.item.valor
         }
-        var newKey = firebase.database().ref().child(childRef).push().key;
-        updateNode = {};
-        updateNode['/' + childRef + '/' + newKey] = newItem;
-        databaseRef.update(updateNode);
+        databaseService.createAsync(newItem, childRef).then(function (newKey) {
+            console.info(childRef + ' item adicionado');
+            showHabilidade(newKey);
+            toastr["success"]("Adicionado: " + newItem.texto);
+        }, function (error) {
+            console.error(childRef + error);
+            toastr["danger"]("Erro ao tentar adicionar: " + newItem.texto);
+        })
         $scope.showHideForm();
-        toastr["success"]("Adicionado: " + $scope.item.texto);
-        showHabilidade(newKey);
     }
 
-    $scope.remove = function (item) {
-        databaseRef.child(childRef + "/" + item.$id).remove();
-        console.log('item removido');
-        toastr["warning"]("Removido: " + item.texto);
+    $scope.remove = function (id) {
+        databaseService.deleteByIdAsync(id, childRef).then(function () {
+            console.info('item removido');
+            toastr["warning"]("Removido");
+        }, function (error) {
+            console.error(error);
+            toastr["danger"]('Erro ao tentar remover');
+        });
     }
 
     $scope.cancel = function () {
@@ -82,13 +95,14 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
             valor: $scope.item.valor
         };
 
-        updateNode = {};
-        updateNode['/' + childRef + '/' + $scope.item.id] = updateItem;
-        databaseRef.update(updateNode);
-        toastr["success"]("Atualizado: " + $scope.item.texto);
-        console.log('atualizado');
-        $scope.showHideForm();
-        showHabilidade(null);
+        databaseService.updateByIdAsync($scope.item.id, updateItem, childRef).then(function (data) {
+            toastr["success"]("Editado");
+            console.log('Editado');
+            $scope.showHideForm();
+        }, function (error) {
+            console.error(error);
+            toastr["danger"]('Erro ao tentar editar');
+        })
     }
 
     $scope.showHideForm = function () {

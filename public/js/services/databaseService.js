@@ -19,6 +19,7 @@ modulo.service('databaseService', ['$firebaseArray', function ($firebaseArray) {
         updateNode = {};
         updateNode['/' + childRef + '/' + id] = item;
         databaseRef.update(updateNode);
+        return updateNode;
     }
 
     this.retrievelAllAsync = async function (childRef) {

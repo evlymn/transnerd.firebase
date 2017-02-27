@@ -754,7 +754,7 @@
                                     <div ng-repeat="item in items">
                                         <div class="item-skills" id="{{item.$id}}" title="{{item.texto}}" data-percent="{{item.valor}}" style="overflow: hidden; width: 238.231px;">
                                             <span ng-show="$root.logado">
-                                                <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                                <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                             </span>
                                             <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
 

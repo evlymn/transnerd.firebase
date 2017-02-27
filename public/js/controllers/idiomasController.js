@@ -74,7 +74,6 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             toastr["success"]("Editado");
             console.log('Editado');
             $scope.showHideForm();
-            showHabilidade(null);
         }, function (error) {
             console.error(error);
             toastr["danger"]('Erro ao tentar editar');
