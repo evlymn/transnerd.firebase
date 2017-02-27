@@ -366,7 +366,7 @@
                             </h2>
 
                             <div class="collapse " id="education1">
-                                <ul id="education" class="clearfix" >
+                                <ul id="education" class="clearfix">
                                     <li data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
                                         <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
 
@@ -588,26 +588,40 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5" id="colunaDireita">
-                        <div class="box ">
-                            <h2 title="Curiosx? Então clique!" data-toggle="collapse" class="whyJelielH2" data-target="#whyjeliel">Why Jeliel?
-                                <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
-                            </h2>
-                            <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
-                                <small class="pull-right smallExp">4 junho 2015 - <b>Porto Alegre</b></small>
-                                <br /> Well, <b>Jeliel</b> is my guardian angel, and because angels doesn't have a gender, and for now is how I'm feeling myself, without a gender or a name. Sometimes just a
-                                thing.
-                                <br /> Since I started the transition, I'm trying to get better, evolve, my look and my mind... day by day, step by step, feeling by feeling, sorrow by sorrow, loss by loss and
-                                joy by joy
-                                <i class="fa fa-smile-o" aria-hidden="true"></i> ...I know, is tough, but isn't impossible.
-                                <br /> Despite the issues, I hope to reach my dreams.
-                                <br /> Some people... well, some close people call me <b>Evelyn</b>, due the first three letters of my old name, but I don't know if they are being sarcastic
-                                <i class="fa fa-meh-o" aria-hidden="true"></i> hahahaha
-                                <br /> Thanks to all who support me, I love you
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                                <br /> And for those who don't like, kisses on the shoulder!!! rsrs
+                        <div ng-controller="ocultaController">
+                            <button ng-show="$root.logado" ng-click="showHideForm()" class="btn btn-link btn-sm">{{isOpenSobreForm? 'Cancelar edição sessão oculta':'Editar sessão oculta' }}</button>
+                            <div class="container-fluid" ng-show="isOpenSobreForm && $root.logado">
                                 <br />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input type="text" id="titulo" class="form-control input-sm" ng-model="tituloEdit" placeholder="Título"></input>
+
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="summernoteDefault">
+                                            <summernote id="sobreSummernote" ng-model="textoEdit"></summernote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button ng-click="save()" class="btn btn-block btn-default btn-sm"> Salvar</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button ng-click="showHideForm()" class="btn btn-block btn-default btn-sm"> Cancelar</button>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="box" ng-show="items" ng-repeat="item in items | limitTo:1">
+                                <h2 title="Curiosx? Então clique!" data-toggle="collapse" class="whyJelielH2" data-target="#whyjeliel">{{item.titulo}}
+                                    <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
+                                </h2>
+                                <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
+                                                                <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+
+                                    
+                                </div>
                             </div>
                         </div>
                         <!-- CONTACT -->
@@ -803,7 +817,7 @@
                             <div class="box">
                                 <h2>Qualidades
                                 </h2>
-                                <ul style="font-size:1.3em;" class="collapse"  id="qualidadesUl">
+                                <ul style="font-size:1.3em;" class="collapse" id="qualidadesUl">
                                     <li ng-repeat="item in items">
                                         <span ng-show="$root.logado" style="color:gray">
                                             <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
@@ -848,7 +862,7 @@
                                 </h2>
                                 <div id="idiomasDiv" class="collapse">
                                     <div id="language-skills">
-                                        <div class="skill"  ng-repeat="item in items" >
+                                        <div class="skill" ng-repeat="item in items">
                                             <span ng-show="$root.logado" style="color:gray">
                                                 <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                             </span>
@@ -891,13 +905,13 @@
                             <div class="box">
                                 <h2>Interesses
                                 </h2>
-                                <div   class="collapse" id="interessesDiv">
+                                <div class="collapse" id="interessesDiv">
 
 
-                                    <span class="hobby"  ng-repeat="item in items">
+                                    <span class="hobby" ng-repeat="item in items">
                                         <i ng-show="$root.logado" ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                         <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
-                                    </div>
+                                </div>
 
                                 </span>
                             </div>
@@ -920,3 +934,4 @@
 <script src="js/controllers/idiomasController.js"></script>
 <script src="js/controllers/qualidadesController.js"></script>
 <script src="js/controllers/interessesController.js"></script>
+<script src="js/controllers/ocultaController.js"></script>
