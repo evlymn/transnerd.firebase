@@ -895,7 +895,7 @@
 
 
                                     <span class="hobby"  ng-repeat="item in items">
-                                        <i ng-show="$root.logado" ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                        <i ng-show="$root.logado" ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                         <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
                                     </div>
 

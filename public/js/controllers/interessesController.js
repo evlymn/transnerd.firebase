@@ -1,8 +1,7 @@
 
-modulo.controller('interessesController', function ($scope, $rootScope, $firebaseArray) {
+modulo.controller('interessesController', function ($scope, $rootScope, databaseService) {
     var childRef = "interesses";
     var msgaddButtonLabel = "Adicionar novo interesse";
-    var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
     $scope.items = [];
@@ -18,8 +17,17 @@ modulo.controller('interessesController', function ($scope, $rootScope, $firebas
     getItemsFromDb();
 
     function getItemsFromDb() {
-        $scope.items = $firebaseArray(databaseRef.child(childRef));
-        console.log('get data ' + childRef);
+        databaseService.retrievelAllAsync(childRef).then(function (data) {
+            $scope.items = data;
+            $scope.$apply();
+            $scope.items.$loaded().then(function () {
+                showHabilidade(null);
+            });
+            console.log('get data ' + childRef);
+        }, function (error) {
+            console.log(error);
+            console.log('erro ' + childRef);
+        });
     }
 
     $scope.setSaveMethod = function () {
@@ -35,18 +43,23 @@ modulo.controller('interessesController', function ($scope, $rootScope, $firebas
             timeid: new Date().getTime(),
             texto: $scope.item.texto
         }
-        var newKey = firebase.database().ref().child(childRef).push().key;
-        updateNode = {};
-        updateNode['/' + childRef + '/' + newKey] = newItem;
-        databaseRef.update(updateNode);
-        toastr["success"]("Adicionado: " + $scope.item.texto);
-        $scope.showHideForm();
+        databaseService.createAsync(newItem, childRef).then(function (newKey) {
+            console.info(childRef + ' item adicionado');
+            toastr["success"]("Adicionado: " + newItem.texto);
+        }, function (error) {
+            console.error(childRef + error);
+            toastr["danger"]("Erro ao tentar adicionar: " + newItem.texto);
+        })
     }
 
-    $scope.remove = function (item) {
-        databaseRef.child(childRef + "/" + item.$id).remove();
-        console.log('item removido');
-        toastr["warning"]("Removido: " + item.texto);
+    $scope.remove = function (id) {
+        databaseService.deleteByIdAsync(id, childRef).then(function () {
+            console.info('item removido');
+            toastr["warning"]("Removido");
+        }, function (error) {
+            console.error(error);
+            toastr["danger"]('Erro ao tentar remover');
+        });
     }
 
     $scope.cancel = function () {
@@ -72,14 +85,15 @@ modulo.controller('interessesController', function ($scope, $rootScope, $firebas
             timeid: $scope.item.timeid,
             texto: $scope.item.texto
         };
-
-        updateNode = {};
-        updateNode['/' + childRef + '/' + $scope.item.id] = updateItem;
-        databaseRef.update(updateNode);
-        toastr["success"]("Atualizado: " + $scope.item.texto);
-        console.log('atualizado');
-        $scope.showHideForm();
-        showHabilidade(null);
+        databaseService.updateByIdAsync($scope.item.id, updateItem, childRef).then(function (data) {
+            toastr["success"]("Editado");
+            console.log('Editado');
+            $scope.showHideForm();
+            $scope.$apply();
+        }, function (error) {
+            console.error(error);
+            toastr["danger"]('Erro ao tentar editar');
+        })
     }
 
     $scope.showHideForm = function () {

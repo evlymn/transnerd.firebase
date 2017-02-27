@@ -2,7 +2,6 @@
 modulo.controller('idiomasController', function ($scope, $rootScope, databaseService) {
     var childRef = "idiomas";
     var msgaddButtonLabel = "Adicionar novo idioma";
-    var databaseRef = firebase.database().ref();
     $scope.formIsOpen = false;
     $scope.items = [];
 
@@ -43,7 +42,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             valor: $scope.item.valor
         }
 
-        databaseService.createAsync(newItem,childRef).then(function (newKey) {
+        databaseService.createAsync(newItem, childRef).then(function (newKey) {
             console.info(childRef + ' item adicionado');
             toastr["success"]("Adicionado: " + newItem.texto);
         }, function (error) {
@@ -55,7 +54,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
     }
 
     $scope.remove = function (id) {
-        databaseService.deleteByIdAsync(id,childRef).then(function () {
+        databaseService.deleteByIdAsync(id, childRef).then(function () {
             console.info('item removido');
             toastr["warning"]("Removido");
         }, function (error) {
@@ -70,7 +69,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             texto: $scope.item.texto,
             valor: $scope.item.valor
         };
-        databaseService.updateByIdAsync($scope.item.id, updateItem,childRef).then(function () {
+        databaseService.updateByIdAsync($scope.item.id, updateItem, childRef).then(function () {
             toastr["success"]("Editado");
             console.log('Editado');
             $scope.showHideForm();
@@ -99,7 +98,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
         return $scope.formIsOpen ? ($scope.item.id ? 'Cancelar edição de :' + $scope.item.texto : 'Cancelar') : msgaddButtonLabel;
     }
 
-    
+
 
     $scope.showHideForm = function () {
         if ($scope.formIsOpen) {

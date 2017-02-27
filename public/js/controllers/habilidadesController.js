@@ -1,8 +1,7 @@
 
-modulo.controller('habilidadesController', function ($scope, $rootScope, $firebaseArray, databaseService) {
+modulo.controller('habilidadesController', function ($scope, $rootScope, databaseService) {
     var childRef = "habilidades";
     var msgaddButtonLabel = "Adicionar nova habilidade";
-    var databaseRef = firebase.database().ref();
 
     $scope.formIsOpen = false;
     $scope.items = [];
@@ -99,6 +98,7 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, $fireba
             toastr["success"]("Editado");
             console.log('Editado');
             $scope.showHideForm();
+            showHabilidade(null);
             $scope.$apply();
         }, function (error) {
             console.error(error);
