@@ -806,7 +806,7 @@
                                 <ul style="font-size:1.3em;" class="collapse"  id="qualidadesUl">
                                     <li ng-repeat="item in items">
                                         <span ng-show="$root.logado" style="color:gray">
-                                            <i ng-click="remove(item)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                            <i ng-click="remove(item.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                         </span>
                                         <span ng-click="fillFormObject(item)" title="Editar" class="cursorHand">{{item.texto}} </span>
                                     </li>
