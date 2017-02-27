@@ -1,18 +1,21 @@
-modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArray, htmlService) {
+modulo.controller('sobreController', function ($scope, $rootScope, htmlService, databaseService) {
+    var childRef = "sobres";
     $scope.htmlService = htmlService;
     $scope.isOpenSobreForm = false;
     $scope.sobreTextoEdit = "";
     $scope.sobreTexto = "";
 
-    var databaseRef = firebase.database().ref();
-
-
     getFromDB();
     function getFromDB() {
-        $scope.sobres = $firebaseArray(databaseRef.child("sobres").orderByKey().limitToLast(1));
+        databaseService.retrievelimitToLastAsync(1, childRef).then(function (data) {
+            $scope.sobres = data;
+            $scope.$apply();
+            console.log('get data ' + childRef);
+        }, function (error) {
+            console.log(error);
+            console.log('erro ' + childRef);
+        });
     }
-
-
 
     $scope.saveSobre = function () {
         pushToDb();
@@ -24,9 +27,15 @@ modulo.controller('sobreController', function ($scope, $rootScope, $firebaseArra
             texto: $scope.sobreTextoEdit
         };
 
-        databaseRef.child("sobres").push(sobre);
-        toastr["success"]("Sobre editado");
-        $scope.showHideSobreForm();
+        databaseService.createAsync(sobre, childRef).then(function (newKey) {
+            console.info(childRef + ' item adicionado');
+            toastr["success"]("Adicionado: " + newItem.texto);
+            $scope.showHideSobreForm();
+            $scope.$apply();
+        }, function (error) {
+            console.error(childRef + error);
+            toastr["danger"]("Erro ao tentar adicionar: " + newItem.texto);
+        })
     }
 
     $scope.showHideSobreForm = function () {
