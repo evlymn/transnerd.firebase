@@ -45,7 +45,6 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
 
         databaseService.createAsync(newItem,childRef).then(function (newKey) {
             console.info(childRef + ' item adicionado');
-            console
             toastr["success"]("Adicionado: " + newItem.texto);
         }, function (error) {
             console.error(childRef + error);

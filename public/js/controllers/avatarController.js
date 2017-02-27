@@ -1,20 +1,24 @@
 
-modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArray,databaseService) {
+modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArray, databaseService) {
+    var childRef = "avatares";
     $scope.newImage = '';
     $scope.croppedAvatar = '';
     $scope.filename = '';
     $scope.totalUp = 0;
     $scope.avatares = [];
-    var databaseRef = firebase.database().ref();
  
-
     getFromDB();
     function getFromDB() {
-        $scope.avatares = $firebaseArray(databaseRef.child("avatares").orderByKey().limitToLast(1));
-     }
+        databaseService.retrievelimitToLastAsync(1, childRef).then(function (data) {
+            $scope.avatares = data;
+            $scope.$apply();
+            console.log('get data ' + childRef);
+        }, function (error) {
+            console.log(error);
+            console.log('erro ' + childRef);
+        });
+    }
 
-
-    
     var handleFileSelect = function (evt) {
         var file = evt.currentTarget.files[0];
         console.log(file.type);
@@ -61,7 +65,7 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
                 var downloadURL = uploadTask.snapshot.downloadURL;
                 console.log(downloadURL);
                 pushAvatar(downloadURL)
-                $scope.enviando=false;
+                $scope.enviando = false;
                 $scope.$apply();
             });
     }
@@ -71,8 +75,14 @@ modulo.controller('avatarController', function ($scope, $rootScope, $firebaseArr
             datacadastro: new Date().getTime(),
             avatarUrl: url
         };
-        databaseRef.child("avatares").push(avatar);
-        toastr["success"]("Avatar adicionado");
+      databaseService.createAsync(avatar, childRef).then(function (newKey) {
+            console.info(childRef + ' item adicionado');
+            toastr["success"]("Adicionado: " + newItem.texto);
+        }, function (error) {
+            console.error(childRef + error);
+            toastr["danger"]("Erro ao tentar adicionar: " + newItem.texto);
+        })  
+        
         $scope.openAvatarEdit();
     }
 
