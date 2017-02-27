@@ -2,32 +2,27 @@
 modulo.service('databaseService', ['$firebaseArray', function ($firebaseArray) {
 
     var databaseRef = firebase.database().ref();
-    var childRef = "";
-
-    this.setChildRef = function (childRef) {
-        this.childRef = childRef;
-    };
-
-    this.createAsync = async function (item) {
+    
+    this.createAsync = async function (item, childRef) {
         var newKey = firebase.database().ref().child(this.childRef).push().key;
         newItem = {};
-        newItem['/' + this.childRef + '/' + newKey] = item;
+        newItem['/' + childRef + '/' + newKey] = item;
         databaseRef.update(newItem);
         return newKey;
     }
 
-    this.deleteByIdAsync = async function (id) {
-        databaseRef.child(this.childRef + "/" + id).remove();
+    this.deleteByIdAsync = async function (id,childRef) {
+        databaseRef.child(childRef + "/" + id).remove();
     }
 
-    this.updateByIdAsync = async function (id, item) {
+    this.updateByIdAsync = async function (id, item,childRef) {
         updateNode = {};
-        updateNode['/' + this.childRef + '/' + id] = item;
+        updateNode['/' + childRef + '/' + id] = item;
         databaseRef.update(updateNode);
     }
 
-    this.retrievelAllAsync = async function () {
-        return $firebaseArray(databaseRef.child(this.childRef));
+    this.retrievelAllAsync = async function (childRef) {
+        return $firebaseArray(databaseRef.child(childRef));
     }
 
 }]);
