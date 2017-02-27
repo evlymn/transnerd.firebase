@@ -3,7 +3,6 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
     var childRef = "idiomas";
     var msgaddButtonLabel = "Adicionar novo idioma";
     var databaseRef = firebase.database().ref();
-    databaseService.setChildRef(childRef);
     $scope.formIsOpen = false;
     $scope.items = [];
 
@@ -27,7 +26,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
     getItemsFromDb();
 
     function getItemsFromDb() {
-        databaseService.retrievelAllAsync().then(function (data) {
+        databaseService.retrievelAllAsync(childRef).then(function (data) {
             $scope.items = data;
             $scope.$apply();
             console.log('get data ' + childRef);
@@ -44,7 +43,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             valor: $scope.item.valor
         }
 
-        databaseService.createAsync(newItem).then(function (newKey) {
+        databaseService.createAsync(newItem,childRef).then(function (newKey) {
             console.info(childRef + ' item adicionado');
             console
             toastr["success"]("Adicionado: " + newItem.texto);
@@ -57,7 +56,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
     }
 
     $scope.remove = function (id) {
-        databaseService.deleteByIdAsync(id).then(function () {
+        databaseService.deleteByIdAsync(id,childRef).then(function () {
             console.info('item removido');
             toastr["warning"]("Removido");
         }, function (error) {
@@ -72,7 +71,7 @@ modulo.controller('idiomasController', function ($scope, $rootScope, databaseSer
             texto: $scope.item.texto,
             valor: $scope.item.valor
         };
-        databaseService.updateByIdAsync($scope.item.id, updateItem).then(function () {
+        databaseService.updateByIdAsync($scope.item.id, updateItem,childRef).then(function () {
             toastr["success"]("Editado");
             console.log('Editado');
             $scope.showHideForm();

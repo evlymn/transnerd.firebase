@@ -4,7 +4,7 @@ modulo.service('databaseService', ['$firebaseArray', function ($firebaseArray) {
     var databaseRef = firebase.database().ref();
     
     this.createAsync = async function (item, childRef) {
-        var newKey = firebase.database().ref().child(this.childRef).push().key;
+        var newKey = firebase.database().ref().child(childRef).push().key;
         newItem = {};
         newItem['/' + childRef + '/' + newKey] = item;
         databaseRef.update(newItem);
