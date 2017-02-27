@@ -19,10 +19,7 @@ modulo.controller('interessesController', function ($scope, $rootScope, database
     function getItemsFromDb() {
         databaseService.retrievelAllAsync(childRef).then(function (data) {
             $scope.items = data;
-            $scope.$apply();
-            $scope.items.$loaded().then(function () {
-                showHabilidade(null);
-            });
+            $scope.$apply();           
             console.log('get data ' + childRef);
         }, function (error) {
             console.log(error);

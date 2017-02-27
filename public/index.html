@@ -373,7 +373,7 @@
                                         <div class="description pull-right">
                                             <h3 ng-class="item.$id==post.id? '' : ''">
                                                 <span id="postEditDiv" ng-show="logado">
-                                                    <i title="Remover" ng-click="remove(item)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
+                                                    <i title="Remover" ng-click="remove(item.$id)" class="fa fa-minus-circle fa-lg cursorHand" aria-hidden="true"></i>
                                                 </span>
                                                 <span title="Editar: {{item.titulo}}" ng-click="updatePostObject(item)" class="cursorHand"> {{item.titulo}}</span>
                                             </h3>
