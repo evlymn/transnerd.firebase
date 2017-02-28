@@ -49,28 +49,34 @@
 
     <body>
         <div ng-controller="loginController" class="form-style-8">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
-                            <i class="fa fa-sign-in " aria-hidden="true"></i>
-                        </button>
-                        <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    <div class="col-sm-3" ng-show="$root.login">
+            <div class="text-center">
+                <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
+                    <b> {{$root.login? 'cancelar':'login'}}</b>
+                </button>
+                <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
+                     <b>logout</b>
+                </button>
+            </div>
+            <div class="text-center">
+
+                
+                
+                <div class="row text-center" style="margin-left: 20%;margin-right: 20%">
+                    <div class="col-sm-6" ng-show="$root.login">
                         <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
                     </div>
-                    <div class="col-sm-3" ng-show="$root.login">
+                    <div class="col-sm-6" ng-show="$root.login">
                         <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
                     </div>
-                    <div class="col-sm-1" ng-show="$root.login">
-                        <button ng-click="doLogin()" class="btn">
-                            <i class="fa fa-check " aria-hidden="true"></i>
+                    </div>
+                     <div class="row">
+                    <div class="col-sm-12" ng-show="$root.login">
+                        <button ng-click="doLogin()" class="btn"> <b> logar</b>
+                              
                         </button>
                     </div>
                 </div>
+                 
             </div>
         </div>
         <div class="container">
@@ -79,7 +85,7 @@
                     <div id="photo-header" class="text-center">
                         <!-- PHOTO (AVATAR) -->
                         <div class="form-style-8" ng-controller="avatarController">
-                             <div class="text-center" ng-show="$root.logado">
+                            <div class="text-center" ng-show="$root.logado">
                                 <button title="Editar imagem de avatar" class="btn btn-link" ng-click="openAvatarEdit()">
                                     <i class="fa fa-camera" aria-hidden="true"></i>
                                 </button>
@@ -87,7 +93,7 @@
                             <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
                                 <img ng-src="{{item.avatarUrl}}" />
                             </div>
-                           
+
                             <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -228,8 +234,8 @@
                                     </div>
 
                                 </div>
-                               
-                                <span ng-repeat="item in items | limitTo:1"> 
+
+                                <span ng-repeat="item in items | limitTo:1">
                                     <div ng-hide="isOpenForm" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
                                 </span>
                             </div>
@@ -358,7 +364,7 @@
                         </h2>
                         <div class="job clearfix">
                             <div class="col-xs-3">
-                                <div class="where">ThoughtWorks</div>
+                                <div class="where" >ThoughtWorks</div>
                                 <div class="year" title="Setembro 2016">2016</div>
                             </div>
                             <div class="col-xs-9">

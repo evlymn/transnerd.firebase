@@ -223,6 +223,7 @@ EXPERIENCES
     .job .where {
         font-size: 1.4em;
         font-weight: bold;
+          max-width: 98% ;overflow: hidden; text-overflow: ellipsis;
     }
 
     .job .year {
