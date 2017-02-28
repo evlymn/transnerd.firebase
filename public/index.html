@@ -51,7 +51,7 @@
         <div ng-controller="loginController" class="form-style-8">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-1">
+                    <div class="col-sm-12">
                         <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
                             <i class="fa fa-sign-in " aria-hidden="true"></i>
                         </button>
@@ -70,7 +70,6 @@
                             <i class="fa fa-check " aria-hidden="true"></i>
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -80,14 +79,15 @@
                     <div id="photo-header" class="text-center">
                         <!-- PHOTO (AVATAR) -->
                         <div class="form-style-8" ng-controller="avatarController">
-                            <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
-                                <img ng-src="{{item.avatarUrl}}" />
-                            </div>
-                            <div class="text-center" ng-show="$root.logado">
-                                <button class="btn btn-link" ng-click="openAvatarEdit()">
+                             <div class="text-center" ng-show="$root.logado">
+                                <button title="Editar imagem de avatar" class="btn btn-link" ng-click="openAvatarEdit()">
                                     <i class="fa fa-camera" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            <div id="photo" ng-repeat="item in avatares" class="hand" data-toggle="collapse" data-target="#fotos">
+                                <img ng-src="{{item.avatarUrl}}" />
+                            </div>
+                           
                             <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -202,84 +202,39 @@
                             </div>
                         </div>
                         <div id="text-header">
-                            <h1>
-                                Olá,
-                                <br> eu sou a
-                                <span>Jeliel</span><sup id="idadeSup">42</sup> e aqui você conhecerá um pouco mim
-                                <i class="fa fa-smile-o" aria-hidden="true"></i>
-                            </h1>
-                            <br />
-                            <small class="hand" data-toggle="collapse" data-target="#turnupradio">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                <b>It</b> was time that I opened my eyes
-                                <b>I'm</b> leaving the past behind
-                                <b>Nothing's</b> ever what it seems
-                                <b>Including</b> this time and this crazy dream
-                                <i class="fa fa-heart-o" aria-hidden="true"></i>
-                            </small>
-                            <div class="collapse" id="turnupradio">
-                                <br>
-                                <p>When the world starts to get you down
-                                    <br /> And nothing seems to go your way
-                                    <br /> And the noise of a maddening crowd
-                                    <br /> Makes you feel like you're going to go insane</p>
-                                <p>There's a glow of a distant light
-                                    <br /> Calling you to come outside
-                                    <br /> To feel the wind in your face and your skin
-                                    <br /> And it's here I begin my story</p>
-                                <p>Turn up the radio
-                                    <br /> Turn up the radio
-                                    <br /> Don't ask me where I wanna go
-                                    <br /> We gotta turn up the radio</p>
-                                <p>It was time that I opened my eyes
-                                    <br /> I'm leaving the past behind
-                                    <br /> Nothing's ever what it seems
-                                    <br /> Including this time and this crazy dream</p>
-                                <p>I'm stuck like a moth to a flame
-                                    <br /> I'm so tired of playing this game
-                                    <br /> I don't know how I got to this stage
-                                    <br /> Let me out of my cage cause I'm dying
-                                </p>
-                                <p>To turn up the radio
-                                    <br /> Turn up the radio
-                                    <br /> Don't ask me where I wanna go
-                                    <br /> We gotta turn up the radio</p>
-                                <p>Turn up the radio
-                                    <br /> Turn up the radio
-                                    <br /> Don't ask me where I wanna go
-                                    <br /> We gotta turn up the radio</p>
-                                <p>I just wanna get in my car
-                                    <br /> I wanna go fast and I gotta go far
-                                    <br /> Don't ask me to explain how I feel
-                                    <br /> Cause I don't wanna say where I'm going</p>
-                                <p>Turn up the noise and turn up the volume
-                                    <br /> Don't have a choice
-                                    <br /> Cause the temperature's pounding
-                                    <br /> If leaving this place is the last thing I do
-                                    <br /> Then I want to escape
-                                    <br /> With a person just like you
-                                </p>
-                                <p>Buzzing around like a moth to a flame
-                                    <br /> I'm so sick and tired of playing this game
-                                    <br /> We gotta have fun if that's all that we do
-                                    <br /> Gotta shake up the system
-                                    <br /> And break all the rules
-                                    <br /> Gotta turn up the radio
-                                    <br /> Until the speakers blow!</p>
-                                <p>Turn up the radio
-                                    <br /> Turn up the radio
-                                    <br /> Don't ask me where I wanna go
-                                    <br /> We gotta turn up the radio</p>
-                                <p>Turn up the radio
-                                    <br /> Turn up the radio
-                                    <br /> There's some things you don't need to know
-                                    <br /> Just let me turn up the radio</p>
-                                <p>Turn up the radio
-                                    <br /> Let me turn up the radio
-                                    <br /> Let me turn up the radio</p>
-                                <br>
-                                <b>Madonna</b>
+
+                            <div ng-controller="tituloController" id="tituloControllerDiv">
+
+                                <button ng-show="$root.logado" ng-click="showHideForm()" class="btn btn-link btn-sm">{{isOpenForm? 'Cancelar edição do título':'Editar título' }}</button>
+                                <div class="container-fluid" ng-show="isOpenForm">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h1 summernote ng-model="textoEdit" config="options">
+                                            </h1>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <button ng-click="save()" class="btn     btn-default btn-sm">
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="col-xs-6 ">
+                                            <button ng-click="showHideForm()" class="btn    btn-default btn-sm">
+                                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                               
+                                <span ng-repeat="item in items | limitTo:1"> 
+                                    <div ng-hide="isOpenForm" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                                </span>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -619,9 +574,9 @@
                                     <i id="whyIcon" class="fa fa-caret-right" aria-hidden="true"></i>
                                 </h2>
                                 <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
-                                                                <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                                    <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
 
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -936,3 +891,4 @@
 <script src="js/controllers/qualidadesController.js"></script>
 <script src="js/controllers/interessesController.js"></script>
 <script src="js/controllers/ocultaController.js"></script>
+<script src="js/controllers/tituloController.js"></script>

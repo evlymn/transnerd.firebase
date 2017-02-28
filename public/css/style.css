@@ -641,3 +641,9 @@ background-color: transparent
  .summernoteDefault{
      font-family: Open Sans;font-size: 1.3em
  }
+#tituloControllerDiv{
+    margin: 5px;
+}
+ tituloControllerDiv h1 .summernote div{
+     margin: 0px; padding: 0px;
+ }
