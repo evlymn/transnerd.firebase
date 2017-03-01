@@ -44,14 +44,15 @@ window.onresize = function () {
 $("#cursosExpand").click(function () {
   $('#fotos').collapse('hide');
   $('#turnupradio').collapse('hide');
-
   $('#sobre').hide();
   $('#experiencia').hide();
   $('#colunaDireita').hide();
   $('#cursosExpand').hide();
   $('#cursosCompress').removeClass("hidden");
   $('#colunaEsquerda').removeClass("col-sm-7");
+  $('#loginControllerDiv').hide();
 });
+
 $("#cursosCompress").click(function () {
   $('#sobre').show();
   $('#experiencia').show();
@@ -59,7 +60,9 @@ $("#cursosCompress").click(function () {
   $('#cursosExpand').show();
   $('#cursosCompress').addClass("hidden");
   $('#colunaEsquerda').addClass("col-sm-7");
+   $('#loginControllerDiv').show();
 });
+
 $("#experienciaExpand").click(function () {
   $('#fotos').collapse('hide');
   $('#turnupradio').collapse('hide');
@@ -69,14 +72,17 @@ $("#experienciaExpand").click(function () {
   $('#experienciaExpand').hide();
   $('#experienciaCompress').show();
   $('#colunaEsquerda').removeClass("col-sm-7");
+   $('#loginControllerDiv').hide();
 });
+
 $("#experienciaCompress").click(function () {
   $('#sobre').show();
   $('#cursos').show();
   $('#colunaDireita').show();
   $('#experienciaExpand').show();
   $('#experienciaCompress').hide();
-  $('#colunaEsquerda').addClass("col-sm-7")();
+  $('#colunaEsquerda').addClass("col-sm-7");
+   $('#loginControllerDiv').show();
 });
 
 function calculateAge(birthMonth, birthDay, birthYear) {
