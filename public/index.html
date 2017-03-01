@@ -50,49 +50,16 @@
     </head>
 
     <body>
-        <div ng-controller="loginController" class="form-style-8">
-            <div class="text-center">
-                <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
-                     {{$root.login? 'cancelar':'login'}} 
-                </button>
-                <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
-                    logout
-                </button>
-            </div>
-            <div class="text-center">
-                <div class="row text-center" style="margin-left: 20%;margin-right: 20%">
-                    <div class="col-sm-6" ng-show="$root.login">
-                        <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
-                    </div>
-                    <div class="col-sm-6" ng-show="$root.login">
-                        <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12" ng-show="$root.login">
-                        <button ng-click="doLogin()" class="btn">
-                            logar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
                     <div id="photo-header" class="text-center">
                         <!-- PHOTO (AVATAR) -->
                         <div class="form-style-8" ng-controller="avatarController">
-                            <div class="text-center" ng-show="$root.logado">
-                                <button title="Editar imagem de avatar" class="btn btn-link" ng-click="openAvatarEdit()">
-                                    <i class="fa fa-camera" aria-hidden="true"></i>
-                                </button>
+                            <div id="photo" ng-repeat="item in avatares">
+                                <img ng-click="openAvatarEdit()" class="hand" ng-src="{{item.avatarUrl}}" />
                             </div>
-                            <!--data-toggle="collapse" data-target="#fotos"-->
-                            <div id="photo" ng-repeat="item in avatares" class="hand" >
-                                <img ng-src="{{item.avatarUrl}}" />
-                            </div>
-
                             <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
                                 <div class="container-fluid">
                                     <div class="row">
@@ -134,11 +101,36 @@
                                 </div>
                             </div>
                         </div>
-
-                  
+                        <div ng-controller="loginController" class="form-style-8">
+                            <div class="text-center">
+                                <button title="Login" ng-hide="logado" class="btn" ng-click="showFormLogin()">
+                                    {{$root.login? 'cancelar':'login'}}
+                                </button>
+                                <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
+                                    logout
+                                </button>
+                            </div>
+                            <div class="text-center">
+                                <div class="row text-center" style="margin-left: 20%;margin-right: 20%">
+                                    <div class="col-sm-6" ng-show="$root.login">
+                                        <input autocomplete="off" type="text" id="email" ng-model="$root.login.email" placeholder="email"></input>
+                                    </div>
+                                    <div class="col-sm-6" ng-show="$root.login">
+                                        <input autocomplete="off" type="password" id="senha" ng-model="$root.login.senha" placeholder="senha"></input>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" ng-show="$root.login">
+                                        <button ng-click="doLogin()" class="btn">
+                                            logar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="text-header">
                             <div ng-controller="tituloController" id="tituloControllerDiv">
-                                <button ng-show="$root.logado" ng-click="showHideForm()" class="btn btn-link btn-sm">{{isOpenForm? 'Cancelar edição do título':'Editar título' }}</button>
+                                <!--<button ng-show="$root.logado" ng-click="showHideForm()" class="btn btn-link btn-sm">{{isOpenForm? 'Cancelar edição do título':'Editar título' }}</button>-->
                                 <div class="container-fluid" ng-show="isOpenForm">
                                     <div class="row">
                                         <div class="col-xs-12">
@@ -148,20 +140,19 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-6">
-                                            <button ng-click="save()" class="btn     btn-default btn-sm">
-                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            <button ng-click="save()" class="btn  btn-block    btn-default btn-sm">
+                                                Salvar
                                             </button>
                                         </div>
-
                                         <div class="col-xs-6 ">
-                                            <button ng-click="showHideForm()" class="btn    btn-default btn-sm">
-                                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                            <button ng-click="showHideForm()" class="btn  btn-block   btn-default btn-sm">
+                                                Cancelar
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                                 <span ng-repeat="item in items | limitTo:1">
-                                    <div ng-hide="isOpenForm" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                                    <div ng-hide="isOpenForm" ng-click="$root.logado && showHideForm()" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
                                 </span>
                             </div>
                         </div>
