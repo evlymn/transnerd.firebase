@@ -193,9 +193,8 @@
                     <!-- Cursos -->
                     <div ng-controller="postController">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i>
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{getTextToShowHideFormButton()}}</i>
                             </button>
-                            <br />
                             <br />
                         </div>
                         <div ng-show="$root.logado">

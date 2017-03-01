@@ -27,6 +27,9 @@ modulo.controller('postController',
             databaseService.retrievelAllAsync(childRef).then(function (data) {
                 $scope.children = data;
                 $scope.$apply();
+                $scope.children.$loaded().then(function () {
+                    console.log('postagens carregadas');
+                });
                 console.log('get data ' + childRef);
             }, function (error) {
                 console.log(error);
@@ -116,4 +119,7 @@ modulo.controller('postController',
             dateOut.setDate(dateOut.getDate() + 1);
             return dateOut;
         };
+        $scope.getTextToShowHideFormButton = function () {
+            return formOpen ? 'Cancelar postagem' : 'Adicionar nova postagem';
+        }
     });
