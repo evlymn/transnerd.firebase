@@ -210,9 +210,7 @@
                             </div>
                         </div>
                         <div id="text-header">
-
                             <div ng-controller="tituloController" id="tituloControllerDiv">
-
                                 <button ng-show="$root.logado" ng-click="showHideForm()" class="btn btn-link btn-sm">{{isOpenForm? 'Cancelar edição do título':'Editar título' }}</button>
                                 <div class="container-fluid" ng-show="isOpenForm">
                                     <div class="row">
@@ -234,15 +232,11 @@
                                             </button>
                                         </div>
                                     </div>
-
                                 </div>
-
                                 <span ng-repeat="item in items | limitTo:1">
                                     <div ng-hide="isOpenForm" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
                                 </span>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -278,49 +272,45 @@
                         </div>
                     </div>
 
-
-
-
                     <!-- Cursos -->
                     <div ng-controller="postController">
                         <div ng-show="$root.logado">
-                            <button class="btn btn-sm btn-link" ng-click="showPostForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i>
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{postForm?'Cancelar postagem': 'Adicionar nova postagem'}}</i>
                             </button>
                             <br />
                             <br />
                         </div>
                         <div ng-show="$root.logado">
-                            <div ng-show="postForm" id="postFormDiv">
+                            <div ng-show="formOpen" id="postFormDiv">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <input type="text" id="titulo" class="form-control input-sm" ng-model="post.titulo" placeholder="Título"></input>
+                                        <input type="text" id="titulo" class="form-control input-sm" ng-model="formObject.titulo" placeholder="Título"></input>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="text" id="local" class="form-control input-sm" ng-model="post.local" placeholder="Local"></input>
+                                        <input type="text" id="local" class="form-control input-sm" ng-model="formObject.local" placeholder="Local"></input>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" id="data" class="form-control input-sm" ng-model="post.data" placeholder="Data"></input>
+                                        <input type="date" id="data" class="form-control input-sm" ng-model="formObject.data" placeholder="Data"></input>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <summernote ng-model="post.texto"></summernote>
+                                        <summernote ng-model="formObject.texto"></summernote>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <button id="postButton" ng-click="savePost()" ng-disabled="(!post.titulo || !post.texto || !post.local)" class="btn  btn-default  btn-block">{{ (post.id ? 'Atualizar':'Salvar') }}</button>
+                                        <button id="postButton" ng-click="createChildFromForm()" ng-disabled="(!formObject.titulo || !formObject.texto || !formObject.local)" class="btn  btn-default  btn-block">{{ (formObject.id ? 'Atualizar':'Salvar') }}</button>
                                     </div>
                                     <div class="col-sm-6">
                                         <button id="cancelButton" ng-click="cancelUpdate(item)" class="btn   btn-default btn-block">Cancelar</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="box" id="cursos" ng-show="postagens">
+                        <div class="box" id="cursos" ng-show="children">
                             <h2>Cursos, educação, vida...
                                 <span class="pull-right">
                                     <i id="cursosExpand" title="Expandir" class="fa fa-expand" aria-hidden="true"></i>
@@ -330,21 +320,21 @@
 
                             <div class="collapse " id="education1">
                                 <ul id="education" class="clearfix">
-                                    <li data-ng-repeat="item in postagens | orderBy:'datacadastro':true ">
-                                        <div class="year pull-left">{{convertToDate(item.data) | date:"yyyy"}}</div>
+                                    <li data-ng-repeat="child in children | orderBy:'datacadastro':true ">
+                                        <div class="year pull-left">{{moment(item.data).format('YYYY')}}</div>
 
                                         <div class="description pull-right">
-                                            <h3 ng-class="item.$id==post.id? '' : ''">
+                                            <h3>
                                                 <span id="postEditDiv" ng-show="logado">
-                                                    <i title="Remover" ng-click="remove(item.$id)" class="fa fa-minus-circle   cursorHand" aria-hidden="true"></i>
+                                                    <i title="Remover" ng-click="removeFromDb(child.$id)" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                                 </span>
-                                                <span title="Editar: {{item.titulo}}" ng-click="updatePostObject(item)" class="cursorHand"> {{item.titulo}}</span>
+                                                <span title="Editar: {{child.titulo}}" ng-click="updateFormObject(child)" class="cursorHand"> {{child.titulo}}</span>
                                             </h3>
                                             <h3>
-                                                <small class="pull-right">{{convertToDate(item.data) | date:"MMMM 'de' yyyy":'-0300'}} - <b>{{item.local}}</b></small>
+                                                <small class="pull-right">{{moment(child.data).format('MMMM [de] YYYY')}} - <b>{{child.local}}</b></small>
                                             </h3>
                                             <br>
-                                            <div ng-show="item.texto" ng-bind-html="htmlService.renderHtml(item.texto)"></div>
+                                            <div ng-show="child.texto" ng-bind-html="htmlService.renderHtml(child.texto)"></div>
 
                                         </div>
 

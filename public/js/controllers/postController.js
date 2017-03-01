@@ -1,35 +1,31 @@
 
-
-
 modulo.controller('postController',
     function ($scope, $rootScope, $sce, htmlService, databaseService) {
         var childRef = "postagens";
         $scope.htmlService = htmlService;
-        $scope.postagens = [];
+        $scope.children = [];
+        $scope.moment = moment;
+        resetFormObject();
+        getDataFromDB();
 
-        resetPostObject();
-        getPostFromDB();
-
-
-        $scope.showPostForm = function () {
-            if ($scope.postForm)
-                $scope.postForm = null;
+        $scope.showHideForm = function () {
+            resetFormObject();
+            if ($scope.formOpen)
+                $scope.formOpen = null;
             else
-                $scope.postForm = true;
+                $scope.formOpen = true;
         };
 
-        function resetPostObject() {
-            $scope.post = {
+        function resetFormObject() {
+            $scope.formObject = {
                 data: new Date(),
                 datacadastro: new Date().getTime().toString()
             };
-
-            console.log('post object resetado');
         }
 
-        function getPostFromDB() {
+        function getDataFromDB() {
             databaseService.retrievelAllAsync(childRef).then(function (data) {
-                $scope.postagens = data;
+                $scope.children = data;
                 $scope.$apply();
                 console.log('get data ' + childRef);
             }, function (error) {
@@ -38,42 +34,41 @@ modulo.controller('postController',
             });
         }
 
-        $scope.savePost = function () {
-            var post = {
-                data: $scope.post.data.toUTCString(),
-                datacadastro: $scope.post.data.getTime(),
-                texto: angular.isUndefined($scope.post.texto) ? '' : $scope.post.texto,
-                titulo: angular.isUndefined($scope.post.titulo) ? '' : $scope.post.titulo,
-                local: angular.isUndefined($scope.post.local) ? '' : $scope.post.local,
+        $scope.createChildFromForm = function () {
+            var child = {
+                data: $scope.formObject.data.toUTCString(),
+                datacadastro: $scope.formObject.data.getTime(),
+                texto: angular.isUndefined($scope.formObject.texto) ? '' : $scope.formObject.texto,
+                titulo: angular.isUndefined($scope.formObject.titulo) ? '' : $scope.formObject.titulo,
+                local: angular.isUndefined($scope.formObject.local) ? '' : $scope.formObject.local,
             };
 
-            if ($scope.post.id) {
-                updatePost(post);
+            if ($scope.formObject.id) {
+                updateToDb(child);
             }
             else {
-                pushPost(post);
+                saveToDb(child);
             }
-
         }
 
-        function pushPost(newItem) {
+        function saveToDb(newItem) {
             databaseService.createAsync(newItem, childRef).then(function (newKey) {
                 console.info(childRef + ' item adicionado');
                 toastr["success"]("Adicionado");
-                $scope.showPostForm();
-                resetPostObject();
+                $scope.showHideForm();
+                resetFormObject();
                 $scope.$apply();
 
             }, function (error) {
                 console.error(childRef + error);
                 toastr["danger"]("Erro ao tentar adicionar");
                 $scope.$apply();
-                $scope.showPostForm();
-                resetPostObject();
+                $scope.showHideForm();
+                resetFormObject();
             })
         }
 
-        $scope.remove = function (id) {
+        $scope.removeFromDb = function (id) {
             databaseService.deleteByIdAsync(id, childRef).then(function () {
                 console.info('item removido');
                 toastr["warning"]("Removido");
@@ -83,22 +78,23 @@ modulo.controller('postController',
             });
         }
 
-        $scope.updatePostObject = function (item) {
-            $scope.postForm = true;
-            resetPostObject();
-            $scope.post.id = item.$id;
-            console.log($scope.post.id);
-            $scope.post.data = new Date(item.data);
-            $scope.post.datacadastro = new Date(item.data).getTime(),
-                $scope.post.texto = angular.isUndefined(item.texto) ? '' : item.texto;
-            $scope.post.titulo = angular.isUndefined(item.titulo) ? '' : item.titulo;
-            $scope.post.local = angular.isUndefined(item.local) ? '' : item.local;
+        $scope.updateFormObject = function (item) {
+            $scope.formOpen = true;
+            resetFormObject();
+            $scope.formObject = {
+                id: item.$id,
+                data: new Date(item.data),
+                datacadastro: new Date(item.data).getTime(),
+                texto: angular.isUndefined(item.texto) ? '' : item.texto,
+                titulo: angular.isUndefined(item.titulo) ? '' : item.titulo,
+                local: angular.isUndefined(item.local) ? '' : item.local
+            }
         }
 
-        function updatePost(post) {
-            $scope.postForm = null;
+        function updateToDb(post) {
+            $scope.formOpen = null;
 
-            databaseService.updateByIdAsync($scope.post.id, post, childRef).then(function (data) {
+            databaseService.updateByIdAsync($scope.formObject.id, post, childRef).then(function (data) {
                 toastr["success"]("Editado");
                 console.log('Editado');
                 $scope.$apply();
@@ -109,8 +105,8 @@ modulo.controller('postController',
         }
 
         $scope.cancelUpdate = function () {
-            $scope.postForm = null;
-            resetPostObject();
+            $scope.formOpen = null;
+            resetFormObject();
             toastr["warning"]("Update cancelado");
             console.log('update cancelado');
         }
