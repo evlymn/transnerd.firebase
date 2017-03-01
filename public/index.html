@@ -45,6 +45,7 @@
         <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
         <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
 
+
         <script src="js/firebase.config.js"></script>
         <script src="js/app.js"></script>
     </head>
@@ -374,118 +375,93 @@
                             </h2>
                             <div style="padding:20px; font-size:1.3em" class="collapse" id="whyjeliel">
                                 <div ng-bind-html="htmlService.renderHtml(item.texto)"></div>
-
-
                             </div>
                         </div>
                     </div>
                     <!-- CONTACT -->
-                    <div class="box clearfix">
-                        <h2>Contatos e afins.
-                        </h2>
-                        <div id="contatosDiv" class="collapse">
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-home fa-fw"></span>
-                                </div>
-                                <div class="title only pull-right">Porto Alegre - RS/Brasil </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-envelope fa-fw"></span>
-                                </div>
-                                <div class="title only pull-right">jeliel@transnerd.com.br</div>
-                            </div>
+                    <div ng-controller="contatosController">
+                        <br>
+                        <div ng-show="$root.logado">
+                            <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{getShowHideFormButtonText()}}</i>
+                            </button>
+                            <br />
+                        </div>
 
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-medium fa-fw"></span>
+                        <div ng-show="$root.logado && formOpen">
+                            <form novalidate name="formContatos" id="formContatos">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Tipo:</label>
+                                        <div class="btn-group">
+                                            <button class="btn btn-link btn-sm" ng-click="setContatoInputType('number')">
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                                <span ng-show="formObject.tipo=='number'"> telefone</span>
+                                            </button>
+                                            <button class="btn btn-link btn-sm" ng-click="setContatoInputType('url')">
+                                                <i class="fa fa-link" aria-hidden="true"></i>
+                                                <span ng-show="formObject.tipo=='url'"> site</span>
+                                            </button>
+                                            <button class="btn btn-link btn-sm" ng-click="setContatoInputType('email')">
+                                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                <span ng-show="formObject.tipo=='email'"> email</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="title pull-right">Medium</div>
-                                <div class="description pull-right">
-                                    <a href="https://medium.com/transnerd">medium.com/transnerd</a>
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <input type="text" id="contatoDescInput" required name="contatoDescInput" class="form-control input-sm" ng-model="formObject.descricao" placeholder="Descrição'"></input>
+                                        <br />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-linkedin fa-fw"></span>
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <input type="number" ng-show="formObject.tipo=='number'" id="contatonumberInput" required name="contatonumberInput" class="form-control input-sm" ng-model="formObject.telefone" placeholder="Telefone"></input>
+                                        <input type="url" ng-show="formObject.tipo=='url'" id="contatourlInput" required name="contatourlInput" pattern="https?://.+" class="form-control input-sm" ng-model="formObject.url" placeholder="Site"></input>
+                                        <input type="email" ng-show="formObject.tipo=='email'" id="contatoemailInput" required name="contatoemailInput" class="form-control input-sm" ng-model="formObject.email" placeholder="Email"></input>
+                                        <div role="alert">
+                                            <small class="smallExp" ng-show="formContatos.$invalid">
+                                                <span ng-show="formObject.tipo=='url'"> informe uma url válida, comece com http:// ou https://</span>
+                                                <span ng-show="formObject.tipo=='number'"> use somente números para o telefone</span>
+                                                <span ng-show="formObject.tipo=='email'"> informe um email válido </span>
+                                            </small>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="title pull-right">Linkedin</div>
-                                <div class="description pull-right">
-                                    <a href="https://www.linkedin.com/in/jelielmendes">in/jelielmendes</a>
+                                <div class="row">
+                                    <!--|| -->
+                                    <div class="col-xs-1">
+                                        <button type="submit" ng-disabled="!formObject.contato || formObject.contato ==null" ng-click="createChildFromForm()" class="btn btn-link btn-sm">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-link btn-sm" ng-click="cancel()">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-twitter fa-fw"></span>
+                            </form>
+                        </div>
+                        <div class="box clearfix">
+                            <h2>Contatos e afins.
+                            </h2>
+                            <div id="contatosDiv" class="collapse">
+
+                                <div class="contact-item" ng-repeat="child in children">
+                                    <div class="icon pull-left text-center">
+                                        <span class="{{getContatoIcon(child.contato,child.tipo)}}"></span>
+                                    </div>
+                                    <div class="title pull-right">{{child.descricao}}</div>
+                                    <div class="description pull-right">
+                                        <span ng-show="child.tipo=='number'">{{child.contato}}</span>
+                                        <a ng-show="child.tipo=='url'" href="{{child.tipo=='url'? child.contato:''}}">{{formatContatoUrl(child.contato)}}</a>
+                                        <a ng-show="child.tipo=='email'" href="mailto:{{child.tipo=='email'? child.contato:''}}">{{child.contato}}</a>
+                                    </div>
+
                                 </div>
-                                <div class="title pull-right">Twitter</div>
-                                <div class="description pull-right">
-                                    <a href="https://twitter.com/jelielmendes">twitter.com/jelielmendes</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-facebook fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Facebook</div>
-                                <div class="description pull-right">
-                                    <a href="https://www.facebook.com/jelielmendes">facebook.com/jelielmendes</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-instagram fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Instagram</div>
-                                <div class="description pull-right">
-                                    <a href="https://www.instagram.com/jelielmendes/">instagram.com/jelielmendes</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-youtube fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Youtube</div>
-                                <div class="description pull-right">
-                                    <a href="https://www.youtube.com/channel/UCBSEHB7hg-T8CRRpxJgNDDw">Canal</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-github fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">GitHub</div>
-                                <div class="description pull-right">
-                                    <a href="https://github.com/jelielmendes">github.com/jelielmendes</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-bitbucket fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Bitbucket</div>
-                                <div class="description pull-right">
-                                    <a href="https://bitbucket.org/jeliel/">bitbucket.org/jeliel/</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-google-plus fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Google+</div>
-                                <div class="description pull-right">
-                                    <a href="https://plus.google.com/+JelielMendes/">+JelielMendes</a>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <div class="icon pull-left text-center">
-                                    <span class="fa fa-skype fa-fw"></span>
-                                </div>
-                                <div class="title pull-right">Skype</div>
-                                <div class="description pull-right">
-                                    <a href="skype:jelielmendes?dropdown">jelielmendes</a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -693,3 +669,4 @@
 <script src="js/controllers/ocultaController.js"></script>
 <script src="js/controllers/tituloController.js"></script>
 <script src="js/controllers/experienciasController.js"></script>
+<script src="js/controllers/contatosController.js"></script>

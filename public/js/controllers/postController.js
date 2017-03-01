@@ -17,10 +17,7 @@ modulo.controller('postController',
         };
 
         function resetFormObject() {
-            $scope.formObject = {
-                data: new Date(),
-                datacadastro: new Date().getTime().toString()
-            };
+            $scope.formObject = {};
         }
 
         function getDataFromDB() {
@@ -28,7 +25,7 @@ modulo.controller('postController',
                 $scope.children = data;
                 $scope.$apply();
                 $scope.children.$loaded().then(function () {
-                    console.log('postagens carregadas');
+                    console.log('contatos carregadas');
                 });
                 console.log('get data ' + childRef);
             }, function (error) {
@@ -39,10 +36,9 @@ modulo.controller('postController',
 
         $scope.createChildFromForm = function () {
             var child = {
-                data: $scope.formObject.data.toUTCString(),
-                datacadastro: $scope.formObject.data.getTime(),
+                timeid: moment().getValue(),
                 texto: angular.isUndefined($scope.formObject.texto) ? '' : $scope.formObject.texto,
-                titulo: angular.isUndefined($scope.formObject.titulo) ? '' : $scope.formObject.titulo,
+                icone: angular.isUndefined($scope.formObject.icone) ? '' : $scope.formObject.icone,
                 local: angular.isUndefined($scope.formObject.local) ? '' : $scope.formObject.local,
             };
 
@@ -71,6 +67,19 @@ modulo.controller('postController',
             })
         }
 
+        function updateToDb(post) {
+            $scope.formOpen = null;
+
+            databaseService.updateByIdAsync($scope.formObject.id, post, childRef).then(function (data) {
+                toastr["success"]("Editado");
+                console.log('Editado');
+                $scope.$apply();
+            }, function (error) {
+                console.error(error);
+                toastr["danger"]('Erro ao tentar editar');
+            })
+        }
+
         $scope.removeFromDb = function (id) {
             databaseService.deleteByIdAsync(id, childRef).then(function () {
                 console.info('item removido');
@@ -92,19 +101,6 @@ modulo.controller('postController',
                 titulo: angular.isUndefined(item.titulo) ? '' : item.titulo,
                 local: angular.isUndefined(item.local) ? '' : item.local
             }
-        }
-
-        function updateToDb(post) {
-            $scope.formOpen = null;
-
-            databaseService.updateByIdAsync($scope.formObject.id, post, childRef).then(function (data) {
-                toastr["success"]("Editado");
-                console.log('Editado');
-                $scope.$apply();
-            }, function (error) {
-                console.error(error);
-                toastr["danger"]('Erro ao tentar editar');
-            })
         }
 
         $scope.cancelUpdate = function () {
