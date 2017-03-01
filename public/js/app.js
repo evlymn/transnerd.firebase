@@ -20,3 +20,5 @@ toastr.options = {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+
+moment.locale('pt-br');

@@ -24,14 +24,11 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, databas
             $scope.items.$loaded().then(function () {
                 showHabilidade(null);
             });
-            console.log('get data ' + childRef);
         }, function (error) {
             console.log(error);
-            console.log('erro ' + childRef);
+            toastr["warning"]("Erro ao recuperar dados");
         });
     }
-
-
 
     $scope.setSaveMethod = function () {
         if ($scope.item.id) {
@@ -48,7 +45,6 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, databas
             valor: $scope.item.valor
         }
         databaseService.createAsync(newItem, childRef).then(function (newKey) {
-            console.info(childRef + ' item adicionado');
             showHabilidade(newKey);
             toastr["success"]("Adicionado: " + newItem.texto);
         }, function (error) {
@@ -60,7 +56,6 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, databas
 
     $scope.remove = function (id) {
         databaseService.deleteByIdAsync(id, childRef).then(function () {
-            console.info('item removido');
             toastr["warning"]("Removido");
         }, function (error) {
             console.error(error);
@@ -96,7 +91,6 @@ modulo.controller('habilidadesController', function ($scope, $rootScope, databas
 
         databaseService.updateByIdAsync($scope.item.id, updateItem, childRef).then(function (data) {
             toastr["success"]("Editado");
-            console.log('Editado');
             $scope.showHideForm();
             showHabilidade(null);
             $scope.$apply();

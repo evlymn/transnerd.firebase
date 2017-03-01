@@ -15,7 +15,6 @@ modulo.controller('tituloController', function ($scope, $rootScope, htmlService,
     getFromDB();
     function getFromDB() {
         databaseService.retrievelimitToLastAsync(1, childRef).then(function (data) {
-            console.log(data);
             $scope.items = data;
             $scope.$apply();
             console.log('get data ' + childRef);
