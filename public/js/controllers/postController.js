@@ -120,6 +120,6 @@ modulo.controller('postController',
             return dateOut;
         };
         $scope.getTextToShowHideFormButton = function () {
-            return formOpen ? 'Cancelar postagem' : 'Adicionar nova postagem';
+            return $scope.formOpen ? 'Cancelar postagem' : 'Adicionar nova postagem';
         }
     });
