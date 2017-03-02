@@ -655,6 +655,14 @@ background-color: transparent
 
  input:required:invalid, input:focus:invalid {
   /* insert your own styles for invalid form input */
-  background-color:  #ffcccc
+  border-color:  #ffcccc
 ;
+}
+
+.contact-item  .fa-minus-circle{
+    font-size: 1.1em;
+}
+.contact-item  .icon{
+   height: 40px;
+   width: 40px;
 }

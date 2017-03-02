@@ -9,8 +9,11 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
     function resetFormObject() {
         $scope.formObject = {
             tipo: 'number',
-            descricao: $scope.formObject.descricao,
-            contato: null
+            descricao: null,
+            contato: null,
+            telefone:null,
+            url:null,
+            email:null
         }
     }
 
@@ -35,9 +38,9 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
         databaseService.retrievelAllAsync(childRef).then(function (data) {
             $scope.children = data;
             $scope.$apply();
-             $scope.children.$loaded().then(function () {
-                   console.log($scope.children);
-                });
+            $scope.children.$loaded().then(function () {
+                console.log($scope.children);
+            });
         }, function (error) {
             console.log(error);
         });
@@ -65,7 +68,7 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
         });
     }
 
-    $scope.updateToDb = function () {
+    $scope.updateToDb = function (child) {
         databaseService.updateByIdAsync($scope.formObject.id, child, childRef).then(function () {
             toastr["success"]("Editado");
             $scope.showHideForm();
@@ -80,9 +83,16 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
         toastr["warning"]("Cancelado");
     }
 
-    $scope.updateFormObject = function (item) {
+    $scope.updateFormObject = function (child) {
         $scope.formObject = {
-
+            id: child.$id,
+            timeid: child.timeid,
+            tipo: child.tipo,
+            descricao: child.descricao,
+            contato: child.contato,
+            telefone: isNaN(child.contato) ? null : parseInt(child.contato),
+            url: child.contato,
+            email: child.contato
         }
         $scope.formOpen = true;
     };
@@ -110,7 +120,14 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
     });
 
     $scope.setContatoInputType = function (tipo) {
-        resetFormObject();
+        if ($scope.formObject.id) {
+            $scope.formObject.telefone = null;
+            $scope.formObject.url = null;
+            $scope.formObject.email = null;
+        }
+        else
+            resetFormObject();
+
         $scope.formObject.tipo = tipo;
         document.querySelector('#contatourlInput').value = '';
         document.querySelector('#contatonumberInput').value = '';
@@ -123,10 +140,10 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
     }
 
     $scope.formatContatoUrl = function (url) {
-        url = url.toLowerCase().replace('https://www.','').replace('http://www.','').replace('https://', '').replace('http://','');
-        if (url.toLowerCase().indexOf("youtube.com/channel") !== -1) {
+        url = url.toLowerCase().replace('https://www.', '').replace('http://www.', '').replace('https://', '').replace('http://', '');
+        if (url.toLowerCase().indexOf("youtube.com/channel") !== -1)
             url = "youtube.com/channel";
-        }
+
         return url;
     }
 

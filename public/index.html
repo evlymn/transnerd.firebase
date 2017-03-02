@@ -327,19 +327,12 @@
                                         <i title="Remover" ng-show="$root.logado" ng-click="removeFromDb(child.$id)" class="fa fa-minus-circle    cursorHand" aria-hidden="true"></i>
                                         <span title="Editar: {{child.cargo}}" ng-click="updateFormObject(child)" class=" cursorHand"> {{child.cargo}} </span>
                                     </div>
-
-
                                     <small class="pull-right smallExp" ng-bind-html="htmlService.renderHtml(formatDatePeriod(child.datainicio,child.datasaida))"></small>
                                     <br>
                                     <div ng-bind-html="htmlService.renderHtml(child.texto)"></div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
-
                     </div>
                 </div>
 
@@ -378,7 +371,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- CONTACT -->
+                    <!-- Contatos -->
                     <div ng-controller="contatosController">
                         <br>
                         <div ng-show="$root.logado">
@@ -386,7 +379,6 @@
                             </button>
                             <br />
                         </div>
-
                         <div ng-show="$root.logado && formOpen">
                             <form novalidate name="formContatos" id="formContatos">
                                 <div class="row">
@@ -427,10 +419,8 @@
                                             </small>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="row">
-                                    <!--|| -->
                                     <div class="col-xs-1">
                                         <button type="submit" ng-disabled="!formObject.contato || formObject.contato ==null" ng-click="createChildFromForm()" class="btn btn-link btn-sm">
                                             <i class="fa fa-check" aria-hidden="true"></i>
@@ -453,7 +443,12 @@
                                     <div class="icon pull-left text-center">
                                         <span class="{{getContatoIcon(child.contato,child.tipo)}}"></span>
                                     </div>
-                                    <div class="title pull-right">{{child.descricao}}</div>
+                                    <div class="title pull-right">
+                                        <span ng-show="$root.logado">
+                                            <i  ng-click="removeFromDb(child.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                        </span>
+                                        <span ng-click="updateFormObject(child)" class=" cursorHand">{{child.descricao}}</span>
+                                    </div>
                                     <div class="description pull-right">
                                         <span ng-show="child.tipo=='number'">{{child.contato}}</span>
                                         <a ng-show="child.tipo=='url'" href="{{child.tipo=='url'? child.contato:''}}">{{formatContatoUrl(child.contato)}}</a>
@@ -465,7 +460,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- SKILLS -->
+                    <!-- Habilidades -->
                     <div ng-controller="habilidadesController" id="habilidadesControllerDiv">
                         <div ng-show="$root.logado">
                             <button class="btn btn-sm btn-link" ng-click="showHideForm()">{{addButtonLabel()}}</i>
