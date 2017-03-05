@@ -36,10 +36,11 @@ modulo.controller('postController',
 
         $scope.createChildFromForm = function () {
             var child = {
-                timeid: moment().getValue(),
+                data: $scope.formObject.data.toUTCString(),
+                datacadastro: moment($scope.formObject.data).valueOf(),
                 texto: angular.isUndefined($scope.formObject.texto) ? '' : $scope.formObject.texto,
-                icone: angular.isUndefined($scope.formObject.icone) ? '' : $scope.formObject.icone,
-                local: angular.isUndefined($scope.formObject.local) ? '' : $scope.formObject.local,
+                titulo: angular.isUndefined($scope.formObject.titulo) ? '' : $scope.formObject.titulo,
+                local: angular.isUndefined($scope.formObject.local) ? '' : $scope.formObject.local
             };
 
             if ($scope.formObject.id) {

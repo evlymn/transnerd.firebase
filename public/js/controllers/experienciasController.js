@@ -86,7 +86,7 @@ modulo.controller('experienciasController',
             $scope.formObject = {
                 id: child.$id,
                 datainicio: new Date(child.datainicio),
-                datasaida: child.datasaida? new Date(child.datasaida) : null,
+                datasaida: child.datasaida ? new Date(child.datasaida) : null,
                 timeid: new Date(child.timeid).getTime(),
                 texto: angular.isUndefined(child.texto) ? '' : child.texto,
                 cargo: angular.isUndefined(child.empresa) ? '' : child.cargo,
@@ -141,8 +141,7 @@ modulo.controller('experienciasController',
             return returnText;
         }
 
-        $scope.formatDate = function(date,format)
-        {
+        $scope.formatDate = function (date, format) {
             return moment(date).format(format)
         }
 

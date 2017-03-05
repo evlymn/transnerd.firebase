@@ -11,9 +11,9 @@ modulo.controller('contatosController', function ($scope, $rootScope, databaseSe
             tipo: 'number',
             descricao: null,
             contato: null,
-            telefone:null,
-            url:null,
-            email:null
+            telefone: null,
+            url: null,
+            email: null
         }
     }
 

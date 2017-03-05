@@ -59,7 +59,7 @@
                         <!-- PHOTO (AVATAR) -->
                         <div class="form-style-8" ng-controller="avatarController">
                             <div id="photo" ng-repeat="item in avatares">
-                                <img ng-click="openAvatarEdit()" class="hand" ng-src="{{item.avatarUrl}}" />
+                                <img ng-click="$root.logado ? openAvatarEdit():null" class="hand" ng-src="{{item.avatarUrl}}" />
                             </div>
                             <div id="avatarEditDiv" ng-show="showAvatarEditDiv()">
                                 <div class="container-fluid">
@@ -110,6 +110,10 @@
                                 <button title="logout" ng-show="logado" class="btn" ng-click="doLogout()">
                                     logout
                                 </button>
+                                <div ng-show="logando">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                             </div>
                             <div class="text-center">
                                 <div class="row text-center" style="margin-left: 20%;margin-right: 20%">
@@ -239,7 +243,7 @@
                             <div class="collapse " id="education1">
                                 <ul id="education" class="clearfix">
                                     <li data-ng-repeat="child in children | orderBy:'datacadastro':true ">
-                                        <div class="year pull-left">{{moment(item.data).format('YYYY')}}</div>
+                                        <div class="year pull-left">  {{moment(child.data).format('YYYY')}}</div>
 
                                         <div class="description pull-right">
                                             <h3>
@@ -253,7 +257,6 @@
                                             </h3>
                                             <br>
                                             <div ng-show="child.texto" ng-bind-html="htmlService.renderHtml(child.texto)"></div>
-
                                         </div>
 
                                     </li>
@@ -445,7 +448,7 @@
                                     </div>
                                     <div class="title pull-right">
                                         <span ng-show="$root.logado">
-                                            <i  ng-click="removeFromDb(child.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
+                                            <i ng-click="removeFromDb(child.$id)" title="Remover" class="fa fa-minus-circle cursorHand" aria-hidden="true"></i>
                                         </span>
                                         <span ng-click="updateFormObject(child)" class=" cursorHand">{{child.descricao}}</span>
                                     </div>
